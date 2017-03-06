@@ -1,4 +1,4 @@
-# Design Principles
+# Principles
 
 ![GraphQL Runtime Structure](runtime-structure.png)
 

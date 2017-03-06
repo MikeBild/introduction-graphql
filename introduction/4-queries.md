@@ -17,3 +17,23 @@
   }
 }
 ```
+
+__Named query__
+```graphql
+query fetch_all_authors {
+  allAuthors {
+    id
+    name
+  }
+}
+```
+
+__Aliasing__
+```graphql
+{
+  authors: allAuthors {
+    id
+    name
+  }
+}
+```
