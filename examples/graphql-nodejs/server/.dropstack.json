@@ -1,0 +1,10 @@
+{
+  "variables": [],
+  "alias": "intro-graphql.services.dropstack.run",
+  "name": "wxamtszc",
+  "serviceUrl": "wxamtszc.services.dropstack.run",
+  "type": "npm",
+  "excludes": [
+    "database.sqlite"
+  ]
+}

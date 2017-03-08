@@ -25,3 +25,8 @@
 ## More ...
 
 * [Resources](introduction/resources.md)
+
+## Live
+
+* [React + Apollo](http://intro-graphql-app.services.dropstack.run)
+* [GraphQL + NodeJS + PouchDB](http://intro-graphql.services.dropstack.run)

@@ -1,11 +1,12 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const webpack = require('webpack');
+const dotenv = require('dotenv').config({path:'.env-development'});
 
 module.exports = {
   devtool: 'cheap-module-source-map',
   entry: './src/app.js',
   output: {
-    path: 'public/',
+    path: 'build/',
     publicPath: '/',
     filename: 'bundle.js'
   },
@@ -28,8 +29,10 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
     'process.env': {
-      'NODE_ENV': JSON.stringify('development')
-    }
+        MODE: JSON.stringify(process.env.NODE_ENV),
+        VERSION: JSON.stringify(require('./package.json').version),
+        GRAPHQL_HOST: JSON.stringify(process.env.GRAPHQL_HOST),
+      }
     }),
     new HtmlWebpackPlugin({
       template: 'src/index.html'

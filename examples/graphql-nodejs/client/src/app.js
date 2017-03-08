@@ -10,8 +10,8 @@ import Posts from './pages/Posts'
 import Post from './pages/Post'
 import Author from './pages/Author'
 
-const httpClient = createNetworkInterface({uri: 'http://localhost:8080/graphql'})
-const wsClient = new SubscriptionClient(`ws://localhost:8080/graphql`, { reconnect: true, connectionParams: {} })
+const httpClient = createNetworkInterface({uri: `http://${process.env.GRAPHQL_HOST}/graphql`})
+const wsClient = new SubscriptionClient(`ws://${process.env.GRAPHQL_HOST}/graphql`, { reconnect: true, connectionParams: {} })
 const apolloClient = new ApolloClient({
   networkInterface: addGraphQLSubscriptions(httpClient, wsClient),
 });

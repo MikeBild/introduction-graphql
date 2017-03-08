@@ -4,6 +4,9 @@
 * NodeJS GraphQL-Server with WebSocket-Subscriptions
 * PouchDB to CouchDB Data-Synchronization
 
+* [React + Apollo](http://intro-graphql-app.services.dropstack.run)
+* [GraphQL + NodeJS + PouchDB](http://intro-graphql.services.dropstack.run)
+
 ## GraphQL-Server
 
 ```bash

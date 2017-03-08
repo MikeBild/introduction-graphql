@@ -1,0 +1,7 @@
+{
+  "variables": [],
+  "alias": "intro-graphql-app.services.dropstack.run",
+  "name": "cmmvmeru",
+  "serviceUrl": "cmmvmeru.services.dropstack.run",
+  "type": "spa"
+}
