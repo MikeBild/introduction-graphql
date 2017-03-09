@@ -29,7 +29,7 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
     'process.env': {
-        MODE: JSON.stringify(process.env.NODE_ENV),
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
         VERSION: JSON.stringify(require('./package.json').version),
         GRAPHQL_HOST: JSON.stringify(process.env.GRAPHQL_HOST),
       }
