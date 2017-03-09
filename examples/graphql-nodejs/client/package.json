@@ -6,7 +6,7 @@
     "test": "npm run lint",
     "dev": "webpack-dev-server -d --hot --inline --no-info --port 9090",
     "start": "concurrently \"npm run dev\"",
-    "build": "webpack -p --progress --config ./webpack.production.config.js"
+    "build": "NODE_ENV=production webpack -p --progress --config ./webpack.production.config.js"
   },
   "babel": {
     "presets": [
@@ -25,7 +25,7 @@
     "react-apollo": "^0.7.1",
     "react-dom": "15.2.1",
     "react-router": "2.5.2",
-    "subscriptions-transport-ws": "^0.5.3"
+    "subscriptions-transport-ws": "^0.5.4"
   },
   "devDependencies": {
     "babel-cli": "6.10.1",
