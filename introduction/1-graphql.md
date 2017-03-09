@@ -22,5 +22,8 @@ __GraphQL is ...__
 
 * Common API for Web-, Mobile- and Service-Consumers
 * Data-Driven (relational) Applications
-* API-Gateway for (Micro)services
-* Reactive Applications / CQRS 
+* API-Gateway for Databases
+* API-Gateway for Micro/Web-Services 
+* API-Gateway for Messaging/Broker-Systems
+* Reactive Applications
+* CQRS

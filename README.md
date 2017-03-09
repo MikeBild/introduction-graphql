@@ -10,13 +10,14 @@
 * [Fragments](introduction/7-fragments.md)
 * [Variables](introduction/8-variables.md)
 * [Directives](introduction/9-directives.md)
-* [Schema](introduction/10-schema.md)
-* [Mutations](introduction/11-mutations.md)
-* [Resolver](introduction/12-resolver.md)
-* [Error Handling](introduction/13-errors.md)
-* [Versioning](introduction/14-versioning.md)
-* [Subscriptions](introduction/15-subscriptions.md)
-* [Coming Soon - Defer, Batch, etc.](introduction/16-soon.md)
+* [Paging](introduction/10-paging.md)
+* [Schema](introduction/11-schema.md)
+* [Mutations](introduction/12-mutations.md)
+* [Resolver](introduction/13-resolver.md)
+* [Error Handling](introduction/14-errors.md)
+* [Versioning](introduction/15-versioning.md)
+* [Subscriptions](introduction/16-subscriptions.md)
+* [Coming Soon - Defer, Batch, etc.](introduction/17-soon.md)
 
 ## Hands-On
 
