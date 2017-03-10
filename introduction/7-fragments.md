@@ -2,6 +2,10 @@
 
 * Prepare and reuse queries
 
+## Example
+
+### GraphQL-Query uses fragment (...)
+
 ```graphql
 query all_authors_query {
   allAuthors {
@@ -20,8 +24,11 @@ query author_query {
     }
   }
 }
+```
 
+### GraphQL named fragment
 
+```graphql
 fragment post on Post {
   title
 }

@@ -5,6 +5,10 @@
 * JavaScript Client-Library e.g. Apollo, Relay, Lokka, etc.
 * Platform specific e.g. Obj-C, F# Type-Provider, etc.
 
+## Examples
+
+### cURL
+
 ```bash
 curl -s -XPOST "http://localhost:8080/graphql" \
     -H "Content-Type: application/json" \

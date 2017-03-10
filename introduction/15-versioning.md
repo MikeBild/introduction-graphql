@@ -4,6 +4,10 @@
 * `#` to mark "old stuff" as deprecated
 * Resolver returns null
 
+## Example
+
+### Mark as deprecated (@)
+
 ```graphql
 type Author {
   id: ID

@@ -2,3 +2,9 @@
 
 * Special Error responses as collection
 * Catches all errors from resolvers
+
+## Example
+
+```json
+
+```

@@ -9,6 +9,10 @@
 * Support for Query-Variables
 * Query validation support
 
+## Example
+
+### Simple Query
+
 ```graphql
 {
   allAuthors {
@@ -18,7 +22,8 @@
 }
 ```
 
-__Named query__
+### Named Query
+
 ```graphql
 query fetch_all_authors {
   allAuthors {
@@ -28,7 +33,8 @@ query fetch_all_authors {
 }
 ```
 
-__Aliasing__
+### Alias
+
 ```graphql
 {
   authors: allAuthors {

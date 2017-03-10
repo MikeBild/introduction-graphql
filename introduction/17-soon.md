@@ -1,4 +1,4 @@
-# Batch, Defer, Live, etc.
+# Batch, Defer, Live, etc
 
 * `@export(as: "ids")` at ID property level generates internal ID collection for batching queries
 * `@defer` at property level can specify that some part of the query can arrive later

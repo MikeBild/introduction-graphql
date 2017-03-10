@@ -3,10 +3,12 @@
 * `include` - do query if
 * `skip` - don't query if
 
+## Example
+
 ```graphql
 query skip_query($isSome: Boolean!) {
     allAuthors {
-      	name
+        name
         posts @skip(if: $isSome) {
           id
         }
@@ -15,7 +17,7 @@ query skip_query($isSome: Boolean!) {
 
 query include_query($isSome: Boolean!) {
     allAuthors {
-      	name
+        name
         posts @include(if: $isSome) {
           id
         }

@@ -1,7 +1,9 @@
-## Introspection
+# Introspection
 
-* Query-Type 
+* Is a special Query-Type
 * Metadata of Type-System, Queries, Mutations and Subscriptions
+
+## Example
 
 ```graphql
 {

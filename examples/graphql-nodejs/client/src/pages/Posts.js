@@ -3,6 +3,7 @@ import { Link } from 'react-router'
 import { style } from 'glamor'
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
+
 import Notification from '../components/Notification'
 
 const allPostsQuery = gql`query fetch_all_posts {
@@ -16,7 +17,7 @@ const allPostsQuery = gql`query fetch_all_posts {
   }
 }`
 
-const upsertedPostSubscription = gql`
+const upsertedPostSubscriptionQuery = gql`
   subscription post_upserted_subscription {
     upsertedPost {
       id
@@ -28,11 +29,16 @@ const upsertedPostSubscription = gql`
     }
   }
 `
+const upsertAuthorMutationQuery = gql`mutation upsert_author($input: AuthorInput!) {
+  upsertAuthor(input: $input) {
+    id
+  }
+}`
 
 const listAllPosts = props => {
-
+  
   props.data.subscribeToMore({
-    document: upsertedPostSubscription,
+    document: upsertedPostSubscriptionQuery,
     variables: { },
     updateQuery: (previousData, { subscriptionData }) => {
       const changedPost = subscriptionData.data.upsertedPost;
@@ -49,6 +55,7 @@ const listAllPosts = props => {
     <div>
       <div className={style(styles.header)}>
         <h3 className={style(styles.h3)}>GraphQL Example - <small>Posts</small></h3>
+        <button className={style(styles.button)} onClick={() => Notification.input(props.upsertAuthor)}>Register Author</button>
       </div>
       <table className={style(styles.table)}>
         <thead>
@@ -73,14 +80,14 @@ const listAllPosts = props => {
 }
 
 listAllPosts.propTypes = {
-  data: PropTypes.shape({
-    allAuthors: PropTypes.array,
-  }).isRequired
+  upsertAuthor: PropTypes.func.isRequired,
 }
 
-export default graphql(allPostsQuery, {
-
-})(listAllPosts)
+export default graphql(upsertAuthorMutationQuery, {
+  props: ({ mutate }) => ({
+      upsertAuthor: value => mutate({ variables: { input: { id: value, name: value } } }),
+  }),
+})(graphql(allPostsQuery)(listAllPosts))
 
 const styles = {
   h3: {
@@ -94,6 +101,16 @@ const styles = {
 
   headerLink: {
     color: '#333333',
+  },
+
+  button: {
+      background: 'none!important',
+      color: '#ff7f00',
+      textDecoration: 'underline',
+      border: 'none',
+      padding: '0!important',
+      font: 'inherit',
+      cursor: 'pointer',
   },
 
   list: {

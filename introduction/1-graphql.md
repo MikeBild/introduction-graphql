@@ -1,4 +1,4 @@
-# What is GraphQL?
+# What is GraphQL
 
 * Isn't a Database
 * Isn't a OR-Mapper
