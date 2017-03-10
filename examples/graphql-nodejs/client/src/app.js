@@ -20,11 +20,11 @@ render(
   <ApolloProvider client={apolloClient}>
     <Router history={browserHistory}>      
       <Route path="/">        
-        <IndexRoute component={Posts} />
-        <Route path="authors" component={Authors} />
-        <Route path="posts" component={Posts} />
-        <Route path="posts/:id" component={Post} />        
-        <Route path="authors/:id" component={Author} />
+        <IndexRoute component={Posts} user="John Doe" />
+        <Route path="authors" component={Authors} user="John Doe" />
+        <Route path="posts" component={Posts} user="John Doe" />
+        <Route path="posts/:id" component={Post} user="John Doe" />        
+        <Route path="authors/:id" component={Author} user="John Doe" />
       </Route>      
     </Router>
   </ApolloProvider>,

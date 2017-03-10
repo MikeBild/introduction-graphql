@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "mocha",
-    "start": "dotenv -e .env-production node bin/server",
+    "start": "dotenv -e .env-development node bin/server",
     "dev": "dotenv -e .env-development concurrently \"mocha -w\" \"nodemon bin/server\""
   },
   "dependencies": {

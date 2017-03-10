@@ -3,7 +3,6 @@ import { Link } from 'react-router'
 import { style } from 'glamor'
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
-
 import Notification from '../components/Notification'
 
 const allPostsQuery = gql`query fetch_all_posts {
@@ -29,20 +28,29 @@ const upsertedPostSubscriptionQuery = gql`
     }
   }
 `
-const upsertAuthorMutationQuery = gql`mutation upsert_author($input: AuthorInput!) {
-  upsertAuthor(input: $input) {
+
+const upsertPostMutationQuery = gql`mutation upsert_post($input: PostInput!) {
+  upsertPost(input: $input) {
     id
+    title
+    author {
+      id
+      name
+    }    
   }
 }`
 
 const listAllPosts = props => {
-  
+console.log(props.route)
   props.data.subscribeToMore({
     document: upsertedPostSubscriptionQuery,
     variables: { },
     updateQuery: (previousData, { subscriptionData }) => {
+      previousData.allPosts = previousData.allPosts || [];
+      console.log(previousData)
+      console.log(subscriptionData)
       const changedPost = subscriptionData.data.upsertedPost;
-      const previousDataIndex = previousData.allPosts.findIndex(x => x.id === changedPost.id);
+      const previousDataIndex = (previousData.allPosts || []).findIndex(x => x.id === changedPost.id);
       if(previousDataIndex === -1) previousData.allPosts.push(changedPost)
       else previousData.allPosts[previousDataIndex] = changedPost;
 
@@ -55,7 +63,7 @@ const listAllPosts = props => {
     <div>
       <div className={style(styles.header)}>
         <h3 className={style(styles.h3)}>GraphQL Example - <small>Posts</small></h3>
-        <button className={style(styles.button)} onClick={() => Notification.input(props.upsertAuthor)}>Register Author</button>
+        <button className={style(styles.button)} onClick={() => Notification.input(props.upsertPost)}>Write Post</button>
       </div>
       <table className={style(styles.table)}>
         <thead>
@@ -69,7 +77,7 @@ const listAllPosts = props => {
             props.data.allPosts.map((post, i) => (
               <tr key={i}>
                 <td className={style(styles.td)}><Link className={style(styles.link)} to={`/posts/${post.id}`}>{post.title}</Link></td>
-                <td className={style(styles.td)}><Link className={style(styles.link)} to={`/authors/${post.author.id}`}>{post.author.name}</Link></td>
+                <td className={style(styles.td)}><Link className={style(styles.link)} to={`/authors/${(post.author || {}).id}`}>{(post.author || {}).name}</Link></td>
               </tr>
             ))
           }
@@ -80,14 +88,19 @@ const listAllPosts = props => {
 }
 
 listAllPosts.propTypes = {
-  upsertAuthor: PropTypes.func.isRequired,
+  upsertPost: PropTypes.func.isRequired,
+  data: PropTypes.shape({
+    allPosts: PropTypes.array,
+  }).isRequired  
 }
 
-export default graphql(upsertAuthorMutationQuery, {
-  props: ({ mutate }) => ({
-      upsertAuthor: value => mutate({ variables: { input: { id: value, name: value } } }),
+export default graphql(upsertPostMutationQuery, {
+  props: ({mutate, ownProps}) => ({
+    upsertPost: value => mutate({ variables: { input: { title: value, authorId: ownProps.route.user } } }),
   }),
-})(graphql(allPostsQuery)(listAllPosts))
+})(graphql(allPostsQuery, {
+  props: ({data, ownProps}) => ({data, ownProps}),
+})(listAllPosts))
 
 const styles = {
   h3: {

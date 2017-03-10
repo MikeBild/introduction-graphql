@@ -3,6 +3,7 @@ import { Link } from 'react-router'
 import { style } from 'glamor'
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
+import Notification from '../components/Notification'
 
 const allAuthorsQuery = gql`query all_authors {
   allAuthors {
@@ -15,11 +16,18 @@ const allAuthorsQuery = gql`query all_authors {
   }
 }`
 
+const upsertAuthorMutationQuery = gql`mutation upsert_author($input: AuthorInput!) {
+  upsertAuthor(input: $input) {
+    id
+  }
+}`
+
 const listAllAuthors = props => {
   return (
     <div>
       <div className={style(styles.header)}>
         <h3 className={style(styles.h3)}>GraphQL Example - <small>Authors</small></h3>
+        <button className={style(styles.button)} onClick={() => Notification.input(props.upsertAuthor)}>Register Author</button>
       </div>
       <table className={style(styles.table)}>
         <thead>
@@ -52,14 +60,17 @@ const listAllAuthors = props => {
 }
 
 listAllAuthors.propTypes = {
+  upsertAuthor: PropTypes.func.isRequired,
   data: PropTypes.shape({
     allAuthors: PropTypes.array,
   }).isRequired
 }
 
-export default graphql(allAuthorsQuery, {
-  options: { pollInterval: 5000 },
-})(listAllAuthors)
+export default graphql(upsertAuthorMutationQuery, {
+  props: ({ mutate }) => ({
+      upsertAuthor: value => mutate({ variables: { input: { id: value, name: value } } }),
+  }),
+})(graphql(allAuthorsQuery)(listAllAuthors))
 
 const styles = {
   h3: {
@@ -73,6 +84,16 @@ const styles = {
 
   headerLink: {
     color: '#333333',
+  },
+
+  button: {
+      background: 'none!important',
+      color: '#ff7f00',
+      textDecoration: 'underline',
+      border: 'none',
+      padding: '0!important',
+      font: 'inherit',
+      cursor: 'pointer',
   },
 
   list: {
