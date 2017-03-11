@@ -1,11 +1,12 @@
 import React, {PropTypes} from 'react'
+import clonedeep from 'lodash.clonedeep'
 import { Link } from 'react-router'
 import { style } from 'glamor'
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 import Notification from '../components/Notification'
 
-const allPostsQuery = gql`query fetch_all_posts {
+const AllPostsQuery = gql`query fetch_all_posts {
   allPosts {
     id
     title
@@ -29,7 +30,7 @@ const upsertedPostSubscriptionQuery = gql`
   }
 `
 
-const upsertPostMutationQuery = gql`mutation upsert_post($input: PostInput!) {
+const UpsertPostMutationQuery = gql`mutation upsert_post($input: PostInput!) {
   upsertPost(input: $input) {
     id
     title
@@ -40,22 +41,21 @@ const upsertPostMutationQuery = gql`mutation upsert_post($input: PostInput!) {
   }
 }`
 
-const listAllPosts = props => {
-console.log(props.route)
+const ListAllPosts = props => {
+
   props.data.subscribeToMore({
     document: upsertedPostSubscriptionQuery,
     variables: { },
     updateQuery: (previousData, { subscriptionData }) => {
-      previousData.allPosts = previousData.allPosts || [];
-      console.log(previousData)
-      console.log(subscriptionData)
+      const result = clonedeep(previousData);
       const changedPost = subscriptionData.data.upsertedPost;
-      const previousDataIndex = (previousData.allPosts || []).findIndex(x => x.id === changedPost.id);
-      if(previousDataIndex === -1) previousData.allPosts.push(changedPost)
-      else previousData.allPosts[previousDataIndex] = changedPost;
-
+      const previousDataIndex = previousData.allPosts.findIndex(x => x.id === changedPost.id);
+      
+      if(previousDataIndex === -1) result.allPosts.push(changedPost)
+      else result.allPosts[previousDataIndex] = changedPost
+      
       Notification.success(`Post ${changedPost.id} updated!`);
-      return previousData;
+      return result;
     },
   });
 
@@ -87,20 +87,20 @@ console.log(props.route)
   )
 }
 
-listAllPosts.propTypes = {
+ListAllPosts.propTypes = {
   upsertPost: PropTypes.func.isRequired,
   data: PropTypes.shape({
     allPosts: PropTypes.array,
   }).isRequired  
 }
 
-export default graphql(upsertPostMutationQuery, {
+export default graphql(UpsertPostMutationQuery, {
   props: ({mutate, ownProps}) => ({
     upsertPost: value => mutate({ variables: { input: { title: value, authorId: ownProps.route.user } } }),
   }),
-})(graphql(allPostsQuery, {
+})(graphql(AllPostsQuery, {
   props: ({data, ownProps}) => ({data, ownProps}),
-})(listAllPosts))
+})(ListAllPosts))
 
 const styles = {
   h3: {

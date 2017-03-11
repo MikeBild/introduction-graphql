@@ -5,7 +5,7 @@ import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 import Notification from '../components/Notification'
 
-const allAuthorsQuery = gql`query all_authors {
+const AllAuthorsQuery = gql`query fetch_all_authors {
   allAuthors {
     id
     name
@@ -16,7 +16,20 @@ const allAuthorsQuery = gql`query all_authors {
   }
 }`
 
-const upsertAuthorMutationQuery = gql`mutation upsert_author($input: AuthorInput!) {
+const FetchAuthor = gql`
+  query fetch_author($id: ID!) {
+    author(id: $id) {
+      id
+      name
+      posts {
+        id
+        title
+      }
+    }
+  }
+`
+
+const UpsertAuthorMutationQuery = gql`mutation upsert_author($input: AuthorInput!) {
   upsertAuthor(input: $input) {
     id
   }
@@ -66,11 +79,17 @@ listAllAuthors.propTypes = {
   }).isRequired
 }
 
-export default graphql(upsertAuthorMutationQuery, {
+export default graphql(UpsertAuthorMutationQuery, {
   props: ({ mutate }) => ({
-      upsertAuthor: value => mutate({ variables: { input: { id: value, name: value } } }),
+      upsertAuthor: value => mutate({ 
+        variables: { input: { id: value, name: value } } ,
+        refetchQueries: [{
+          query: AllAuthorsQuery,
+          variables: { },
+        }],
+      }),
   }),
-})(graphql(allAuthorsQuery)(listAllAuthors))
+})(graphql(AllAuthorsQuery)(listAllAuthors))
 
 const styles = {
   h3: {
