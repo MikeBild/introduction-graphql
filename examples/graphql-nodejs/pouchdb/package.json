@@ -1,0 +1,32 @@
+{
+  "private": true,
+  "name": "introduction-graphql-pouchdb",
+  "version": "1.0.0",
+  "description": "",
+  "bin": "./bin/server.js",
+  "scripts": {
+    "start": "set NODE_ENV=production && node ./bin/server.js",
+    "dev": "concurrently \"mocha --watch\" \"nodemon -e js ./bin/server.js\" ",
+    "test": "mocha",
+    "import-local": "excel-couchdb-import ./test/fixtures/test.xlsx --target http://localhost:8080/introduction-graphql",
+    "import-remote": "excel-couchdb-import ./introduction-graphql.xlsx --target http://intro-graphql-pouchdb.services.dropstack.run/introduction-graphql"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "cors": "^2.8.1",
+    "express": "^4.15.2",
+    "express-pouchdb": "^2.3.6",
+    "morgan": "^1.8.1",
+    "node-fetch": "^1.6.3",
+    "pouchdb": "^6.1.2",
+    "pouchdb-adapter-node-websql": "^6.1.2",
+    "excel-couchdb-import": "^2.0.0"
+  },
+  "devDependencies": {
+    "concurrently": "^3.4.0",
+    "dotenv-cli": "^1.1.1",
+    "excel-couchdb-import": "^2.0.0",
+    "mocha": "^3.2.0",
+    "nodemon": "^1.11.0"
+  }
+}

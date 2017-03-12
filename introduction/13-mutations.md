@@ -5,7 +5,8 @@
 * Support for Scalar- or Input-Types
 * Custom payload types as response
 
-__Schema__
+## Schema
+
 ```graphql
 type Author {
     id: ID
@@ -26,7 +27,8 @@ type Mutation {
 }
 ```
 
-__Upsert author mutation query__
+## Upsert author mutation query
+
 ```graphql
 mutation {
   upsertAuthor(input: { name: "Test" }) {
@@ -36,7 +38,9 @@ mutation {
   }
 }
 ```
-__Remove author mutation query__
+
+## Remove author mutation query
+
 ```graphql
 mutation {
   removeAuthor(input: {id: "...", rev: "..."})
