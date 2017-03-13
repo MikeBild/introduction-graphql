@@ -20,3 +20,9 @@ mocha -w ./api.test.js
 touch api.js
 touch server.js
 ```
+
+## Run
+
+```bash
+node server
+```

@@ -7,5 +7,5 @@
 ## Install dependencies in root folder
 
 ```bash
-npm i express express-graphql graphql graphql-tools node-fetch
+npm i express cors express-graphql graphql graphql-tools node-fetch
 ```

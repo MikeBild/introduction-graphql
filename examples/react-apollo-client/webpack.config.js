@@ -19,7 +19,7 @@ module.exports = {
       loader: 'style!css'
     }, {
       test: /\.js$/,
-      loader: 'babel',
+      loader: 'babel-loader',
       exclude: /node_modules/
     }, {
       test: /\.json$/,
