@@ -10,6 +10,10 @@
 
 * [Relay Specification](https://facebook.github.io/relay/docs/graphql-relay-specification.html)
 
+## Tools
+
+* [GraphiQL App (OSX, Win)](https://github.com/skevy/graphiql-app)
+
 ## RESTful / Hypermedia
 
 * [GitHub API v3](https://developer.github.com/v3/)

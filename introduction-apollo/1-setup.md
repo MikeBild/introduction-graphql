@@ -19,7 +19,7 @@ const MyComponent = props => (<pre>{JSON.strinigy(props, null, 4)}</pre>)
 const MyQuery = gql`query MySimpleQuery { search(term: "some example content") { content } }`
 const MyComponentWithData = graphql(MyQuery)(MyComponent)
 
-render(
+render (
   <ApolloProvider client={client}>
     <MyComponentWithData />
   </ApolloProvider>,
