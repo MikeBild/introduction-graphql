@@ -1,14 +1,22 @@
 # GraphQL Schema + Runtime
 
-## Install dependencies
+## Install dependencies for this lesson
 
 ```bash
-npm install -g mocha
 npm install graphql graphql-tools
 ```
 
-## Run tests
+## Testing
 
 ```bash
-mocha ./schema.test.js
+npm install -g mocha
+touch schema.test.js
+mocha -w ./schema.test.js
+```
+
+## Implementation
+
+```bash
+touch schema.graphql
+touch schema.js
 ```
