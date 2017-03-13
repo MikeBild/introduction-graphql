@@ -1,5 +1,17 @@
 # Introduction to GraphQL
 
+## Recommendations
+
+* Basic knowledge of
+  * JavaScript
+  * NodeJS or Babel-Node (ES6/7)
+  * React
+* NodeJS 6.10.x LTS
+* Linux, OSX or Windows operation system
+* Sublime or VS Code
+* Chrome and Developer Tools
+* Postman, cURL or httpie
+
 ## GraphQL with NodeJS
 
 * [Why GraphQL](introduction-graphql/0-intro.md)
