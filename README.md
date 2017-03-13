@@ -22,7 +22,7 @@
 
 ## Hands-On
 
-* [GraphQL Hands-On](examples/graphql-nodejs/README.md)
+* [GraphQL Hands-On](examples/README.md)
 
 ## More
 
