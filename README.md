@@ -1,4 +1,6 @@
-# GraphQL - An Introduction
+# Introduction to GraphQL
+
+## GraphQL with NodeJS
 
 * [Why GraphQL](introduction-graphql/0-intro.md)
 * [What is GraphQL](introduction-graphql/1-graphql.md)
@@ -18,15 +20,23 @@
 * [Error Handling](introduction-graphql/15-errors.md)
 * [Versioning](introduction-graphql/16-versioning.md)
 * [Subscriptions](introduction-graphql/17-subscriptions.md)
-* [Coming Soon - Defer, Batch, etc.](introduction-graphql/18-soon.md)
+* [Testing](introduction-graphql/18-testing.md)
+* [Coming Soon - Defer, Batch, etc.](introduction-graphql/19-soon.md)
+
+## GraphQL with Apollo
+
+* [Why Apollo](introduction-apollo/0-intro.md)
+* [Setup](introduction-apollo/1-setup.md)
 
 ## Hands-On
 
 * [GraphQL Hands-On](examples/README.md)
+* [Step by Step](lessons/README.md)
 
 ## More
 
-* [Resources](introduction-graphql/resources.md)
+* [GraphQL Resources](introduction-graphql/resources.md)
+* [Apollo Resources](introduction-apollo/resources.md)
 
 ## Live
 
