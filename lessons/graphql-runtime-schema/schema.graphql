@@ -1,0 +1,11 @@
+type SearchResult {
+  content: String
+}
+
+type Query {
+  search(term: String): SearchResult
+}
+
+type Mutation {
+  doSomething: ID
+}

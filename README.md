@@ -31,7 +31,7 @@
 ## Hands-On
 
 * [GraphQL Hands-On](examples/README.md)
-* [Step by Step](lessons/README.md)
+* [GraphQL Step by Step Beginners Guide](lessons/README.md)
 
 ## More
 
