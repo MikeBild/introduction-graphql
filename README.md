@@ -29,16 +29,6 @@
 * [Why Apollo](introduction-apollo/0-intro.md)
 * [Setup](introduction-apollo/1-setup.md)
 
-## Versions
-
-* graphql ^0.9.1
-* apollo-client ^0.10.1
-* react-apollo ^0.13.3
-* react ^15.2.1
-* babel ^6.10.1
-* webpack ^1.13.1
-* dataloader ^1.3.0
-
 ## Hands-On
 
 * [GraphQL Step by Step Beginners Guide](lessons/README.md)
@@ -55,10 +45,20 @@
 * [GraphQL Resources](introduction-graphql/resources.md)
 * [Apollo Resources](introduction-apollo/resources.md)
 
-## Live
+## Deployments
 
 * [React + Apollo](http://intro-graphql-app.services.dropstack.run)
 * [GraphQL + NodeJS + PouchDB](http://intro-graphql.services.dropstack.run)
+
+## Versions
+
+* graphql ^0.9.1
+* apollo-client ^0.10.1
+* react-apollo ^0.13.3
+* react ^15.2.1
+* babel ^6.10.1
+* webpack ^1.13.1
+* dataloader ^1.3.0
 
 ## Issue Reporting
 
