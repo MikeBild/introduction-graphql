@@ -28,6 +28,13 @@
 
 * [Why Apollo](introduction-apollo/0-intro.md)
 * [Setup](introduction-apollo/1-setup.md)
+* [Application Structure](introduction-apollo/2-app-structure.md)
+* [Queries](introduction-apollo/3-queries.md)
+* [Handle Server-Side data changes](introduction-apollo/4-handle-server-data-changes.md)
+* [Mutations](introduction-apollo/5-mutations.md)
+* [Subscriptions](introduction-apollo/6-subscriptions.md)
+* [Client-Store](introduction-apollo/7-store.md)
+* [Caching Strategy](introduction-apollo/8-caching-strategy.md)
 
 ## Hands-On
 
