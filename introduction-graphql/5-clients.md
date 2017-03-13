@@ -2,8 +2,8 @@
 
 * Query Tools e.g. GraphiQL, GraphiQL APP, etc.
 * Every HTTP Client e.g. cURL, Postman, fetch, etc.
-* JavaScript Client-Library e.g. Apollo, Relay, Lokka, etc.
-* Platform specific e.g. Obj-C, F# Type-Provider, etc.
+* JavaScript Client-Libraries e.g. [Apollo](http://dev.apollodata.com/), [Relay](https://github.com/facebook/relay), [Lokka](https://github.com/kadirahq/lokka), etc.
+* Web/Mobile Platform specific e.g. Obj-C, F# Type-Provider, etc.
 
 ## Examples
 

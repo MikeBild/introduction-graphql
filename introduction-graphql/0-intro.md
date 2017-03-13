@@ -1,4 +1,4 @@
-# Why GraphQL?
+# Why GraphQL
 
 `GET /users/1/friends/1/dogs/1?include=user.name,dog.age`
 
@@ -18,3 +18,7 @@ Current APIs are:
 * Increases the effort for multiple representations (e.g. Desktop/Web/Mobile)
 * Inconsistent REST/Hypermedia [Maturity Model](https://martinfowler.com/articles/richardsonMaturityModel.html)
 * Sometimes obsure resource naming, relations and operations
+
+## Who using GraphQL
+
+[GraphQL Users](http://graphql.org/users/)
