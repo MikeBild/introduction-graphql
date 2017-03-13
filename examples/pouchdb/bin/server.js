@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const SERVICE_PORT = process.env.SERVICE_PORT || 8080;
+const SERVICE_PORT = process.env.SERVICE_PORT;
 const server = require('../lib/server');
 
 server

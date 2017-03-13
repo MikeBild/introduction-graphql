@@ -5,11 +5,11 @@
   "description": "",
   "bin": "./bin/server.js",
   "scripts": {
-    "start": "set NODE_ENV=production && node ./bin/server.js",
-    "dev": "concurrently \"mocha --watch\" \"nodemon -e js ./bin/server.js\" ",
+    "start": "NODE_ENV=production SERVICE_PORT=80 && node ./bin/server.js",
+    "dev": "SERVICE_PORT=7070 concurrently \"mocha --watch\" \"nodemon -e js ./bin/server.js\" ",
     "test": "mocha",
-    "import-local": "excel-couchdb-import ./test/fixtures/test.xlsx --target http://localhost:8080/introduction-graphql",
-    "import-remote": "excel-couchdb-import ./introduction-graphql.xlsx --target http://intro-graphql-pouchdb.services.dropstack.run/introduction-graphql"
+    "import-local": "excel-couchdb-import ./introduction-graphql.xlsx --target http://admin:admin@localhost:7070/introduction-graphql",
+    "import-remote": "excel-couchdb-import ./introduction-graphql.xlsx --target http://admin:admin@intro-graphql-pouchdb.services.dropstack.run/introduction-graphql"
   },
   "dependencies": {
     "body-parser": "^1.17.1",

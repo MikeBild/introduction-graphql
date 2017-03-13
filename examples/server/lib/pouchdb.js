@@ -7,6 +7,7 @@ const database = new PouchDB(`database.sqlite`, {adapter: 'websql', auto_compact
 const eventemitter = new EventEmitter();
 
 if(process.env.SYNC_URL) database.sync(process.env.SYNC_URL, { live: true, retry: true, });
+
 database
 .changes({ since: 'now', live: true, include_docs: true, open_revs: 'all', revs_info: true})
 .on('change', msg => {     
@@ -28,7 +29,7 @@ module.exports = name => {
     name = name || 'default';
 
     return {
-        findAll: selector => findAll(database, name, selector),
+        findAll: (selector, skip, limit) => findAll(database, name, selector, skip, limit),
         find: ids => find(database, ids),
         get: id => get(database, id),
         upsert: entity => upsert(database, name, entity),
@@ -40,10 +41,13 @@ module.exports = name => {
 module.exports.subscribe = (name, cb) => eventemitter.on(name, cb);
 module.exports.publish = (name, msg) => eventemitter.emit(name, msg);
 
-function findAll (database, name, selector = {}) {
-    const querySelector = Object.assign({}, {$type: name}, selector);    
+function findAll (database, name, selector = {}, skip = 0, limit = 10) {
+    const querySelector = Object.assign({}, {$type: name}, selector);
+
+    if(limit > 10) limit = 10;
+
     return database
-    .find({selector: querySelector})
+    .find({selector: querySelector, skip: skip, limit: limit})
     .then(data => data.docs)
     .then(data => data.map(doc => {
             doc.id = doc._id;

@@ -2,10 +2,8 @@
 
 * GraphQL Schema- and Type-Language (Short-Hand Notation)
 * Similar to GraphQL Query-Language
-* Build in Scalar-Types (Int, String, Boolean, ID, Float)
-* Custom types via Type-Language
-* Enums, Unions, Interfaces, Lists, Non-Null
-* `@` to mark as deprecated 
+* Declaration via Build-In Type-System
+* `@` to mark as deprecated
 * `#` for custom documentations
 * Query, Mutation and Subscription are special types
 * Exclicit Input-Type definitions

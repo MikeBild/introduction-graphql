@@ -7,7 +7,7 @@
 * Like JSON without JSON values
 * Queries, Mutations and Subscriptions
 * Support for Query-Variables
-* Query validation support
+* Query validation for types and execution runtime on server side
 
 ## Example
 

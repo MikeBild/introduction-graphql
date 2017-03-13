@@ -4,7 +4,7 @@ type Author {
     fullname: String @deprecated(reason: "Use the 'name' field instead")
     name: String
     # Posts written by current author
-    posts: [Post] 
+    posts(skip: Int, limit: Int): [Post] 
 }
 
 type Post {
@@ -33,9 +33,10 @@ type Query {
     # Query author by ID
     author(id: ID!): Author
     # Query all authors
-    allAuthors: [Author]
+    allAuthors(skip: Int, limit: Int): [Author]
     post(id: ID!): Post
-    allPosts: [Post]
+    allPosts(skip: Int, limit: Int): [Post]
+    doSomthing: ID
     me: Me   
 }
 

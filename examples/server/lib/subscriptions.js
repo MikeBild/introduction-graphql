@@ -1,6 +1,6 @@
 const graphqlSubscriptions = require('graphql-subscriptions');
 const schema = require('./schema');
-const pouchdb = require('../lib/pouchdb');  
+const pouchdb = require('../lib/pouchdb');
 
 module.exports = () => {    
     const pubsub = new graphqlSubscriptions.PubSub();
@@ -30,7 +30,7 @@ module.exports = () => {
             }),                                   
         },
     });
-
+    pubsub.ee.setMaxListeners(0); //Warning: Possible EventEmitter memory leak detected. Use emitter.setMaxListeners() to increase limit.
     pouchdb.subscribe('event', msg => pubsub.publish('changedChannel', msg));
 
     return {
