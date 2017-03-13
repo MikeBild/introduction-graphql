@@ -41,8 +41,11 @@
 
 ## Hands-On
 
-* [GraphQL + PouchDB/CouchDB Hands-On](examples/README.md)
 * [GraphQL Step by Step Beginners Guide](lessons/README.md)
+* [GraphQL + PouchDB/CouchDB + React-Apollo Hands-On](examples/README.md)
+* [GraphQL Server-Side with Lokka (coming soon)](examples/server-side-lokka-client/README.md)
+* [GraphQL React-Native + Apollo (coming soon)](examples/react-native-apollo-client/README.md)
+* [GraphQL React + Relay (coming soon)](examples/react-relay-client/README.md)
 
 ## More
 
