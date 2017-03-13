@@ -24,7 +24,7 @@
 
 * [GraphQL Hands-On](examples/graphql-nodejs/README.md)
 
-## More ...
+## More
 
 * [Resources](introduction/resources.md)
 
@@ -32,3 +32,17 @@
 
 * [React + Apollo](http://intro-graphql-app.services.dropstack.run)
 * [GraphQL + NodeJS + PouchDB](http://intro-graphql.services.dropstack.run)
+
+## Issue Reporting
+
+If you have found a bug or if you have a feature request, please report them at this repository issues section. Please do not report security vulnerabilities on the public [GitHub issue tracker](https://github.com/MikeBild/introduction-graphql/issues).
+
+## License
+
+This project is licensed under the MIT license. See the [LICENSE](LICENSE) file for more info.
+
+## Thanks
+
+You like this GraphQL introduction and you want to see what coming next? Follow me on Twitter [`@mikebild`](https://twitter.com/mikebild).
+
+Enjoy!

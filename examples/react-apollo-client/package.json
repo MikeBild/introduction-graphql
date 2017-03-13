@@ -1,6 +1,7 @@
 {
   "private": true,
-  "name": "graphql-example-client",
+  "name": "introduction-graphql-react-apollo-client",
+  "version": "1.0.0",
   "scripts": {
     "lint": "eslint src",
     "test": "npm run lint",

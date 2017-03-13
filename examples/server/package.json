@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "graphql-example-server",
+  "name": "introduction-graphql-server",
   "version": "1.0.0",
   "main": "lib/schema.js",
   "bin": {
