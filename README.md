@@ -22,15 +22,26 @@
 * [Subscriptions](introduction-graphql/17-subscriptions.md)
 * [Testing](introduction-graphql/18-testing.md)
 * [Coming Soon - Defer, Batch, etc.](introduction-graphql/19-soon.md)
+* [GraphQL with ExpressJS](introduction-graphql/20-expressjs.md)
 
 ## GraphQL with Apollo
 
 * [Why Apollo](introduction-apollo/0-intro.md)
 * [Setup](introduction-apollo/1-setup.md)
 
+## Versions
+
+* graphql ^0.9.1
+* apollo-client ^0.10.1
+* react-apollo ^0.13.3
+* react ^15.2.1
+* babel ^6.10.1
+* webpack ^1.13.1
+* dataloader ^1.3.0
+
 ## Hands-On
 
-* [GraphQL Hands-On](examples/README.md)
+* [GraphQL + PouchDB/CouchDB Hands-On](examples/README.md)
 * [GraphQL Step by Step Beginners Guide](lessons/README.md)
 
 ## More
