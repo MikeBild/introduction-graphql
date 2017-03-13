@@ -39,6 +39,7 @@
 ## Hands-On
 
 * [GraphQL Step by Step Beginners Guide](lessons/README.md)
+* [GraphQL & Apollo Receipes](recipes/README.md)
 
 ## Examples
 
