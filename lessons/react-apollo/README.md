@@ -3,7 +3,7 @@
 ## Install dependencies for this lesson
 
 ```bash
-npm install webpack babel-core babel-loader babel-preset-es2015 babel-preset-react react react-dom apollo-client react-apollo
+npm install webpack babel-core babel-loader babel-preset-es2015 babel-preset-stage-0 babel-preset-react react react-dom apollo-client react-apollo
 npm install -g babel-cli babel-core webpack webpack-dev-server
 ```
 

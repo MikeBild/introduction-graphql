@@ -1,6 +1,9 @@
 # Fragments
 
-* Prepare and reuse queries
+* Prepare and reuse queries like React-Components
+* Fragment per Component in mind
+  * `<Post />` component is associated with Post-Fragment
+  * `<Author />` component is associated with Author-Fragment
 
 ## Example
 
@@ -18,10 +21,7 @@ query all_authors_query {
 
 query author_query {
   author(id: "John Doe") {
-    name
-    posts {
-      ...post
-    }
+    ...author
   }
 }
 ```
@@ -31,5 +31,12 @@ query author_query {
 ```graphql
 fragment post on Post {
   title
+}
+
+fragement author on Author {
+  name
+  posts {
+    ...post
+  }
 }
 ```

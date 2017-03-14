@@ -12,6 +12,11 @@
 * Chrome and Developer Tools
 * Postman, cURL or httpie
 
+## More resources
+
+* [Introduction to NodeJS](https://github.com/MikeBild/introduction-nodejs)
+* [Introduction to React](https://github.com/MikeBild/introduction-react)
+
 ## GraphQL with NodeJS
 
 * [Why GraphQL](introduction-graphql/0-intro.md)

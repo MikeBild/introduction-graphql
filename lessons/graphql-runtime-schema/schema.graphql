@@ -7,5 +7,5 @@ type Query {
 }
 
 type Mutation {
-  doSomething: ID
+  doSomething(input: String): ID
 }
