@@ -19,3 +19,50 @@
   }
 }
 ```
+
+## Fetching remote GraphQL schema
+
+```javascript
+const GRAPHQL_URL = 'http://localhost:8080/graphql'
+const GRAPHQL_USERNAME = 'username'
+const GRAPHQL_PASSWORD = 'password'
+
+const fs = require('fs')
+const path = require('path')
+const fetch = require('node-fetch')
+const GraphQLUtils = require('graphql/utilities')
+
+console.log(`Fetching GraphQL schema from ${GRAPHQL_URL}`)
+
+fetch(GRAPHQL_URL, {
+  method: 'POST',
+  headers: {
+    'authorization': `Basic ${Buffer.from(`${GRAPHQL_USERNAME}:${GRAPHQL_PASSWORD}`).toString('base64')}`,
+    'content-type': 'application/json',
+  },
+  body: JSON.stringify({query: GraphQLUtils.introspectionQuery}),
+})
+.then(res => res.text())
+.then(data => fs.writeFileSync(path.join(__dirname, 'schema.json'), data))
+.then(() => console.log('GraphQL schema written.'))
+.catch(error => {
+  console.error(error)
+  process.exit(1)
+})
+```
+
+## ESLint GraphQL schema validation
+
+* adjust your .eslintrc / package.json for GraphQL schema validation
+
+```json
+"rules": {
+  "graphql/template-strings": [
+    "error",
+    {
+      "env": "apollo",
+      "schemaJsonFilepath": "./scripts/schema.json"
+    }
+  ],
+},
+```
