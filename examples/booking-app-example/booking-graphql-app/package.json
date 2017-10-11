@@ -1,0 +1,23 @@
+{
+  "private": true,
+  "version": "1.0.0",
+  "name": "booking-app",
+  "description": "My booking-app React-Universal-App",
+  "engines": {
+    "node": "^6"
+  },
+  "dependencies": {
+    "graphql-tag": "^2.4.2",
+    "react-apollo": "^1.4.16",
+    "recompose": "^0.26.0",
+    "reunify": "latest"
+  },
+  "scripts": {
+    "export": "NODE_ENV=production reunify export",
+    "export:dev": "NODE_ENV=production reunify export -d",
+    "export:package": "NODE_ENV=production reunify export -p",
+    "export:package:dev": "NODE_ENV=production reunify export -p -d",
+    "dev": "PORT=8080 NODE_ENV=development reunify serve",
+    "start": "PORT=80 GRAPHQL_URL=https://api-triboo.cloud.dropstack.run/graphql NODE_ENV=production reunify serve --silent"
+  }
+}
