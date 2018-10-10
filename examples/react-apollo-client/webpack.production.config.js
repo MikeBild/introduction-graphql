@@ -1,6 +1,6 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
-const dotenv = require('dotenv').config({path:'.env-production'});
+const dotenv = require('dotenv').config({ path: '.env-production' });
 
 module.exports = {
   entry: './src/app.js',
@@ -10,17 +10,21 @@ module.exports = {
     filename: 'bundle.js',
   },
   module: {
-    loaders: [{
-      test: /\.css/,
-      loader: 'style!css',
-    }, {
-      test: /\.js$/,
-      loader: 'babel-loader',
-      exclude: /node_modules/,
-    }, {
-      test: /\.json$/,
-      loader: 'json',
-    }]
+    loaders: [
+      {
+        test: /\.css/,
+        loader: 'style!css',
+      },
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.json$/,
+        loader: 'json',
+      },
+    ],
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -38,4 +42,4 @@ module.exports = {
     new webpack.optimize.UglifyJsPlugin(),
     new webpack.optimize.AggressiveMergingPlugin(),
   ],
-}
+};

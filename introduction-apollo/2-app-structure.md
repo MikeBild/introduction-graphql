@@ -39,7 +39,7 @@
 ## `webpack.config.js`
 
 ```javascript
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 
 module.exports = {
@@ -54,14 +54,17 @@ module.exports = {
     historyApiFallback: true,
   },
   module: {
-    loaders: [{
-      test: /\.css/,
-      loader: 'style!css',
-    }, {
-      test: /\.js$/,
-      loader: 'babel-loader',
-      exclude: /node_modules/,
-    }]
+    loaders: [
+      {
+        test: /\.css/,
+        loader: 'style!css',
+      },
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/,
+      },
+    ],
   },
   plugins: [
     new webpack.DefinePlugin({

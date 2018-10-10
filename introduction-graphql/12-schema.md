@@ -1,12 +1,12 @@
 # GraphQL Schema
 
-* GraphQL Schema- and Type-Language (Short-Hand Notation)
-* Similar to GraphQL Query-Language
-* Declaration via Build-In Type-System
-* `@` to mark as deprecated
-* `#` for custom documentations
-* Query, Mutation and Subscription are special types
-* Exclicit Input-Type definitions
+- GraphQL Schema- and Type-Language (Short-Hand Notation)
+- Similar to GraphQL Query-Language
+- Declaration via Build-In Type-System
+- `@` to mark as deprecated
+- `#` for custom documentations
+- Query, Mutation and Subscription are special types
+- Exclicit Input-Type definitions
 
 ```graphql
 type Author {

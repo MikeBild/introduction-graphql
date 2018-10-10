@@ -1,9 +1,0 @@
-{
-  "variables": "GRAPHQL_URL=https://api-triboo.cloud.dropstack.run/graphql",
-  "instances": 1,
-  "alias": "triboo.cloud.dropstack.run",
-  "type": "npm",
-  "excludes": [],
-  "name": "dksbrvrk",
-  "serviceUrl": "dksbrvrk.cloud.dropstack.run"
-}

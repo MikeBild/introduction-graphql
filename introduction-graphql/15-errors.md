@@ -1,12 +1,13 @@
 # Error Handling
 
-* Special Error responses as collection
-* Catches thrown errors from resolvers
+- Special Error responses as collection
+- Catches thrown errors from resolvers
 
 ## Example
 
 ```javascript
-doSomthing: (source, args, context, info) => Promise.reject(new Error('An error'))
+doSomthing: (source, args, context, info) =>
+  Promise.reject(new Error('An error'));
 ```
 
 ```json
@@ -23,9 +24,7 @@ doSomthing: (source, args, context, info) => Promise.reject(new Error('An error'
           "column": 2
         }
       ],
-      "path": [
-        "doSomthing"
-      ]
+      "path": ["doSomthing"]
     }
   ]
 }

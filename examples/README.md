@@ -1,11 +1,11 @@
 # GraphQL Hands-On
 
-* PouchDB to CouchDB Data-Synchronization
-* NodeJS GraphQL-Server with WebSocket-Subscriptions
-* React + Apollo Client
+- PouchDB to CouchDB Data-Synchronization
+- NodeJS GraphQL-Server with WebSocket-Subscriptions
+- React + Apollo Client
 
-* [React + Apollo](http://intro-graphql-app.services.dropstack.run)
-* [GraphQL + NodeJS + PouchDB](http://intro-graphql.services.dropstack.run)
+- [React + Apollo](http://intro-graphql-app.services.dropstack.run)
+- [GraphQL + NodeJS + PouchDB](http://intro-graphql.services.dropstack.run)
 
 ## PouchDB
 
@@ -14,7 +14,7 @@ npm run dev
 npm run import-local
 ```
 
-* [PouchDB Admin](http://localhost:7070/_utils)
+- [PouchDB Admin](http://localhost:7070/_utils)
 
 ## GraphQL-Server
 
@@ -22,7 +22,7 @@ npm run import-local
 npm run dev
 ```
 
-* [GraphiQL](http://localhost:8080/graphiql)
+- [GraphiQL](http://localhost:8080/graphiql)
 
 ## GraphQL + React + Apollo
 
@@ -30,4 +30,4 @@ npm run dev
 npm run dev
 ```
 
-* [React + Apollo](http://localhost:9090)
+- [React + Apollo](http://localhost:9090)

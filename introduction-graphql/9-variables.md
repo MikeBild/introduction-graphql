@@ -1,7 +1,7 @@
 # Variables
 
-* Special field in request
-* JSON structure
+- Special field in request
+- JSON structure
 
 ## Example
 
@@ -19,6 +19,6 @@ query author_query($id: ID!) {
 
 ```json
 {
-    "id": "..."
+  "id": "..."
 }
 ```

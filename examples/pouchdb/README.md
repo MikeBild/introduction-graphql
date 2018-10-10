@@ -2,8 +2,8 @@
 
 ## PouchDB
 
-* Username: admin
-* Password: admin
+- Username: admin
+- Password: admin
 
 ## Deploy via [https://dropstack.run](https://dropstack.run)
 

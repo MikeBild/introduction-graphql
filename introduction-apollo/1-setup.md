@@ -10,21 +10,31 @@ npm install webpack webpack-dev-server babel-cli babel-core babel-loader babel-p
 ## Minimum React implementation
 
 ```javascript
-import React from 'react'
-import { render } from 'react-dom'
-import { ApolloProvider, ApolloClient, createNetworkInterface } from 'react-apollo'
-import { gql, graphql } from 'react-apollo'
+import React from 'react';
+import { render } from 'react-dom';
+import {
+  ApolloProvider,
+  ApolloClient,
+  createNetworkInterface,
+} from 'react-apollo';
+import { gql, graphql } from 'react-apollo';
 
-const MyComponent = props => (<pre>{JSON.strinigy(props, null, 4)}</pre>)
-const MyQuery = gql`query MySimpleQuery { search(term: "some example content") { content } }`
-const MyComponentWithData = graphql(MyQuery)(MyComponent)
+const MyComponent = props => <pre>{JSON.strinigy(props, null, 4)}</pre>;
+const MyQuery = gql`
+  query MySimpleQuery {
+    search(term: "some example content") {
+      content
+    }
+  }
+`;
+const MyComponentWithData = graphql(MyQuery)(MyComponent);
 
-render (
+render(
   <ApolloProvider client={client}>
     <MyComponentWithData />
   </ApolloProvider>,
-  document.getElementById('root')
-)
+  document.getElementById('root'),
+);
 ```
 
 ## Run application for development

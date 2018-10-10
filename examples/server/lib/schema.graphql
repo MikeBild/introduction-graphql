@@ -1,69 +1,69 @@
 type Author {
-    id: ID
-    rev: ID
-    fullname: String @deprecated(reason: "Use the 'name' field instead")
-    name: String
-    # Posts written by current author
-    posts(skip: Int, limit: Int): [Post] 
+  id: ID
+  rev: ID
+  fullname: String @deprecated(reason: "Use the 'name' field instead")
+  name: String
+  # Posts written by current author
+  posts(skip: Int, limit: Int): [Post]
 }
 
 type Post {
-    id: ID
-    rev: ID
-    title: String
-    text: String
-    # Current author of post
-    author: Author
+  id: ID
+  rev: ID
+  title: String
+  text: String
+  # Current author of post
+  author: Author
 }
 
 # User informations
 type User {
-    id: ID
-    rev: ID
+  id: ID
+  rev: ID
 }
 
 type Me {
-    user: User
-    author(id: ID): Author
-    allAuthors: [Author]    
+  user: User
+  author(id: ID): Author
+  allAuthors: [Author]
 }
 
 # All queries
 type Query {
-    # Query author by ID
-    author(id: ID!): Author
-    # Query all authors
-    allAuthors(skip: Int, limit: Int): [Author]
-    post(id: ID!): Post
-    allPosts(skip: Int, limit: Int): [Post]
-    doSomthing: ID
-    me: Me   
+  # Query author by ID
+  author(id: ID!): Author
+  # Query all authors
+  allAuthors(skip: Int, limit: Int): [Author]
+  post(id: ID!): Post
+  allPosts(skip: Int, limit: Int): [Post]
+  doSomthing: ID
+  me: Me
 }
 
 input AuthorInput {
-    id: ID
-    rev: ID
-    name: String
+  id: ID
+  rev: ID
+  name: String
 }
 
 input PostInput {
-    id: ID
-    rev: ID
-    title: String
-    text: String
-    authorId: ID
+  id: ID
+  rev: ID
+  title: String
+  text: String
+  authorId: ID
 }
 
 type Mutation {
-    upsertAuthor(input: AuthorInput!): Author
-    removeAuthor(input: AuthorInput!): ID
-    upsertPost(input: PostInput!): Post
-    removePost(input: PostInput!): ID    
+  upsertAuthor(input: AuthorInput!): Author
+  removeAuthor(input: AuthorInput!): ID
+  upsertPost(input: PostInput!): Post
+  removePost(input: PostInput!): ID
 }
 
 type Subscription {
   upsertedAuthor(id: ID): Author
   removedAuthor(id: ID): ID
   upsertedPost(id: ID): Post
-  removedPost(id: ID): ID  
+  removedPost(id: ID): ID
 }

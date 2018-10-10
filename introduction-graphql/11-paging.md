@@ -1,9 +1,9 @@
 # Paging
 
-* Depends on paging strategy of data source
-* 2 techniques are relevant
-  * range based - skip / limit
-  * cursor based - first / after
+- Depends on paging strategy of data source
+- 2 techniques are relevant
+  - range based - skip / limit
+  - cursor based - first / after
 
 ```graphql
 {

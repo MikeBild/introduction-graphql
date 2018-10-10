@@ -1,29 +1,29 @@
 # GraphQL Mutations
 
-* Mutations are like queries
-* Request/Response model
-* Support for Scalar- or Input-Types
-* Custom payload types as response
+- Mutations are like queries
+- Request/Response model
+- Support for Scalar- or Input-Types
+- Custom payload types as response
 
 ## Schema
 
 ```graphql
 type Author {
-    id: ID
-    rev: ID
-    name: String
-    posts: [Post] 
+  id: ID
+  rev: ID
+  name: String
+  posts: [Post]
 }
 
 input AuthorInput {
-    id: ID
-    rev: ID
-    name: String
+  id: ID
+  rev: ID
+  name: String
 }
 
 type Mutation {
-    upsertAuthor(input: AuthorInput!): Author
-    removeAuthor(input: AuthorInput!): ID
+  upsertAuthor(input: AuthorInput!): Author
+  removeAuthor(input: AuthorInput!): ID
 }
 ```
 
@@ -43,6 +43,6 @@ mutation {
 
 ```graphql
 mutation {
-  removeAuthor(input: {id: "...", rev: "..."})
+  removeAuthor(input: { id: "...", rev: "..." })
 }
 ```

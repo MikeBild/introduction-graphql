@@ -9,17 +9,23 @@ npm install --save subscriptions-transport-ws
 ## Subscription connection via WebSocket transport
 
 ```javascript
-import ApolloClient, { createNetworkInterface } from 'apollo-client'
-import { SubscriptionClient, addGraphQLSubscriptions } from 'subscriptions-transport-ws'
+import ApolloClient, { createNetworkInterface } from 'apollo-client';
+import {
+  SubscriptionClient,
+  addGraphQLSubscriptions,
+} from 'subscriptions-transport-ws';
 
-const httpClient = createNetworkInterface({uri: `http://localhost:8080/graphql`})
-const wsClient = new SubscriptionClient(`ws://localhost:8080/graphql`, { reconnect: true })
-const apolloClient = new ApolloClient({ networkInterface: addGraphQLSubscriptions(httpClient, wsClient) });
+const httpClient = createNetworkInterface({
+  uri: `http://localhost:8080/graphql`,
+});
+const wsClient = new SubscriptionClient(`ws://localhost:8080/graphql`, {
+  reconnect: true,
+});
+const apolloClient = new ApolloClient({
+  networkInterface: addGraphQLSubscriptions(httpClient, wsClient),
+});
 
-render (
-  <ApolloProvider client={apolloClient}>
-  </ApolloProvider>
-)
+render(<ApolloProvider client={apolloClient} />);
 ```
 
 ## Using subscription query in components

@@ -1,24 +1,27 @@
 # GraphQL Types
 
-* Build-In Scalar Types
-  * ID (identity value)
-  * String
-  * Int
-  * Float
-  * Boolean
+- Build-In Scalar Types
 
-* Build-In Abstract Types to group other types
-  * Interface
-  * Union
+  - ID (identity value)
+  - String
+  - Int
+  - Float
+  - Boolean
 
-* Special Custom Types
-  * Enums
-  * Scalar
-  * Input
+- Build-In Abstract Types to group other types
 
-* Type modifiers
-  * List
-  * Non-Null
+  - Interface
+  - Union
+
+- Special Custom Types
+
+  - Enums
+  - Scalar
+  - Input
+
+- Type modifiers
+  - List
+  - Non-Null
 
 <br />
 <hr />

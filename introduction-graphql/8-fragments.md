@@ -1,9 +1,9 @@
 # Fragments
 
-* Prepare and reuse queries like React-Components
-* Fragment per Component in mind
-  * `<Post />` component is associated with Post-Fragment
-  * `<Author />` component is associated with Author-Fragment
+- Prepare and reuse queries like React-Components
+- Fragment per Component in mind
+  - `<Post />` component is associated with Post-Fragment
+  - `<Author />` component is associated with Author-Fragment
 
 ## Example
 
