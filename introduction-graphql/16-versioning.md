@@ -1,8 +1,8 @@
 # Versioning
 
-* Add new types, properties and resolver
-* `#` to mark "old stuff" as deprecated
-* Resolver returns null
+- Add new types, properties and resolver
+- `#` to mark "old stuff" as deprecated
+- Resolver returns null
 
 ## Example
 

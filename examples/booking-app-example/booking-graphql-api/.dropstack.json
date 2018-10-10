@@ -1,9 +1,0 @@
-{
-  "variables": "",
-  "instances": 1,
-  "alias": "api-triboo.cloud.dropstack.run",
-  "type": "npm",
-  "excludes": [],
-  "name": "fxzsiqyg",
-  "serviceUrl": "fxzsiqyg.cloud.dropstack.run"
-}

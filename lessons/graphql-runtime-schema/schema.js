@@ -8,16 +8,16 @@ module.exports = graphqlTools.makeExecutableSchema({
   resolvers: resolve(),
 });
 
-function resolve () {
-    return resolvers = {
-      SearchResult: {
-        content: (source, args, context, info) => source.content,
-      },
-      Query: {
-        search: (source, args, context, info) => ({ content: args.term }),
-      },
-      Mutation: {
-        doSomething: (source, args, context, info) => 'Transaction ID',
-      },
-    };
+function resolve() {
+  return (resolvers = {
+    SearchResult: {
+      content: (source, args, context, info) => source.content,
+    },
+    Query: {
+      search: (source, args, context, info) => ({ content: args.term }),
+    },
+    Mutation: {
+      doSomething: (source, args, context, info) => 'Transaction ID',
+    },
+  });
 }

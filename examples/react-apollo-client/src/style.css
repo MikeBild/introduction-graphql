@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   background-color: #333333;
@@ -12,5 +13,5 @@ html, body {
 }
 
 .app {
-  padding-top: 50px; 
+  padding-top: 50px;
 }

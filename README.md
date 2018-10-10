@@ -2,88 +2,88 @@
 
 ## Recommendations
 
-* Basic knowledge of
-  * JavaScript
-  * NodeJS or Babel-Node (ES6/7)
-  * React
-* NodeJS 8.10.x LTS
-* Linux, OSX or Windows operation system
-* Sublime or VS Code
-* Chrome and Developer Tools
-* Postman, cURL or httpie
+- Basic knowledge of
+  - JavaScript
+  - NodeJS or Babel-Node (ES6/7)
+  - React
+- NodeJS 8.10.x LTS
+- Linux, OSX or Windows operation system
+- Sublime or VS Code
+- Chrome and Developer Tools
+- Postman, cURL or httpie
 
 ## More resources
 
-* [Introduction to NodeJS](https://github.com/MikeBild/introduction-nodejs)
-* [Introduction to React](https://github.com/MikeBild/introduction-react)
+- [Introduction to NodeJS](https://github.com/MikeBild/introduction-nodejs)
+- [Introduction to React](https://github.com/MikeBild/introduction-react)
 
 ## GraphQL with NodeJS
 
-* [Why GraphQL](introduction-graphql/0-intro.md)
-* [What is GraphQL](introduction-graphql/1-graphql.md)
-* [Architecture](introduction-graphql/2-architecture.md)
-* [Principles](introduction-graphql/3-principles.md)
-* [Queries](introduction-graphql/4-queries.md)
-* [Clients](introduction-graphql/5-clients.md)
-* [Introspection](introduction-graphql/6-introspection.md)
-* [Types](introduction-graphql/7-types.md)
-* [Fragments](introduction-graphql/8-fragments.md)
-* [Variables](introduction-graphql/9-variables.md)
-* [Directives](introduction-graphql/10-directives.md)
-* [Paging](introduction-graphql/11-paging.md)
-* [Schema](introduction-graphql/12-schema.md)
-* [Mutations](introduction-graphql/13-mutations.md)
-* [Resolver](introduction-graphql/14-resolver.md)
-* [Error Handling](introduction-graphql/15-errors.md)
-* [Versioning](introduction-graphql/16-versioning.md)
-* [Subscriptions](introduction-graphql/17-subscriptions.md)
-* [Testing](introduction-graphql/18-testing.md)
-* [Coming Soon - Defer, Batch, etc.](introduction-graphql/19-soon.md)
-* [GraphQL with ExpressJS](introduction-graphql/20-expressjs.md)
+- [Why GraphQL](introduction-graphql/0-intro.md)
+- [What is GraphQL](introduction-graphql/1-graphql.md)
+- [Architecture](introduction-graphql/2-architecture.md)
+- [Principles](introduction-graphql/3-principles.md)
+- [Queries](introduction-graphql/4-queries.md)
+- [Clients](introduction-graphql/5-clients.md)
+- [Introspection](introduction-graphql/6-introspection.md)
+- [Types](introduction-graphql/7-types.md)
+- [Fragments](introduction-graphql/8-fragments.md)
+- [Variables](introduction-graphql/9-variables.md)
+- [Directives](introduction-graphql/10-directives.md)
+- [Paging](introduction-graphql/11-paging.md)
+- [Schema](introduction-graphql/12-schema.md)
+- [Mutations](introduction-graphql/13-mutations.md)
+- [Resolver](introduction-graphql/14-resolver.md)
+- [Error Handling](introduction-graphql/15-errors.md)
+- [Versioning](introduction-graphql/16-versioning.md)
+- [Subscriptions](introduction-graphql/17-subscriptions.md)
+- [Testing](introduction-graphql/18-testing.md)
+- [Coming Soon - Defer, Batch, etc.](introduction-graphql/19-soon.md)
+- [GraphQL with ExpressJS](introduction-graphql/20-expressjs.md)
 
 ## GraphQL with Apollo
 
-* [Why Apollo](introduction-apollo/0-intro.md)
-* [Setup](introduction-apollo/1-setup.md)
-* [Application Structure](introduction-apollo/2-app-structure.md)
-* [Queries](introduction-apollo/3-queries.md)
-* [Handle Server-Side data changes](introduction-apollo/4-handle-server-data-changes.md)
-* [Mutations](introduction-apollo/5-mutations.md)
-* [Subscriptions](introduction-apollo/6-subscriptions.md)
-* [Client-Store](introduction-apollo/7-store.md)
-* [Caching Strategy](introduction-apollo/8-caching-strategy.md)
+- [Why Apollo](introduction-apollo/0-intro.md)
+- [Setup](introduction-apollo/1-setup.md)
+- [Application Structure](introduction-apollo/2-app-structure.md)
+- [Queries](introduction-apollo/3-queries.md)
+- [Handle Server-Side data changes](introduction-apollo/4-handle-server-data-changes.md)
+- [Mutations](introduction-apollo/5-mutations.md)
+- [Subscriptions](introduction-apollo/6-subscriptions.md)
+- [Client-Store](introduction-apollo/7-store.md)
+- [Caching Strategy](introduction-apollo/8-caching-strategy.md)
 
 ## Hands-On
 
-* [GraphQL Step by Step Beginners Guide](lessons/README.md)
-* [GraphQL & Apollo Receipes](recipes/README.md)
+- [GraphQL Step by Step Beginners Guide](lessons/README.md)
+- [GraphQL & Apollo Receipes](recipes/README.md)
 
 ## Examples
 
-* [GraphQL + PouchDB/CouchDB + React-Apollo](examples/README.md)
-* [GraphQL Server-Side with Lokka (coming soon)](examples/server-side-lokka-client/README.md)
-* [GraphQL React-Native + Apollo (coming soon)](examples/react-native-apollo-client/README.md)
-* [GraphQL React + Relay (coming soon)](examples/react-relay-client/README.md)
+- [GraphQL + PouchDB/CouchDB + React-Apollo](examples/README.md)
+- [GraphQL Server-Side with Lokka (coming soon)](examples/server-side-lokka-client/README.md)
+- [GraphQL React-Native + Apollo (coming soon)](examples/react-native-apollo-client/README.md)
+- [GraphQL React + Relay (coming soon)](examples/react-relay-client/README.md)
 
 ## More
 
-* [GraphQL Resources](introduction-graphql/resources.md)
-* [Apollo Resources](introduction-apollo/resources.md)
+- [GraphQL Resources](introduction-graphql/resources.md)
+- [Apollo Resources](introduction-apollo/resources.md)
 
 ## Deployments
 
-* [React + Apollo](http://intro-graphql-app.services.dropstack.run)
-* [GraphQL + NodeJS + PouchDB](http://intro-graphql.services.dropstack.run)
+- [React + Apollo](http://intro-graphql-app.services.dropstack.run)
+- [GraphQL + NodeJS + PouchDB](http://intro-graphql.services.dropstack.run)
 
 ## Versions
 
-* graphql ^0.9.1
-* apollo-client ^0.10.1
-* react-apollo ^0.13.3
-* react ^15.2.1
-* babel ^6.10.1
-* webpack ^1.13.1
-* dataloader ^1.3.0
+- graphql ^0.9.1
+- apollo-client ^0.10.1
+- react-apollo ^0.13.3
+- react ^15.2.1
+- babel ^6.10.1
+- webpack ^1.13.1
+- dataloader ^1.3.0
 
 ## Issue Reporting
 

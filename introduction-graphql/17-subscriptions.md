@@ -2,13 +2,13 @@
 
 ![Subscriptions](subscription.png)
 
-* Publish/Subscribe Pattern
-* Transport via different protocols (WebSockets, HTTP Event-Source, HTTP-Stream, HTTP/2)
+- Publish/Subscribe Pattern
+- Transport via different protocols (WebSockets, HTTP Event-Source, HTTP-Stream, HTTP/2)
 
 ## Use Cases
 
-* GraphQL API-Gateway for different Messaging/Broker Systems
-* Long running tasks via correlation/transaction ID
+- GraphQL API-Gateway for different Messaging/Broker Systems
+- Long running tasks via correlation/transaction ID
 
 ## Example
 
@@ -16,12 +16,12 @@
 
 ```graphql
 subscription upserted_author_subscription {
-    upsertedAuthor {
-        id
-        name
-        post {
-            title
-        }
+  upsertedAuthor {
+    id
+    name
+    post {
+      title
     }
+  }
 }
 ```
