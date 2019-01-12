@@ -14,6 +14,13 @@
 
 ## GraphQL
 
+- [GraphQL Specification](https://facebook.github.io/graphql/)
+- [Introduction](#introduction)
+- [Server-Side GraphQL](#server-side-with-nodejs)
+- [Client-Side GraphQL](#client-side-with-react)
+
+## Introduction
+
 - [Why GraphQL](introduction-graphql/0-intro.md)
 - [What is GraphQL](introduction-graphql/1-graphql.md)
 - [Architecture](introduction-graphql/2-architecture.md)
@@ -64,7 +71,7 @@
   - [Batching]()
   - [Prepared/Persistent Queries]()
 
-## Client-Side with React/React-Neative
+## Client-Side with React
 
 - [Why Apollo]()
 - [Setup React + Apollo Client]()
