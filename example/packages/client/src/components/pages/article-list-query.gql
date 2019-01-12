@@ -1,0 +1,6 @@
+query ArticleList {
+  articles {
+    id
+    content
+  }
+}

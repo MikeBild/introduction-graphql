@@ -1,0 +1,23 @@
+{
+  "private": true,
+  "name": "@introduction-graphql/client",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "parcel src/index.html",
+    "build": "parcel build src/index.html -d build --no-cache",
+    "start": "http-server ./build"
+  },
+  "devDependencies": {
+    "apollo-boost": "^0.1.23",
+    "apollo-client": "^2.4.8",
+    "graphql": "^14.0.2",
+    "parcel": "^1.11.0",
+    "react": "^16.7.0",
+    "react-apollo": "^2.3.3",
+    "react-dom": "^16.7.0",
+    "@introduction-graphql/list": "^1.0.0"
+  },
+  "dependencies": {
+    "http-server": "^0.11.1"
+  }
+}

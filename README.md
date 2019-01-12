@@ -3,19 +3,14 @@
 ## Recommendations
 
 - Basic knowledge of
-  - JavaScript
-  - NodeJS or Babel-Node (ES6/7)
+  - JavaScript/TypeScript
+  - NodeJS
   - React
-- NodeJS 8.10.x LTS
+- NodeJS 8.14.x LTS
 - Linux, OSX or Windows operation system
-- Sublime or VS Code
+- VS Code
 - Chrome and Developer Tools
 - Postman, cURL or httpie
-
-## More resources
-
-- [Introduction to NodeJS](https://github.com/MikeBild/introduction-nodejs)
-- [Introduction to React](https://github.com/MikeBild/introduction-react)
 
 ## GraphQL with NodeJS
 
@@ -53,37 +48,16 @@
 - [Client-Store](introduction-apollo/7-store.md)
 - [Caching Strategy](introduction-apollo/8-caching-strategy.md)
 
-## Hands-On
+## Exmaple
 
-- [GraphQL Step by Step Beginners Guide](lessons/README.md)
-- [GraphQL & Apollo Receipes](recipes/README.md)
+- [Exmaple App](example/README.md)
 
-## Examples
+## Resources
 
-- [GraphQL + PouchDB/CouchDB + React-Apollo](examples/README.md)
-- [GraphQL Server-Side with Lokka (coming soon)](examples/server-side-lokka-client/README.md)
-- [GraphQL React-Native + Apollo (coming soon)](examples/react-native-apollo-client/README.md)
-- [GraphQL React + Relay (coming soon)](examples/react-relay-client/README.md)
-
-## More
-
+- [Introduction to NodeJS](https://github.com/MikeBild/introduction-nodejs)
+- [Introduction to React](https://github.com/MikeBild/introduction-react)
 - [GraphQL Resources](introduction-graphql/resources.md)
 - [Apollo Resources](introduction-apollo/resources.md)
-
-## Deployments
-
-- [React + Apollo](http://intro-graphql-app.services.dropstack.run)
-- [GraphQL + NodeJS + PouchDB](http://intro-graphql.services.dropstack.run)
-
-## Versions
-
-- graphql ^0.9.1
-- apollo-client ^0.10.1
-- react-apollo ^0.13.3
-- react ^15.2.1
-- babel ^6.10.1
-- webpack ^1.13.1
-- dataloader ^1.3.0
 
 ## Issue Reporting
 
