@@ -1,0 +1,14 @@
+{
+  "private": true,
+  "name": "graphql-example",
+  "version": "1.0.0",
+  "scripts": {
+    "bootstrap": "lerna clean && lerna bootstrap",
+    "dev": "lerna run dev --stream --parallel",
+    "build": "lerna run build --stream",
+    "start": "lerna run start --stream --parallel"
+  },
+  "devDependencies": {
+    "lerna": "^3.10.5"
+  }
+}

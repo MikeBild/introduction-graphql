@@ -1,3 +1,0 @@
-# React + Relay Client
-
-> TBD

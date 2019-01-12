@@ -1,0 +1,18 @@
+{
+  "private": true,
+  "name": "@introduction-graphql/server",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "nodemon -e js,graphql index",
+    "start": "NODE_ENV=production node index"
+  },
+  "dependencies": {
+    "apollo-server": "^2.3.1",
+    "graphql": "^14.0.2"
+  },
+  "devDependencies": {
+    "faker": "^4.1.0",
+    "graphql-tools": "^4.0.3",
+    "nodemon": "^1.18.9"
+  }
+}
