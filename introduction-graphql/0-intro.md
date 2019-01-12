@@ -1,5 +1,7 @@
 # Why GraphQL
 
+## Restfullness
+
 `GET /users/1/friends/1/dogs/1?include=user.name,dog.age`
 
 Current APIs are:
