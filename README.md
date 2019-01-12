@@ -12,7 +12,7 @@
 - Chrome and Developer Tools
 - Postman, cURL or httpie
 
-## Introduction
+## GraphQL
 
 - [Why GraphQL](introduction-graphql/0-intro.md)
 - [What is GraphQL](introduction-graphql/1-graphql.md)
@@ -37,7 +37,7 @@
 - [Subscriptions](introduction-graphql/17-subscriptions.md)
 - [Coming Soon - Defer, Batch, etc.](introduction-graphql/19-soon.md)
 
-## Server-Side GraphQL with NodeJS
+## Server-Side with NodeJS
 
 - [Why Apollo](introduction-apollo/0-intro.md)
 - [Setup](introduction-apollo/1-setup.md)
@@ -64,7 +64,7 @@
   - [Batching]()
   - [Prepared/Persistent Queries]()
 
-## Client-Side GraphQL with React/React-Neative
+## Client-Side with React/React-Neative
 
 - [Why Apollo]()
 - [Setup React + Apollo Client]()
