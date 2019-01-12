@@ -3,7 +3,8 @@ module.exports = {
   article,
 };
 
-async function articles(_, __, { datasources }) {
+async function articles(_, __, { datasources, userToken }) {
+  console.log({ userToken });
   const articleList = await datasources.articles.list();
   return articleList;
 }

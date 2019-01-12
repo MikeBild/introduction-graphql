@@ -19,9 +19,10 @@ async function start({ port, isProd }) {
     mocks            : !isProd && mocks,
     mockEntireSchema : false,
     resolvers,
-    context          : {
+    context          : ({ req }) => ({
       datasources,
-    },
+      userToken   : req.headers.authorization || '',
+    }),
   });
 
   const { url } = await server.listen(port);
