@@ -1,21 +1,6 @@
-import * as React from 'react';
-export interface Row {
-  id: string;
-  value?: string;
-}
+import * as React from "react";
 
-interface TProps {
-  rows: [Row];
-  renderRow: (item: Row) => JSX.Element;
-  renderHeadRow?: () => JSX.Element;
-  isLoading?: boolean;
-  renderLoading?: () => JSX.Element;
-  error?: Error;
-  renderError?: (error: Error) => JSX.Element;
-  style: object;
-}
-
-export const List: React.StatelessComponent<TProps> = ({
+export const List = ({
   rows,
   renderRow,
   renderHeadRow = () => <tr />,

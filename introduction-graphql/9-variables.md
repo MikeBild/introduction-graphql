@@ -1,9 +1,10 @@
-# Variables
+# Query Variables
 
+- Supports default values
 - Special field in request
 - JSON structure
 
-## Example
+## Examples
 
 ### GraphQL-Query uses variables ($)
 
@@ -20,5 +21,15 @@ query author_query($id: ID!) {
 ```json
 {
   "id": "..."
+}
+```
+
+## Default values
+
+```graphql
+query author_query($id: ID = 1) {
+  author(id: $id) {
+    name
+  }
 }
 ```

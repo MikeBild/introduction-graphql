@@ -1,5 +1,7 @@
 # GraphQL Architecture
 
+**Is a a unified data API**
+
 ![Architecture](architecture.png)
 
 - No Under-/Over-Fetching

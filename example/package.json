@@ -3,12 +3,12 @@
   "name": "graphql-example",
   "version": "1.0.0",
   "scripts": {
-    "bootstrap": "lerna clean && lerna bootstrap",
-    "dev": "lerna run dev --stream --parallel",
+    "lerna": "lerna clean --yes && lerna bootstrap",
+    "develop": "lerna run dev --stream --parallel",
     "build": "lerna run build --stream",
     "start": "lerna run start --stream --parallel"
   },
   "devDependencies": {
-    "lerna": "^3.10.5"
+    "lerna": "^4.0.0"
   }
 }

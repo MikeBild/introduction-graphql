@@ -1,5 +1,6 @@
 # GraphQL Mutations
 
+- Allow to perform updates
 - Mutations are like queries
 - Request/Response model
 - Support for Scalar- or Input-Types

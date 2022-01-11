@@ -1,9 +1,17 @@
-# Error Handling
+# GraphQL Errors
 
-- Special Error responses as collection
+- separate between technical errors and business failures
+- technical errors will be handles in resolvers and the HTTP runtime
+- business errors should explicit designed as interface or union types
+
+## Business error handling
+
+TBD
+
+## Technical error handling
+
+- Special error responses as collection
 - Catches thrown errors from resolvers
-
-## Example
 
 ```javascript
 doSomthing: (source, args, context, info) =>

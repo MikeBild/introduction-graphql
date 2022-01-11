@@ -6,7 +6,15 @@
 - Isn't a Protocol
 - Isn't a transport layer
 
-**GraphQL is ...**
+**GraphQL is a specifcation! (https://spec.graphql.org/June2018/)**
+
+![GraphQL is a Specification](graphql-is-a-spec.png)
+
+
+
+## GraphQL is a unified data API
+
+> API consumers of relational data structures needs flexible requests and responses
 
 - A **type and query specification**
 - GraphQL services can be written in **any language**
@@ -14,9 +22,7 @@
 - A **structured hierarchically** (top-down) data relations resolver
 - **Optimized for data fetching** and manipulations
 
-> API consumers of relational data structures needs flexible requests and responses
-
-![Relational Data](relational-data.png)
+![GraphQL is a unified data API](graphql-unified-data-api.png)
 
 ## Common Use Cases
 
@@ -27,3 +33,24 @@
 - API-Gateway for Messaging/Broker-Systems
 - Reactive Applications
 - CQRS
+
+## HTTP(S) based Communication (e.g. WebSockets for Subscriptions)
+
+![HTTP based communication](http-request.png)
+
+## Data with GraphQL
+
+- Structure
+- Types
+- Relations
+- Values
+
+![GraphQL data](graphql-data.png)
+
+## Who using GraphQL
+
+[GraphQL Users](http://graphql.org/users/)
+
+## GraphQL Data Relations
+
+![Data Relations](data-relations.png)

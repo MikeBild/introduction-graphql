@@ -1,4 +1,4 @@
-query ArticleList {
+query articles {
   articles {
     id
     content
