@@ -8,11 +8,6 @@
   - Float
   - Boolean
 
-- Build-In Abstract Types to group other types
-
-  - Interface
-  - Union
-
 - Special Custom Types
 
   - Enums
@@ -20,16 +15,42 @@
   - Input
 
 - Type modifiers
-  - List
-  - Non-Null
+  - List `[]`
+  - Non-Null `!`
 
-<br />
-<hr />
-<br />
+- Build-In Abstract Types to group other types
 
-![GraphQL Short-Hand Nootation](graphql.png)
+  - Interface
+  - Union
 
-## Resolving Interfaces
+## Scalars
+
+TBD
+
+## Objects
+
+TBD
+
+
+## Collections
+
+TBD
+
+
+## Enumns
+
+TBD
+
+
+## Inputs
+
+TBD
+
+## Unions
+
+TBD
+
+## Interfaces
 
 ```graphql
 interface Contact {
@@ -58,3 +79,5 @@ Contact: {
   },
 },
 ```
+
+![GraphQL Short-Hand Notation](cheatsheet.png)

@@ -1,5 +1,6 @@
 # Fragments
 
+- "Reuse" of complex queries
 - Prepare and reuse queries like React-Components
 - Fragment per Component in mind
   - `<Post />` component is associated with Post-Fragment
@@ -33,7 +34,7 @@ fragment post on Post {
   title
 }
 
-fragement author on Author {
+fragment author on Author {
   name
   posts {
     ...post

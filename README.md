@@ -32,16 +32,18 @@
 - [Introspection](introduction-graphql/6-introspection.md)
 - [Type System](introduction-graphql/7-types.md)
 - [Schema](introduction-graphql/12-schema.md)
-- [Validation & Execution]()
-  - [Validators]()
+- [Query Execution and Validation]
   - [Resolver](introduction-graphql/14-resolver.md)
-  - [Execution]()
+  - [Validators](introduction-graphql/21-validators.md)
   - [Error Handling](introduction-graphql/15-errors.md)
 - [Directives](introduction-graphql/10-directives.md)
 - [Mutations](introduction-graphql/13-mutations.md)
 - [Versioning](introduction-graphql/16-versioning.md)
 - [Paging](introduction-graphql/11-paging.md)
 - [Subscriptions](introduction-graphql/17-subscriptions.md)
+- [Advanced GraphQL]()
+- [Caching]()
+- [Authentication]()
 - [Coming Soon - Defer, Batch, etc.](introduction-graphql/19-soon.md)
 
 ## Server-Side with NodeJS

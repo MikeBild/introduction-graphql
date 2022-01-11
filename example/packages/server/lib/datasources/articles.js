@@ -5,9 +5,9 @@ module.exports = {
 
 async function list() {
   // TODO: Load articles from real data source.
-  // return [
-  //   { id: 1, content: 'ac' },
-  // ];
+  return [
+    { id: 1, content: 'ac' },
+  ];
 }
 
 async function getById(id) {

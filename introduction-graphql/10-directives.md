@@ -1,7 +1,13 @@
-# Directives
+# Query Directives
+
+## Included Directives
 
 - `include` - do query if
 - `skip` - don't query if
+
+## Custom Directives
+
+- depending on GraphQL framework
 
 ## Example
 

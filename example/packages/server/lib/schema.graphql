@@ -1,5 +1,6 @@
 type Query {
   articles: [Article]
+  comments: [Comment]
   article(id: ID!): Article
 }
 
@@ -7,6 +8,12 @@ type Article {
   id: ID!
   authorId: ID
   content: String
+}
+
+type Comment {
+  id: ID!
+  authorId: ID
+  text: String
 }
 
 type Mutation {

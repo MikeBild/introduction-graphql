@@ -20,11 +20,11 @@
 ## Setup
 
 1. `yarn`
-2. `yarn bootstrap`
+2. `yarn lerna`
 
 ## Development
 
-`yarn dev`
+`yarn develop`
 
 ## Build
 

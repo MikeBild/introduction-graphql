@@ -7,12 +7,12 @@
     "start": "NODE_ENV=production node index"
   },
   "dependencies": {
-    "apollo-server": "^2.3.1",
-    "graphql": "^14.0.2"
+    "apollo-server": "2.25.3",
+    "graphql": "15.8.0"
   },
   "devDependencies": {
-    "faker": "^4.1.0",
-    "graphql-tools": "^4.0.3",
-    "nodemon": "^1.18.9"
+    "casual": "1.6.2",
+    "graphql-tools": "7.0.5",
+    "nodemon": "2.0.15"
   }
 }

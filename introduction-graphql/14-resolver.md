@@ -15,6 +15,18 @@
 - Third argument **context** - Request specific context object
 - Fourth argument **info** - Information about the GraphQL execution state
 
+## Resolve with Async/Await
+
+```javascript
+async (source, args, context, info) => {
+    try {
+        return {...}
+    } catch (error)
+        return {...}
+    }
+}
+```
+
 ## Resolve with Promises
 
 ```javascript
