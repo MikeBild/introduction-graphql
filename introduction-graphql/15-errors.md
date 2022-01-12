@@ -6,7 +6,7 @@
 
 ## Business error handling
 
-TBD
+- Define as union type
 
 ## Technical error handling
 
