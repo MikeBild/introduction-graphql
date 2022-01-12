@@ -1,4 +1,4 @@
-const { articles, article } = require("./articles");
+const { articles, article, articleAdd } = require("./articles");
 const { search } = require("./search");
 const { posts } = require("./posts");
 
@@ -26,5 +26,10 @@ module.exports = {
     search,
     posts,
   },
-  Mutation: {},
+  Mutation: { articleAdd },
+  Subscription: {
+    articleAdded: {
+      subscribe: (_, __, {  pubsub }) => pubsub.asyncIterator(["ARTICLE_ADDED"]),
+    },
+  },
 };

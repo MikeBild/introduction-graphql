@@ -1,7 +1,8 @@
 module.exports = {
   articles,
   article,
-  search,
+  articleAdd,
+  articleAdded,
 };
 
 async function articles(_, __, { datasources, userToken }) {
@@ -15,7 +16,13 @@ async function article(_, { id }, { datasources }) {
   return article;
 }
 
-async function search(_, __, { datasources }) {
-  const articleList = await datasources.articles.list();
-  return [...articleList, { id: 1, text: "A comment!" }];
+async function articleAdd(_, __, { datasources, pubsub }) {
+  pubsub.publish("ARTICLE_ADDED", {
+    articleAdded: { id: 1, authorId: 22, content: "abc" },
+  });
+  return {};
+}
+
+async function articleAdded(_, __, { datasources }) {
+  return {};
 }

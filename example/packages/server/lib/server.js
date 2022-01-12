@@ -7,9 +7,13 @@ const { defaultFieldResolver } = require("graphql");
 const resolvers = require("./resolvers");
 const mocks = require("./mocks");
 const datasources = require("./datasources");
+const { PubSub } = require("graphql-subscriptions");
+const pubsub = new PubSub();
+
+
 module.exports = start;
 
-async function start({ port, isProd }) {
+async function start({ port }) {
   const typeDefs = (
     await readFile(join(__dirname, "schema.graphql"))
   ).toString();
@@ -17,6 +21,7 @@ async function start({ port, isProd }) {
   const server = new ApolloServer({
     cors: true,
     introspection: true,
+    subscriptions: true,
     schemaDirectives: {
       upper: UpperCaseDirective,
     },
@@ -26,7 +31,8 @@ async function start({ port, isProd }) {
     resolvers,
     context: ({ req }) => ({
       datasources,
-      userToken: req.headers.authorization || "",
+      pubsub,
+      userToken: (req && req.headers && req.headers.authorization) || "",
     }),
   });
 
@@ -38,9 +44,8 @@ async function start({ port, isProd }) {
   };
 }
 
-class UpperCaseDirective extends SchemaDirectiveVisitor {  
+class UpperCaseDirective extends SchemaDirectiveVisitor {
   visitFieldDefinition(field) {
-    
     const { resolve = defaultFieldResolver } = field;
     field.resolve = async function (...args) {
       const result = await resolve.apply(this, args);
