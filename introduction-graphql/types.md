@@ -36,7 +36,7 @@ scalar Date
 ```
 
 
-## Enumns
+## Enums
 
 ```graphql
 enum PostType {
