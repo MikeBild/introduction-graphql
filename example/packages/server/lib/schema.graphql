@@ -34,6 +34,11 @@ type Mutation {
   articleAdd(input: ArticleAddInput!): ArticleAddResult!
 }
 
+
+type Subscription {
+  articleAdded: Article
+}
+
 input ArticleAddInput {
   content: String!
   authorId: ID!
