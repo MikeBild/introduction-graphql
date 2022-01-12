@@ -37,3 +37,11 @@ async (source, args, context, info) => {
     })
 }
 ```
+
+## Resolve synchronous
+
+```javascript
+(source, args, context, info) => {
+    return {}
+}
+```
