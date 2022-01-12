@@ -1,6 +1,6 @@
 # GraphQL Schema
 
-- GraphQL Schema- and Type-Language (Short-Hand Notation)
+- GraphQL Schema- and Type-Language
 - Similar to GraphQL Query-Language
 - Declaration via Build-In Type-System
 - `@deprecated` to mark as deprecated
@@ -29,9 +29,11 @@ type Post {
 }
 
 type Query {
+    # Query all authors
+  authors: [Author]
   # Query author by ID
   author(id: ID!): Author
-  # Query all authors
-  allAuthors: [Author]
 }
 ```
+
+![GraphQL Short-Hand Notation](cheatsheet.png)
