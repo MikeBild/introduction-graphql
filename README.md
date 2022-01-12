@@ -26,7 +26,7 @@
 - [Introspection](introduction-graphql/introspection.md)
 - [Type System](introduction-graphql/types.md)
 - [Schema](introduction-graphql/schema.md)
-- [Query Execution and Validation]
+- [Query Execution and Validation]()
   - [Resolver](introduction-graphql/resolver.md)
   - [Validators](introduction-graphql/validators.md)
   - [Error Handling](introduction-graphql/errors.md)
