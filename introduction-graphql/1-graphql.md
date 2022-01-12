@@ -54,3 +54,5 @@
 ## GraphQL Data Relations
 
 ![Data Relations](data-relations.png)
+
+![GraphQL Short-Hand Notation](cheatsheet.png)

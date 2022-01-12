@@ -4,12 +4,11 @@ module.exports = {
 };
 
 async function list() {
-  // TODO: Load articles from real data source.
   return [
-    { id: 1, content: 'ac' },
+    { id: 1, content: 'ac', releasedAt: new Date() },
   ];
 }
 
 async function getById(id) {
-  // TODO: Load article by ID from real data source.
+  
 }

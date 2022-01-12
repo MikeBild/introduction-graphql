@@ -14,14 +14,6 @@ module.exports = {
   },
 };
 
-function articles() {
-  return new MockList(10, () => ({
-    id: casual.uuid,
-    authorId: casual.email,
-    content: casual.words(600),
-  }));
-}
-
 function comment() {
   return {
     id: casual.uuid(),

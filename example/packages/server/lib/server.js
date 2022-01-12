@@ -2,7 +2,8 @@ const { join } = require("path");
 const { readFile: readFilePromise } = require("fs");
 const { promisify } = require("util");
 const readFile = promisify(readFilePromise);
-const { ApolloServer } = require("apollo-server");
+const { ApolloServer, SchemaDirectiveVisitor } = require("apollo-server");
+const { defaultFieldResolver } = require("graphql");
 const resolvers = require("./resolvers");
 const mocks = require("./mocks");
 const datasources = require("./datasources");
@@ -16,12 +17,15 @@ async function start({ port, isProd }) {
   const server = new ApolloServer({
     cors: true,
     introspection: true,
+    schemaDirectives: {
+      upper: UpperCaseDirective,
+    },
     mocks,
-    mockEntireSchema: false,    
+    mockEntireSchema: false,
     typeDefs,
     resolvers,
     context: ({ req }) => ({
-      datasources,      
+      datasources,
       userToken: req.headers.authorization || "",
     }),
   });
@@ -32,4 +36,18 @@ async function start({ port, isProd }) {
     stop: async () => await server.stop(),
     url,
   };
+}
+
+class UpperCaseDirective extends SchemaDirectiveVisitor {  
+  visitFieldDefinition(field) {
+    
+    const { resolve = defaultFieldResolver } = field;
+    field.resolve = async function (...args) {
+      const result = await resolve.apply(this, args);
+      if (typeof result === "string") {
+        return result.toUpperCase();
+      }
+      return result;
+    };
+  }
 }

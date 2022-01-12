@@ -15,7 +15,7 @@
   - Input
 
 - Type modifiers
-  - List `[]`
+  - Collections `[]`
   - Non-Null `!`
 
 - Build-In Abstract Types to group other types
@@ -23,61 +23,34 @@
   - Interface
   - Union
 
-## Scalars
+## Scala
 
-TBD
-
-## Objects
-
-TBD
-
+```graphql
+scalar Date
+```
 
 ## Collections
 
-TBD
+```graphql
+[Articles]
+```
 
 
 ## Enumns
 
-TBD
-
+```graphql
+enum PostType {
+  ARTICLE
+  COMMENT
+}
+```
 
 ## Inputs
 
-TBD
-
-## Unions
-
-TBD
-
-## Interfaces
-
 ```graphql
-interface Contact {
-  id: ID
-  name: String
-}
-
-type Person implements Contact {
-  id: ID
-  firstname: String
-  lastname: String
-}
-
-type Organization implements Contact {
-  id: ID
-  name: String
+input ArticleAddInput {
+  content: String!
+  authorId: ID!
 }
 ```
 
-```javascript
-Contact: {
-  __resolveType: (source, context, info) => {
-    if(source.name) return 'Organization';
-    if(source.vorname && source.nachname) return 'Person';
-    return null;
-  },
-},
-```
-
-![GraphQL Short-Hand Notation](cheatsheet.png)
