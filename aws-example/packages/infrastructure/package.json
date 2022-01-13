@@ -6,7 +6,6 @@
     "build": "tsc",
     "dev": "nodemon -e js,graphql index",
     "start": "NODE_ENV=production node index",
-    "strap": "cdk bootstrap",
     "deploy": "cdk deploy *Stack"
   },
   "devDependencies": {
