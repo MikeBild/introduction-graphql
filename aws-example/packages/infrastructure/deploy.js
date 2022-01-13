@@ -1,0 +1,10 @@
+#!/usr/bin/env node
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const aws_cdk_lib_1 = require("aws-cdk-lib");
+const appsync_1 = require("./stacks/appsync");
+const lambdas_1 = require("./stacks/lambdas");
+const app = new aws_cdk_lib_1.App();
+new appsync_1.AppSyncStack(app, 'AppSyncStack');
+new lambdas_1.LambdaStack(app, 'LambdaStack');
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZGVwbG95LmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiZGVwbG95LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7OztBQUVBLDZDQUFrQztBQUNsQyw4Q0FBZ0Q7QUFDaEQsOENBQStDO0FBRS9DLE1BQU0sR0FBRyxHQUFHLElBQUksaUJBQUcsRUFBRSxDQUFDO0FBQ3RCLElBQUksc0JBQVksQ0FBQyxHQUFHLEVBQUUsY0FBYyxDQUFDLENBQUM7QUFDdEMsSUFBSSxxQkFBVyxDQUFDLEdBQUcsRUFBRSxhQUFhLENBQUMsQ0FBQyIsInNvdXJjZXNDb250ZW50IjpbIiMhL3Vzci9iaW4vZW52IG5vZGVcblxuaW1wb3J0IHsgQXBwIH0gZnJvbSAnYXdzLWNkay1saWInO1xuaW1wb3J0IHsgQXBwU3luY1N0YWNrIH0gZnJvbSAnLi9zdGFja3MvYXBwc3luYyc7XG5pbXBvcnQgeyBMYW1iZGFTdGFjayB9IGZyb20gJy4vc3RhY2tzL2xhbWJkYXMnO1xuXG5jb25zdCBhcHAgPSBuZXcgQXBwKCk7XG5uZXcgQXBwU3luY1N0YWNrKGFwcCwgJ0FwcFN5bmNTdGFjaycpO1xubmV3IExhbWJkYVN0YWNrKGFwcCwgJ0xhbWJkYVN0YWNrJyk7XG4iXX0=

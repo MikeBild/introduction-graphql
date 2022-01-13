@@ -6,7 +6,8 @@
     "lerna": "lerna clean --yes && lerna bootstrap",
     "develop": "lerna run dev --stream --parallel",
     "build": "lerna run build --stream",
-    "start": "lerna run start --stream --parallel"
+    "start": "lerna run start --stream --parallel",
+    "deploy": "lerna run deploy --stream"
   },
   "devDependencies": {
     "lerna": "^4.0.0"

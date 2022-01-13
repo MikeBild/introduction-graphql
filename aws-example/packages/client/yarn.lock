@@ -605,7 +605,7 @@
     "@parcel/utils" "^2.2.0"
     posthtml "^0.16.4"
 
-"@parcel/plugin@^2.2.0":
+"@parcel/plugin@^2.1.1", "@parcel/plugin@^2.2.0":
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@parcel/plugin/-/plugin-2.2.0.tgz#dfd80fd5c8e9663b2a08b1235297ab7abdadcca4"
   integrity sha512-etIxpizU14aZELSV/qEeuufoC5fLgopQ9I0j/Y9ExSmlU3NH79NeQo0JPP1TU49ZOL8Si9o/D6tlhojle6GbzA==
@@ -731,12 +731,12 @@
     postcss-value-parser "^4.1.0"
     semver "^5.7.1"
 
-"@parcel/transformer-graphql@^2.1.1":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@parcel/transformer-graphql/-/transformer-graphql-2.2.0.tgz#cd46970ee602396b14c7b4f91bb39f58a31f2140"
-  integrity sha512-2ODhIBPXKB5faXmljGu6rll79JL1UccfU18pPlQ/ODjnwFdEmZup3GIIesbGZQOt9TlIuDvm2IZbwSHSQ6UKnw==
+"@parcel/transformer-graphql@2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@parcel/transformer-graphql/-/transformer-graphql-2.1.1.tgz#ed140c04b923be8a370c0307525b912e7a23be40"
+  integrity sha512-7k1WX4BQAohXvWXj5aNzurL+h8tbEzNLT8QDFYdUxRhK/j+MZehH6sd/uVvlNCTeUeOGl/kV15rubF471uWMyA==
   dependencies:
-    "@parcel/plugin" "^2.2.0"
+    "@parcel/plugin" "^2.1.1"
     graphql "^15.0.0"
     graphql-import-macro "^1.0.0"
 
