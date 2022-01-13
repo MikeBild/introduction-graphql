@@ -1,8 +1,8 @@
-export declare function list(): Promise<{
+export declare function list(payload: any): Promise<{
     id: number;
-    content: string;
+    body: string;
 }[]>;
 export declare function byId(payload: any): Promise<{
     id: number;
-    content: string;
+    body: string;
 }>;

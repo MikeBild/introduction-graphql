@@ -1,8 +1,9 @@
-export async function list() {
-  return [{ id: 1, content: 'ABC' }];
+export async function list(payload: any) {
+  console.log(payload);
+  return [{ id: 1, body: 'ABC' }];
 }
 
 export async function byId(payload: any) {
   console.log(payload);
-  return { id: 1, content: 'ABC' };
+  return { id: 1, body: 'ABC' };
 }
