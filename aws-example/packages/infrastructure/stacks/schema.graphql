@@ -1,7 +1,3 @@
-scalar URL
-scalar DateTime
-scalar HTML
-
 interface Entity {
     id: ID!
 }
@@ -15,7 +11,7 @@ enum ArticleState  {
 type Publication implements Entity {
     id: ID!
     name: String!
-    url: URL
+    url: AWSURL
     rootSection: Section!
 }
 
@@ -31,15 +27,15 @@ type Section implements Entity {
 type Article implements Entity {
     id: ID!
     title: String
-    body: HTML
+    body: String
     state: ArticleState
-    publicationDate: DateTime
+    publicationDate: AWSDateTime
     ownerPublication: Publication!
-    homeSections: [Sections!]!
-    sections: [Sections!]!
+    homeSections: [Section!]!
+    sections: [Section!]!
 }
 
-type ArticleFilter {
+input ArticleFilter {
     # Filter by ID
     sectionId: ID
     # Filter by section path
@@ -48,17 +44,11 @@ type ArticleFilter {
     articleState: [ArticleState]
 }
 
-type ArticleResult {
-    success: Article
-    failure: Failure
+type ArticleFailure {
+    message: String
 }
 
-type Failure {
-    reason: String
-    code: String
-}
-
-union ArticleResult = Article | String
+union ArticleResult = Article | ArticleFailure
 
 type Query {
     article(id: ID!): ArticleResult

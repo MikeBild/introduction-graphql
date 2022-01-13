@@ -14,8 +14,7 @@ export class AppSyncStack extends Stack {
         defaultAuthorization: {
           authorizationType: AuthorizationType.API_KEY,
         },
-      },
-      xrayEnabled: true,
+      }
     });
   }
 }
