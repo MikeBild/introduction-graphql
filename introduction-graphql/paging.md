@@ -24,8 +24,10 @@
 ```graphql
 {
   authors(after: 99, take: 2) {
+    id
     name
     posts(after: 99, take: 2) {
+      id
       title
     }
   }

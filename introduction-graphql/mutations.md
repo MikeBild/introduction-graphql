@@ -23,20 +23,29 @@ input AuthorInput {
 }
 
 type Mutation {
-  upsertAuthor(input: AuthorInput!): Author
-  removeAuthor(input: AuthorInput!): ID
+  authorUpsert(input: AuthorInput!): Author
+  authorRemove(input: AuthorInput!): ID
 }
 ```
 
 ## Upsert author mutation query
 
 ```graphql
-mutation {
-  upsertAuthor(input: { name: "Test" }) {
+mutation AuthorUpsert($input: AuthorInput!) {
+  authorUpsert(input: $input) {
     id
     rev
     name
+    posts {
+      id
+    }
   }
+}
+```
+
+```json
+{ 
+  "input": { "name": "Test" }
 }
 ```
 
