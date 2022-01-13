@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@introduction-graphql/aws-example-server",
+  "name": "@introduction-graphql/aws-example-infrastructure",
   "version": "1.0.0",
   "scripts": {
     "dev": "nodemon -e js,graphql index",
@@ -11,6 +11,8 @@
     "casual": "1.6.2",
     "graphql-tools": "7.0.5",
     "lambda-local": "2.0.1",
-    "esbuild": "0.14.11"
+    "esbuild": "0.14.11",
+    "aws-sdk": "2.1056.0",
+    "aws-cdk": "2.7.0"
   }
 }
