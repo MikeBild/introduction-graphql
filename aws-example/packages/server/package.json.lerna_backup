@@ -1,0 +1,16 @@
+{
+  "private": true,
+  "name": "@introduction-graphql/aws-example-server",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "nodemon -e js,graphql index",
+    "start": "NODE_ENV=production node index"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "casual": "1.6.2",
+    "graphql-tools": "7.0.5",
+    "lambda-local": "2.0.1",
+    "esbuild": "0.14.11"
+  }
+}

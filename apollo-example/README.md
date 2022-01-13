@@ -1,4 +1,4 @@
-# GraphQL Hands-On
+# Apollo GraphQL Hands-On
 
 ## Tech-Stack
 

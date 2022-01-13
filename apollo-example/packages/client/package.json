@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@introduction-graphql/client",
+  "name": "@introduction-graphql/apollo-example-client",
   "version": "1.0.0",
   "scripts": {
     "dev": "parcel src/index.html",

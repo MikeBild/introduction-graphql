@@ -1,0 +1,54 @@
+directive @upper on FIELD_DEFINITION
+
+scalar Date
+
+interface Post {
+  id: ID!
+  authorId: ID
+}
+
+type Query {
+  articles: [Article]
+  comments: [Comment]
+  article(id: ID!): Article
+  search: [Search]
+  posts: [Post]
+}
+
+union Search = Article | Comment
+
+type Article implements Post {
+  id: ID!
+  authorId: ID
+  content: String @upper
+  releasedAt: Date
+}
+
+type Comment implements Post {
+  id: ID!
+  authorId: ID
+  text: String
+}
+
+type Mutation {
+  articleAdd(input: ArticleAddInput!): ArticleAddResult!
+}
+
+
+type Subscription {
+  articleAdded: Article
+}
+
+input ArticleAddInput {
+  content: String!
+  authorId: ID!
+}
+
+type ArticleAddResult {
+  result: Article
+  failure: Failure
+}
+
+type Failure {
+  message: String!
+}

@@ -1,0 +1,66 @@
+scalar URL
+scalar DateTime
+scalar HTML
+
+interface Entity {
+    id: ID!
+}
+
+enum ArticleState  {
+    DRAFT
+    PUBLISHED
+    DELETED
+}
+
+type Publication implements Entity {
+    id: ID!
+    name: String!
+    url: URL
+    rootSection: Section!
+}
+
+type Section implements Entity {
+    id: ID!
+    name: String!
+    uniqueName: String!
+    publication: Publication!
+    parentSection: Section
+    subSections: [Section]
+}
+
+type Article implements Entity {
+    id: ID!
+    title: String
+    body: HTML
+    state: ArticleState
+    publicationDate: DateTime
+    ownerPublication: Publication!
+    homeSections: [Sections!]!
+    sections: [Sections!]!
+}
+
+type ArticleFilter {
+    # Filter by ID
+    sectionId: ID
+    # Filter by section path
+    sectionPath: String
+    onyleNewest: Boolean
+    articleState: [ArticleState]
+}
+
+type ArticleResult {
+    success: Article
+    failure: Failure
+}
+
+type Failure {
+    reason: String
+    code: String
+}
+
+union ArticleResult = Article | String
+
+type Query {
+    article(id: ID!): ArticleResult
+    articles(filter: ArticleFilter, take: Int, page: Int): [Article]
+}
