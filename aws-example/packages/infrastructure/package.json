@@ -3,6 +3,7 @@
   "name": "@introduction-graphql/aws-example-infrastructure",
   "version": "1.0.0",
   "scripts": {
+    "build": "tsc",
     "dev": "nodemon -e js,graphql index",
     "start": "NODE_ENV=production node index"
   },
@@ -11,7 +12,7 @@
     "casual": "1.6.2",
     "graphql-tools": "7.0.5",
     "lambda-local": "2.0.1",
-    "esbuild": "0.14.11",
+    "typescript": "4.5.4",
     "aws-sdk": "2.1056.0",
     "aws-cdk": "2.7.0"
   }

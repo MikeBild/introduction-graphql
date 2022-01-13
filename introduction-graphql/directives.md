@@ -61,7 +61,7 @@ class CustomDirective extends SchemaDirectiveVisitor {
 
 const server = new ApolloServer({
   schemaDirectives: {
-    upper: UpperCaseDirective,
+    upper: CustomDirective,
   },
   typeDefs,
 });
