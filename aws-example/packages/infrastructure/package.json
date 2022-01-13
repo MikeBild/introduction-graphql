@@ -5,15 +5,26 @@
   "scripts": {
     "build": "tsc",
     "dev": "nodemon -e js,graphql index",
-    "start": "NODE_ENV=production node index"
+    "start": "NODE_ENV=production node index",
+    "strap": "cdk bootstrap",
+    "deploy": "cdk deploy *Stack"
   },
-  "dependencies": {},
   "devDependencies": {
     "casual": "1.6.2",
     "graphql-tools": "7.0.5",
     "lambda-local": "2.0.1",
     "typescript": "4.5.4",
     "aws-sdk": "2.1056.0",
+    "@types/jest": "26.0.10",
+    "@types/node": "10.17.27",
+    "jest": "26.4.2",
+    "ts-jest": "26.2.0",
+    "ts-node": "9.0.0",
     "aws-cdk": "2.7.0"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "2.7.0",
+    "constructs": "10.0.0",
+    "@aws-cdk/aws-appsync-alpha": "2.7.0-alpha.0"
   }
 }
