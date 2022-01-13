@@ -41,7 +41,7 @@
 - [Coming Soon - Defer, Batch, etc.](introduction-graphql/soon.md)
 ## Example
 
-- [Example App](example/README.md)
+- [Apollo Example](apollo-example/README.md)
 
 ## Resources
 

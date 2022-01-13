@@ -1,0 +1,14 @@
+{
+  "private": true,
+  "name": "apollo-graphql-example",
+  "version": "1.0.0",
+  "scripts": {
+    "lerna": "lerna clean --yes && lerna bootstrap",
+    "develop": "lerna run dev --stream --parallel",
+    "build": "lerna run build --stream",
+    "start": "lerna run start --stream --parallel"
+  },
+  "devDependencies": {
+    "lerna": "^4.0.0"
+  }
+}

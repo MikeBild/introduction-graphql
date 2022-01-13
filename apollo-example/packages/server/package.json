@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@introduction-graphql/server",
+  "name": "@introduction-graphql/apollo-example-server",
   "version": "1.0.0",
   "scripts": {
     "dev": "nodemon -e js,graphql index",

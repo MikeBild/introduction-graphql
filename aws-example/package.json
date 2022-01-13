@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "graphql-example",
+  "name": "aws-graphql-example",
   "version": "1.0.0",
   "scripts": {
     "lerna": "lerna clean --yes && lerna bootstrap",
