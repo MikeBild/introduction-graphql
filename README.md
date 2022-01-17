@@ -26,9 +26,9 @@
 - [Introspection](introduction-graphql/introspection.md)
 - [Type System](introduction-graphql/types.md)
 - [Schema](introduction-graphql/schema.md)
-- [Query Execution and Validation]()
+- [Execution and Validation Engine]()
+  - [Validation](introduction-graphql/validation.md)
   - [Resolver](introduction-graphql/resolver.md)
-  - [Validators](introduction-graphql/validators.md)
   - [Error Handling](introduction-graphql/errors.md)
 - [Directives](introduction-graphql/directives.md)
 - [Mutations](introduction-graphql/mutations.md)
@@ -39,9 +39,10 @@
 - [Authentication and Authorization](introduction-graphql/auth.md)
 - [Caching](introduction-graphql/caching.md)
 - [Coming Soon - Defer, Batch, etc.](introduction-graphql/soon.md)
-## Example
+## Examples
 
 - [Apollo Example](apollo-example/README.md)
+- [DotNet (C#) Server Example](graphql-server-example-dotnet/README.md)
 
 ## Resources
 
