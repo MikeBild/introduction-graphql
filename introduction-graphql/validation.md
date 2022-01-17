@@ -5,3 +5,5 @@
 - Minimise runtime validation checks
 - Allows to prevent DOS attacks by query cost analysis before query execution
 - Custom validation possible depending on the GraphQL framework
+
+![GraphQL Execution Engine](graphql-execution-engine.png)

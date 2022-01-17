@@ -12,39 +12,40 @@ using GraphQL.Server;
 
 namespace graphql_server_example_dotnet
 {
-    public class Droid
-    {
-        public string Id { get; set; }
-        public string Name { get; set; }
-        public Character Friend(IResolveFieldContext context, Droid source)
-        {
-            return new Character { Name = "C3-PO" };
-        }
-    }
-
-    public class Character
-    {
-        public string Name { get; set; }
-    }
-    
-    public class Post
+    public class Comment
     {
         public string Id { get; set; }
         public string Text { get; set; }
+
+        public Comment Answer(IResolveFieldContext context, Comment source)
+        {
+            return new Comment { Id = "99", Text = "Comment Answer Text 1" };
+        }
+
+        public Post Post(IResolveFieldContext context, Comment source)
+        {
+            return new Post { Id = "99", Body = "Comment Answer Text 1" };
+        }
+    }
+
+    public class Post
+    {
+        public string Id { get; set; }
+        public string Body { get; set; }
+
+        public Comment[] Comments(IResolveFieldContext context, Post source)
+        {
+            return new[] { new Comment { Id = "1", Text = "Comment Text 1" } };
+        }
     }
 
     public class Query
     {
-        public Droid hero(IResolveFieldContext context)
-        {
-            return new Droid { Id = "1", Name = "R2-D2" };
-        }
-
         public Post[] posts(IResolveFieldContext context)
         {
             return new[] {
-                new Post { Id = "1", Text = "Text A" },
-                new Post { Id = "2", Text = "Text B" }
+                new Post { Id = "1", Body = "Body A" },
+                new Post { Id = "2", Body = "Body B" }
             };
         }
     }
@@ -53,7 +54,7 @@ namespace graphql_server_example_dotnet
     {
         public Post postAdd(IResolveFieldContext context)
         {
-            return new Post { Id = "1", Text = "Demo" };
+            return new Post { Id = "1", Body = "Demo" };
         }
     }
 
@@ -62,25 +63,23 @@ namespace graphql_server_example_dotnet
         public void ConfigureServices(IServiceCollection services)
         {
             var schema = Schema.For(@"
-            type Droid {
-                id: String
-                name: String
-                friend: Character
-            }
-
-            type Character {
-                name: String
-            }
-
-            type Post {
+           type Post {
                 id: ID
+                body: String
+                comments: [Comment]
+            }
+
+            type Comment {
+                id: ID
+                postId: ID
                 text: String
+                answer: Comment
+                post: Post
             }
 
             type Query {
-                hero: Droid
                 posts: [Post]
-             }
+            }
 
             type Mutation {
                 postAdd(input: PostInput!): Post
@@ -91,7 +90,8 @@ namespace graphql_server_example_dotnet
             }
             ", _ =>
             {
-                _.Types.Include<Droid>();
+                _.Types.Include<Comment>();
+                _.Types.Include<Post>();
                 _.Types.Include<Query>();
                 _.Types.Include<Mutation>();
             });
