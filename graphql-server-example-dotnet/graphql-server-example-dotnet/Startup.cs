@@ -27,7 +27,10 @@ namespace graphql_server_example_dotnet
             return new Post { Id = "99", Body = "Comment Answer Text 1" };
         }
     }
-
+    public class PostInput
+    {
+        public string Text { get; set; }
+    }
     public class Post
     {
         public string Id { get; set; }
@@ -54,7 +57,8 @@ namespace graphql_server_example_dotnet
     {
         public Post postAdd(IResolveFieldContext context)
         {
-            return new Post { Id = "1", Body = "Demo" };
+            var pi = context.GetArgument<PostInput>("input");
+            return new Post { Id = "1", Body = pi.Text };
         }
     }
 
@@ -63,7 +67,7 @@ namespace graphql_server_example_dotnet
         public void ConfigureServices(IServiceCollection services)
         {
             var schema = Schema.For(@"
-           type Post {
+            type Post {
                 id: ID
                 body: String
                 comments: [Comment]
@@ -102,7 +106,6 @@ namespace graphql_server_example_dotnet
                 .AddSystemTextJson(deserializerSettings => { }, serializerSettings => { })
                 .AddSchema<ISchema>(s => schema);
         }
-
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
