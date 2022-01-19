@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using GraphQL.Types;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,57 +9,16 @@ using Microsoft.Extensions.DependencyInjection;
 using GraphQL;
 using GraphQL.SystemTextJson;
 using GraphQL.Server;
+using Microsoft.Extensions.Logging;
+using System.Security.Claims;
 
 namespace graphql_server_example_dotnet
 {
-    public class Comment
+    public class GraphQLUserContext : Dictionary<string, object>
     {
-        public string Id { get; set; }
-        public string Text { get; set; }
-
-        public Comment Answer(IResolveFieldContext context, Comment source)
-        {
-            return new Comment { Id = "99", Text = "Comment Answer Text 1" };
-        }
-
-        public Post Post(IResolveFieldContext context, Comment source)
-        {
-            return new Post { Id = "99", Body = "Comment Answer Text 1" };
-        }
-    }
-    public class PostInput
-    {
-        public string Text { get; set; }
-    }
-    public class Post
-    {
-        public string Id { get; set; }
-        public string Body { get; set; }
-
-        public Comment[] Comments(IResolveFieldContext context, Post source)
-        {
-            return new[] { new Comment { Id = "1", Text = "Comment Text 1" } };
-        }
-    }
-
-    public class Query
-    {
-        public Post[] posts(IResolveFieldContext context)
-        {
-            return new[] {
-                new Post { Id = "1", Body = "Body A" },
-                new Post { Id = "2", Body = "Body B" }
-            };
-        }
-    }
-
-    public class Mutation
-    {
-        public Post postAdd(IResolveFieldContext context)
-        {
-            var pi = context.GetArgument<PostInput>("input");
-            return new Post { Id = "1", Body = pi.Text };
-        }
+        public ClaimsPrincipal User { get; set; }
+        public string Token { get; set; }
+        public ExampleRepository ExampleRepository { get; set; }
     }
 
     public class Startup
@@ -67,15 +26,25 @@ namespace graphql_server_example_dotnet
         public void ConfigureServices(IServiceCollection services)
         {
             var schema = Schema.For(@"
-            type Post {
+            enum ArticeType {
+                COMMENT
+                ARTICLE
+            }     
+            
+            union ArticleSearch = Post | Comment
+            
+            interface Article {
+                id: ID
+            }
+
+            type Post implements Article {
                 id: ID
                 body: String
                 comments: [Comment]
             }
 
-            type Comment {
+            type Comment implements Article {
                 id: ID
-                postId: ID
                 text: String
                 answer: Comment
                 post: Post
@@ -83,6 +52,8 @@ namespace graphql_server_example_dotnet
 
             type Query {
                 posts: [Post]
+                search: [ArticleSearch]
+                articles: [Article]
             }
 
             type Mutation {
@@ -92,26 +63,38 @@ namespace graphql_server_example_dotnet
             input PostInput {
                 text: String
             }
-            ", _ =>
+            ", builder =>
             {
-                _.Types.Include<Comment>();
-                _.Types.Include<Post>();
-                _.Types.Include<Query>();
-                _.Types.Include<Mutation>();
+                builder.AllowUnknownTypes = true;
+                builder.AllowUnknownFields = true;
+                builder.Types.For("ArticleSearch").ResolveType = obj => new GraphQLTypeReference(obj.GetType().Name);
+                builder.Types.For("Article").ResolveType = obj => new GraphQLTypeReference(obj.GetType().Name);
+                builder.Types.Include<Comment>();
+                builder.Types.Include<Post>();
+                builder.Types.Include<Query>();
+                builder.Types.Include<Mutation>();
             });
+            services.AddLogging(builder => builder.AddConsole());
+            services.AddHttpContextAccessor();
 
             GraphQL.MicrosoftDI.GraphQLBuilderExtensions
                 .AddGraphQL(services)
                 .AddServer(true)
                 .AddSystemTextJson(deserializerSettings => { }, serializerSettings => { })
-                .AddSchema<ISchema>(s => schema);
+                .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true)
+                .AddSchema<ISchema>(s => schema)
+                .AddUserContextBuilder(httpContext => new GraphQLUserContext
+                {
+                    User = httpContext.User,
+                    Token = httpContext.Request?.Headers["x-api-key"],
+                    ExampleRepository = new ExampleRepository()
+                });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseGraphQL<ISchema>();
             app.UseGraphQLPlayground();
-
         }
     }
 }
