@@ -20,7 +20,6 @@ namespace graphql_server_example_dotnet
         public string Token { get; set; }
         public ExampleRepository ExampleRepository { get; set; }
     }
-
     public class Startup
     {
         public void ConfigureServices(IServiceCollection services)
@@ -29,8 +28,8 @@ namespace graphql_server_example_dotnet
             enum ArticeType {
                 COMMENT
                 ARTICLE
-            }     
-            
+            }                 
+
             union ArticleSearch = Post | Comment
             
             interface Article {
@@ -39,22 +38,24 @@ namespace graphql_server_example_dotnet
 
             type Post implements Article {
                 id: ID
-                body: String
+                body: String @deprecated(reason: ""use the new field body2 please"")                
+                body2: String
                 comments: [Comment]
             }
 
             type Comment implements Article {
                 id: ID
                 text: String
-                answer: Comment
+                answer: Comment 
                 post: Post
             }
 
             type Query {
-                posts: [Post]
+                post(id: ID!): Post
+                posts(input: PagedInput): [Post]
                 search: [ArticleSearch]
                 articles: [Article]
-            }
+            }            
 
             type Mutation {
                 postAdd(input: PostInput!): Post
@@ -62,6 +63,11 @@ namespace graphql_server_example_dotnet
 
             input PostInput {
                 text: String
+            }
+
+            input PagedInput {
+                skip: Int
+                take: Int
             }
             ", builder =>
             {

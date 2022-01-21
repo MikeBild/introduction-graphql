@@ -2,23 +2,34 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using GraphQL;
+using GraphQL.Types;
 
 namespace graphql_server_example_dotnet
 {
     public class Query
     {
-        public IEnumerable<Post> Posts(IResolveFieldContext context)
+        public Post Post(IResolveFieldContext context)
         {
-            var repository = (context.UserContext as GraphQLUserContext).ExampleRepository;
+            var byId = context.GetArgument<int>("id");
             
-            return repository.Posts;
+            var repository = (context.UserContext as GraphQLUserContext).ExampleRepository;
+
+            return repository.Posts.SingleOrDefault(x => x.Id == byId.ToString());
         }
 
+        public IEnumerable<Post> Posts(IResolveFieldContext context)
+        {
+            var input = context.GetArgument<PagedInput>("input", new PagedInput { Take = 100, Skip = 0 });
+
+            var repository = (context.UserContext as GraphQLUserContext).ExampleRepository;
+
+            return repository.Posts.Skip(input.Skip).Take(input.Take);
+        }
 
         public IEnumerable<object> Search(IResolveFieldContext context)
         {
             var repository = (context.UserContext as GraphQLUserContext).ExampleRepository;
-            
+
             return repository.Comments.Cast<object>().Concat(repository.Posts.Cast<object>());
         }
 
