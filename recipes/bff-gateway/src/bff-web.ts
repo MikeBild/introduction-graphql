@@ -1,5 +1,6 @@
 import { GraphQLError } from 'graphql'
-import { createSchema, createYoga } from 'graphql-yoga'
+import { createSchema, createYoga, type YogaInitialContext } from 'graphql-yoga'
+import { customerIdOf, notFound } from './auth.ts'
 import { findCustomer } from './domain/customers.ts'
 import { findOrder, saveOrder, type Order } from './domain/orders.ts'
 import { log, yogaLogger } from './logger.ts'
@@ -36,21 +37,20 @@ const toOrderPage = (order: Order) => {
 
 export const yoga = createYoga({
   logging: yogaLogger,
-  schema: createSchema({
+  schema: createSchema<YogaInitialContext>({
     typeDefs,
     resolvers: {
       Query: {
-        orderPage: (_parent: unknown, { id }: { id: string }) => {
+        orderPage: (_parent: unknown, { id }: { id: string }, context: YogaInitialContext) => {
           const order = findOrder(id)
-          return order ? toOrderPage(order) : null
+          return order && order.customerId === customerIdOf(context) ? toOrderPage(order) : null
         },
       },
       Mutation: {
         // Smell: the business rule lives in the resolver. A job or a second BFF would have to copy it.
-        cancelOrder: (_parent: unknown, { id }: { id: string }) => {
+        cancelOrder: (_parent: unknown, { id }: { id: string }, context: YogaInitialContext) => {
           const order = findOrder(id)
-          if (!order)
-            throw new GraphQLError('Order not found', { extensions: { code: 'NOT_FOUND' } })
+          if (!order || order.customerId !== customerIdOf(context)) throw notFound()
           if (order.status !== 'OPEN')
             throw new GraphQLError('Only open orders can be cancelled', {
               extensions: { code: 'NOT_CANCELLABLE' },

@@ -1,9 +1,9 @@
-import { GraphQLError } from 'graphql'
 import { createSchema, createYoga, type YogaInitialContext } from 'graphql-yoga'
 import { ordersOfCustomer, type Order } from '../src/domain/orders.ts'
 import { yogaLogger } from '../src/logger.ts'
 import { canCancel, cancelOrder } from './domain/order-rules.ts'
 import { unwrapCancel } from './graphql-errors.ts'
+import { customerIdOf } from '../src/auth.ts'
 
 // BFF for the mobile app: a lean list for small screens, built by the app team.
 const typeDefs = /* GraphQL */ `
@@ -24,12 +24,6 @@ const typeDefs = /* GraphQL */ `
 `
 
 const toTile = (order: Order) => ({ ...order, canCancel: canCancel(order) })
-const customerIdOf = ({ request }: YogaInitialContext) => {
-  const customerId = request.headers.get('authorization')
-  if (!customerId)
-    throw new GraphQLError('Not authenticated', { extensions: { code: 'UNAUTHENTICATED' } })
-  return customerId
-}
 
 export const yoga = createYoga({
   logging: yogaLogger,
@@ -41,8 +35,10 @@ export const yoga = createYoga({
           ordersOfCustomer(customerIdOf(context)).map(toTile),
       },
       Mutation: {
-        cancelOrder: (_parent: unknown, { id }: { id: string }) =>
-          toTile(unwrapCancel(cancelOrder(id))),
+        cancelOrder: (_parent: unknown, { id }: { id: string }, context: YogaInitialContext) =>
+          toTile(
+            unwrapCancel(cancelOrder(id, { kind: 'customer', customerId: customerIdOf(context) })),
+          ),
       },
     },
   }),
