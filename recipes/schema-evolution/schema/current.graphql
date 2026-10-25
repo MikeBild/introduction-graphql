@@ -1,0 +1,26 @@
+# Your working copy. Change this file and run `npm run schema:diff`.
+type Order {
+  id: ID!
+  status: OrderStatus!
+  total: Float!
+  # new and optional: an additive change
+  placedAt: String
+}
+
+enum OrderStatus {
+  OPEN
+  PAID
+}
+
+input PlaceOrderInput {
+  productId: ID!
+  quantity: Int!
+}
+
+type Query {
+  orders: [Order!]!
+}
+
+type Mutation {
+  placeOrder(input: PlaceOrderInput!): Order!
+}

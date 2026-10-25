@@ -1,0 +1,4 @@
+{
+  "cce974b920ea0aa322a65e2ae9075bd529c839af7712113abc210a8ad873ad1a": "query OrdersPage { orders(first: 20) { id status customer { name } } }",
+  "9714d4c14c1f92129d286fcf07763512eac7bc6d4e3d89b5929877c48b6c5413": "query CustomerOrders { orders(first: 5) { customer { name orders(first: 5) { id status } } } }"
+}

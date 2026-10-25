@@ -1,0 +1,34 @@
+# Expand: totalPrice is added, total stays and is deprecated until nobody asks for it anymore.
+type Order {
+  id: ID!
+  status: OrderStatus!
+  total: Float! @deprecated(reason: "Use totalPrice, it includes the currency.")
+  totalPrice: Money!
+  placedAt: String
+}
+
+type Money {
+  "decimal string, no float rounding"
+  amount: String!
+  currency: String!
+}
+
+enum OrderStatus {
+  OPEN
+  PAID
+}
+
+input PlaceOrderInput {
+  productId: ID!
+  quantity: Int!
+  "new input fields must be optional"
+  note: String
+}
+
+type Query {
+  orders: [Order!]!
+}
+
+type Mutation {
+  placeOrder(input: PlaceOrderInput!): Order!
+}

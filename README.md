@@ -44,6 +44,22 @@
 - [Apollo Example](apollo-example/README.md)
 - [DotNet (C#) Server Example](graphql-server-example-dotnet/README.md)
 
+## Exercises
+
+Small, runnable GraphQL Yoga recipes with an exercise, tests and a solution:
+
+- [REST vs. GraphQL](recipes/rest-vs-graphql/README.md)
+- [Operations: Variables, Fragments, Aliases](recipes/operations-fragments/README.md)
+- [Errors as Data](recipes/errors-as-data/README.md)
+- [Custom Scalars](recipes/custom-scalars/README.md)
+- [Wrapping REST](recipes/rest-wrapping/README.md)
+- [Query Cost Limits and Persisted Operations](recipes/query-cost-limits/README.md)
+- [Response Caching](recipes/response-caching/README.md)
+- [Schema Evolution](recipes/schema-evolution/README.md)
+- [Federation](recipes/federation/README.md)
+- [Tracing and Metrics](recipes/tracing/README.md)
+- [BFF and Domain Boundaries](recipes/bff-gateway/README.md)
+
 ## Resources
 
 - [Introduction to NodeJS](https://github.com/mikebild/introduction-nodejs)

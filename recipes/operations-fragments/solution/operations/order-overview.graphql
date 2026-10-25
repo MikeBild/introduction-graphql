@@ -1,0 +1,27 @@
+query OrderOverview($first: Int!) {
+  open: orders(status: OPEN, first: $first) {
+    ...OrderRow
+  }
+  paid: orders(status: PAID, first: $first) {
+    ...OrderRow
+  }
+}
+
+query OrderDetail($id: ID!, $withItems: Boolean!) {
+  order(id: $id) {
+    ...OrderRow
+    items @include(if: $withItems) {
+      title
+      quantity
+    }
+  }
+}
+
+fragment OrderRow on Order {
+  id
+  status
+  total
+  customer {
+    name
+  }
+}

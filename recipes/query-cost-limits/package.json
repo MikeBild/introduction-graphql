@@ -1,0 +1,33 @@
+{
+  "name": "@introduction-graphql/query-cost-limits",
+  "version": "1.0.0",
+  "description": "Depth, alias and cost limits plus persisted operations for a public graph",
+  "private": true,
+  "type": "module",
+  "author": "Mike Bild <mike.bild@gmail.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "start": "node src/server.ts",
+    "start:solution": "node solution/server.ts",
+    "test": "LOG_LEVEL=warn node --test 'src/**/*.test.ts' 'solution/**/*.test.ts'",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write .",
+    "manifest": "node scripts/build-manifest.ts"
+  },
+  "dependencies": {
+    "@escape.tech/graphql-armor-max-aliases": "^2.6.2",
+    "@escape.tech/graphql-armor-max-depth": "^2.4.2",
+    "@graphql-yoga/plugin-persisted-operations": "^4.0.1",
+    "graphql": "^16.14.2",
+    "graphql-yoga": "^6.0.1",
+    "loglevel": "^1.9.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "prettier": "^3.9.10",
+    "typescript": "^7.0.2"
+  }
+}

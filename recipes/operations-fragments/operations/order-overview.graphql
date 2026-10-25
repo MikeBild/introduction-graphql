@@ -1,0 +1,10 @@
+query OrderOverview($first: Int!) {
+  open: orders(status: OPEN, first: $first) {
+    ...OrderRow
+  }
+  # add the paid orders here
+}
+
+fragment OrderRow on Order {
+  id
+}
