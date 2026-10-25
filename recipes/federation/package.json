@@ -1,0 +1,33 @@
+{
+  "name": "@introduction-graphql/federation",
+  "version": "1.0.0",
+  "description": "Two subgraphs, composition and a gateway with Apollo Federation v2 directives",
+  "private": true,
+  "type": "module",
+  "author": "Mike Bild <mike.bild@gmail.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "start": "node src/server.ts",
+    "start:solution": "node solution/server.ts",
+    "test": "LOG_LEVEL=warn node --test 'src/**/*.test.ts' 'solution/**/*.test.ts'",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "@apollo/subgraph": "^2.15.1",
+    "@graphql-hive/gateway-runtime": "^2.13.0",
+    "@graphql-mesh/transport-http": "^1.2.2",
+    "@theguild/federation-composition": "^0.27.0",
+    "graphql": "^16.14.2",
+    "graphql-yoga": "^6.0.1",
+    "loglevel": "^1.9.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "prettier": "^3.9.10",
+    "typescript": "^7.0.2"
+  }
+}

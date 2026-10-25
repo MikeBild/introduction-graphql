@@ -1,0 +1,28 @@
+{
+  "name": "@introduction-graphql/operations-fragments",
+  "version": "1.0.0",
+  "description": "Named operations with variables, fragments, aliases and directives",
+  "private": true,
+  "type": "module",
+  "author": "Mike Bild <mike.bild@gmail.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "start": "node src/server.ts",
+    "test": "LOG_LEVEL=warn node --test 'src/**/*.test.ts' 'solution/**/*.test.ts'",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "graphql": "^17.0.2",
+    "graphql-yoga": "^6.0.1",
+    "loglevel": "^1.9.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "prettier": "^3.9.10",
+    "typescript": "^7.0.2"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "name": "@introduction-graphql/schema-evolution",
+  "version": "1.0.0",
+  "description": "Evolve a schema additively, deprecate fields and detect breaking changes",
+  "private": true,
+  "type": "module",
+  "author": "Mike Bild <mike.bild@gmail.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "start": "node src/server.ts",
+    "start:solution": "node solution/server.ts",
+    "test": "LOG_LEVEL=warn node --test 'src/**/*.test.ts' 'solution/**/*.test.ts'",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write .",
+    "schema:diff": "node src/schema-diff.ts"
+  },
+  "dependencies": {
+    "@graphql-inspector/core": "^8.0.1",
+    "graphql": "^17.0.2",
+    "graphql-yoga": "^6.0.1",
+    "loglevel": "^1.9.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "prettier": "^3.9.10",
+    "typescript": "^7.0.2"
+  }
+}

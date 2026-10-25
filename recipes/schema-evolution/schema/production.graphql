@@ -1,0 +1,24 @@
+# The schema that is live in production (e.g. exported from the main branch).
+type Order {
+  id: ID!
+  status: OrderStatus!
+  total: Float!
+}
+
+enum OrderStatus {
+  OPEN
+  PAID
+}
+
+input PlaceOrderInput {
+  productId: ID!
+  quantity: Int!
+}
+
+type Query {
+  orders: [Order!]!
+}
+
+type Mutation {
+  placeOrder(input: PlaceOrderInput!): Order!
+}

@@ -1,0 +1,30 @@
+{
+  "name": "@introduction-graphql/response-caching",
+  "version": "1.0.0",
+  "description": "Server-side response cache with sessions, TTL per type and invalidation via mutations",
+  "private": true,
+  "type": "module",
+  "author": "Mike Bild <mike.bild@gmail.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "start": "node src/server.ts",
+    "start:solution": "node solution/server.ts",
+    "test": "LOG_LEVEL=warn node --test 'src/**/*.test.ts' 'solution/**/*.test.ts'",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "graphql": "^17.0.2",
+    "graphql-yoga": "^6.0.1",
+    "loglevel": "^1.9.2",
+    "@graphql-yoga/plugin-response-cache": "^4.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "prettier": "^3.9.10",
+    "typescript": "^7.0.2"
+  }
+}
