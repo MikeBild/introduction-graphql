@@ -1,4 +1,5 @@
-import { createSchema, createYoga } from 'graphql-yoga'
+import { createSchema, createYoga, type YogaInitialContext } from 'graphql-yoga'
+import { customerIdOf } from '../src/auth.ts'
 import { findCustomer } from '../src/domain/customers.ts'
 import { findOrder, type Order } from '../src/domain/orders.ts'
 import { yogaLogger } from '../src/logger.ts'
@@ -36,18 +37,20 @@ const toOrderPage = (order: Order) => {
 
 export const yoga = createYoga({
   logging: yogaLogger,
-  schema: createSchema({
+  schema: createSchema<YogaInitialContext>({
     typeDefs,
     resolvers: {
       Query: {
-        orderPage: (_parent: unknown, { id }: { id: string }) => {
+        orderPage: (_parent: unknown, { id }: { id: string }, context: YogaInitialContext) => {
           const order = findOrder(id)
-          return order ? toOrderPage(order) : null
+          return order && order.customerId === customerIdOf(context) ? toOrderPage(order) : null
         },
       },
       Mutation: {
-        cancelOrder: (_parent: unknown, { id }: { id: string }) =>
-          toOrderPage(unwrapCancel(cancelOrder(id))),
+        cancelOrder: (_parent: unknown, { id }: { id: string }, context: YogaInitialContext) =>
+          toOrderPage(
+            unwrapCancel(cancelOrder(id, { kind: 'customer', customerId: customerIdOf(context) })),
+          ),
       },
     },
   }),
