@@ -24,7 +24,7 @@ const typeDefs = /* GraphQL */ `
 
   type Order {
     id: ID!
-    total: Float!
+    totalCents: Int!
     customer: Customer!
   }
 

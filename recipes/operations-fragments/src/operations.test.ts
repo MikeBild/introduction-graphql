@@ -1,8 +1,11 @@
-import { expect, it } from 'vitest'
+import { afterAll, expect, it } from 'vitest'
+import { createApp } from './app.ts'
 import { loadOperation, runOperation } from './operations.ts'
-import { yoga } from './yoga.ts'
+import { startTestServer } from './test-client.ts'
 
-const run = runOperation(yoga)
+const { url, close } = await startTestServer(await createApp())
+afterAll(close)
+const run = runOperation(url)
 
 it('OrderOverview runs with variables and the OrderRow fragment', async () => {
   const document = await loadOperation(
@@ -15,6 +18,7 @@ it('OrderOverview runs with variables and the OrderRow fragment', async () => {
 
 it('a nullable variable for a required argument fails validation before any resolver runs', async () => {
   const result = await run(`query OrderDetail($id: ID) { order(id: $id) { id } }`, { id: 'o-1' })
+  expect(result.status).toBe(400)
   expect(result.data).toBeUndefined()
   expect(result.errors?.[0]?.message ?? '').toMatch(
     /Variable "\$id" of type "ID" used in position expecting type "ID!"/,

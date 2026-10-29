@@ -1,17 +1,19 @@
-import { expect, it } from 'vitest'
+import { afterAll, expect, it } from 'vitest'
 import { findOrder } from '../src/domain/orders.ts'
-import { createTestClient } from '../src/test-client.ts'
-import { yoga as appBff } from './bff-app.ts'
-import { yoga as webBff } from './bff-web.ts'
+import { startTestServer } from '../src/test-client.ts'
+import { createAppBff } from './bff-app.ts'
+import { createWebBff } from './bff-web.ts'
 import { cancelOrder, cancelStaleOrders } from './domain/order-rules.ts'
 
-const asCustomer = (server: Parameters<typeof createTestClient>[0], customerId: string) => {
-  const client = createTestClient(server)
-  return (query: string) => client(query, {}, { authorization: customerId })
-}
-const web = asCustomer(webBff, 'c-1')
-const app = asCustomer(appBff, 'c-1')
-const webAsOtherCustomer = asCustomer(webBff, 'c-2')
+const webServer = await startTestServer(await createWebBff())
+const appServer = await startTestServer(await createAppBff())
+afterAll(() => Promise.all([webServer.close(), appServer.close()]))
+
+const asCustomer = (server: typeof webServer, customerId: string) => (query: string) =>
+  server.execute(query, {}, { authorization: customerId })
+const web = asCustomer(webServer, 'c-1')
+const app = asCustomer(appServer, 'c-1')
+const webAsOtherCustomer = asCustomer(webServer, 'c-2')
 
 it('the domain rule works without GraphQL', () => {
   const system = { kind: 'system' } as const
@@ -26,12 +28,12 @@ it('the domain rule works without GraphQL', () => {
 
 it('two BFFs, two shapes, one domain', async () => {
   const page = await web(`query OrderPage { orderPage(id: "o-1") { customerName canCancel } }`)
-  const tiles = await app(`query MyOrders { myOrders { id canCancel } }`)
+  const tiles = await app(`query MyOrders { myOrders { id totalCents canCancel } }`)
   expect(page.data).toEqual({ orderPage: { customerName: 'Ada Lovelace', canCancel: true } })
   expect(tiles.data).toEqual({
     myOrders: [
-      { id: 'o-1', canCancel: true },
-      { id: 'o-3', canCancel: true },
+      { id: 'o-1', totalCents: 2580, canCancel: true },
+      { id: 'o-3', totalCents: 1290, canCancel: true },
     ],
   })
 })
@@ -46,8 +48,8 @@ it('both BFFs map the same domain result to the same error code', async () => {
   expect(fromApp.errors?.[0]?.extensions?.code).toBe('NOT_FOUND')
 })
 
-it('the nightly job reuses the rule and cancels only stale open orders', () => {
+it('the nightly job reuses the rule and cancels only stale draft or placed orders', () => {
   expect(cancelStaleOrders(new Date('2026-10-25T00:00:00Z'), 30)).toEqual(['o-3'])
-  expect(findOrder('o-1')?.status).toBe('OPEN')
+  expect(findOrder('o-1')?.status).toBe('PLACED')
   expect(findOrder('o-2')?.status).toBe('SHIPPED')
 })

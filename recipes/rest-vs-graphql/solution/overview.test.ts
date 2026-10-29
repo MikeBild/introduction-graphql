@@ -1,30 +1,33 @@
-import { expect, it } from 'vitest'
+import { afterAll, expect, it } from 'vitest'
 import { orders } from '../src/data.ts'
-import { restHandler } from '../src/rest.ts'
-import { createTestClient } from '../src/test-client.ts'
-import { yoga } from './yoga.ts'
+import { startTestServer } from '../src/test-client.ts'
+import { createApp } from './app.ts'
 
-const execute = createTestClient(yoga)
+const { url, execute, close } = await startTestServer(await createApp())
+afterAll(close)
+const apiUrl = url.replace('/graphql', '/api')
 
 type OverviewData = {
   orders: {
     id: string
+    totalCents: number
     customer: { name: string }
-    items: { quantity: number; product: { title: string } }[]
+    items: { quantity: number; product: { name: string } }[]
   }[]
 }
 
 const overviewQuery = /* GraphQL */ `
   query OpenOrderOverview {
-    orders(status: OPEN) {
+    orders(status: PLACED) {
       id
+      totalCents
       customer {
         name
       }
       items {
         quantity
         product {
-          title
+          name
         }
       }
     }
@@ -36,26 +39,26 @@ it('GraphQL: the whole overview in one request', async () => {
   expect(result.errors).toBeUndefined()
   expect(result.data?.orders[0]).toEqual({
     id: 'o-1',
+    totalCents: 16700,
     customer: { name: 'Ada Lovelace' },
     items: [
-      { quantity: 1, product: { title: 'Keyboard' } },
-      { quantity: 2, product: { title: 'Mouse' } },
+      { quantity: 1, product: { name: 'Keyboard' } },
+      { quantity: 2, product: { name: 'Mouse' } },
     ],
   })
 })
 
 it('GraphQL answer is smaller than the sum of the REST answers', async () => {
-  const graphqlBytes = JSON.stringify(await execute(overviewQuery)).length
-  const openOrders = orders.filter((order) => order.status === 'OPEN')
+  const { status: _status, ...graphqlBody } = await execute(overviewQuery)
+  const graphqlBytes = JSON.stringify(graphqlBody).length
+  const openOrders = orders.filter((order) => order.status === 'PLACED')
   const restPaths = [
-    '/orders?status=OPEN',
+    '/orders?status=PLACED',
     ...openOrders.map((order) => `/customers/${order.customerId}`),
     '/products?ids=p-1,p-2',
   ]
   const restBodies = await Promise.all(
-    restPaths.map(async (path) =>
-      (await restHandler(new Request(`http://localhost${path}`))).text(),
-    ),
+    restPaths.map(async (path) => (await fetch(`${apiUrl}${path}`)).text()),
   )
   const restBytes = restBodies.reduce((sum, body) => sum + body.length, 0)
   expect(

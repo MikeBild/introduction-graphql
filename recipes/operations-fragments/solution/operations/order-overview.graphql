@@ -1,5 +1,5 @@
 query OrderOverview($first: Int!) {
-  open: orders(status: OPEN, first: $first) {
+  open: orders(status: PLACED, first: $first) {
     ...OrderRow
   }
   paid: orders(status: PAID, first: $first) {
@@ -11,7 +11,9 @@ query OrderDetail($id: ID!, $withItems: Boolean!) {
   order(id: $id) {
     ...OrderRow
     items @include(if: $withItems) {
-      title
+      product {
+        name
+      }
       quantity
     }
   }
@@ -20,7 +22,7 @@ query OrderDetail($id: ID!, $withItems: Boolean!) {
 fragment OrderRow on Order {
   id
   status
-  total
+  totalCents
   customer {
     name
   }

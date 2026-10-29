@@ -8,8 +8,11 @@ export const ordersTypeDefs = parse(/* GraphQL */ `
   extend schema @link(url: "https://specs.apollo.dev/federation/v2.3", import: ["@key"])
 
   enum OrderStatus {
-    OPEN
+    DRAFT
+    PLACED
     PAID
+    SHIPPED
+    CANCELLED
   }
 
   type Order @key(fields: "id") {

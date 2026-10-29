@@ -6,7 +6,7 @@ import { createStore, type Store } from './store.ts'
 const typeDefs = /* GraphQL */ `
   type Order {
     id: ID!
-    total: Float!
+    totalCents: Int!
     createdAt: String!
   }
 

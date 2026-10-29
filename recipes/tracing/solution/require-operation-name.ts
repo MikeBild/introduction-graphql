@@ -1,19 +1,17 @@
-import { GraphQLError, type ValidationRule } from 'graphql'
-import type { Plugin } from 'graphql-yoga'
+import type { ApolloServerPlugin } from '@apollo/server'
+import { GraphQLError } from 'graphql'
 
-// Depends only on the document, so it is safe with Yoga's validation cache.
-const operationNameRule: ValidationRule = (context) => ({
-  OperationDefinition: (operation) => {
-    if (!operation.name)
-      context.reportError(
-        new GraphQLError('Anonymous operations are not allowed. Give your operation a name.', {
-          nodes: [operation],
-          extensions: { code: 'ANONYMOUS_OPERATION' },
-        }),
-      )
-  },
-})
-
-export const useRequireOperationName = (): Plugin => ({
-  onValidate: ({ addValidationRule }) => addValidationRule(operationNameRule),
+// Rejects anonymous operations before execution: without a name, logs and traces are useless.
+export const requireOperationNamePlugin = (): ApolloServerPlugin => ({
+  requestDidStart: async () => ({
+    didResolveOperation: async ({ operation }) => {
+      if (!operation?.name)
+        throw new GraphQLError(
+          'Anonymous operations are not allowed. Give your operation a name.',
+          {
+            extensions: { code: 'ANONYMOUS_OPERATION', http: { status: 400 } },
+          },
+        )
+    },
+  }),
 })

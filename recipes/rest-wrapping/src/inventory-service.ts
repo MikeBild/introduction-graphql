@@ -1,52 +1,72 @@
-import { createServer } from 'node:http'
-import type { AddressInfo } from 'node:net'
 import { setTimeout as sleep } from 'node:timers/promises'
+import express from 'express'
 import { log } from './logger.ts'
 
-export type StockRow = { sku: string; available: number }
-type InventoryOptions = { port?: number; delayMs?: number; failingSkus?: string[] }
+export type StockRow = { productId: string; stock: number }
+type InventoryOptions = { port?: number; delayMs?: number; failingIds?: string[] }
 
-const stockBySku = new Map([
-  ['KB-1', 12],
-  ['MS-2', 0],
-  ['MN-3', 4],
+const stockByProduct = new Map([
+  ['p-1', 12],
+  ['p-2', 0],
+  ['p-3', 4],
 ])
 
-// A stand-in for an existing REST service that another team operates.
+// A stand-in for an existing REST service that another team operates (Express 5).
 export const startInventoryService = ({
   port = 0,
   delayMs = 0,
-  failingSkus = [],
-}: InventoryOptions = {}) =>
-  new Promise<{
+  failingIds = [],
+}: InventoryOptions = {}) => {
+  const requests: string[] = []
+  const authorizations: (string | undefined)[] = []
+  const app = express()
+
+  app.use(async (req, _res, next) => {
+    requests.push(decodeURIComponent(req.originalUrl))
+    authorizations.push(req.headers.authorization)
+    log.debug(`[inventory] ${req.method} ${req.originalUrl}`)
+    await sleep(delayMs)
+    next()
+  })
+
+  const rowsFor = (ids: string[]): StockRow[] | undefined =>
+    ids.some((id) => failingIds.includes(id))
+      ? undefined
+      : ids.map((productId) => ({ productId, stock: stockByProduct.get(productId) ?? 0 }))
+
+  // Single resource: GET /stock/p-1
+  app.get('/stock/:productId', (req, res) => {
+    const rows = rowsFor([req.params.productId])
+    if (!rows) res.status(503).json({ message: 'inventory db down' })
+    else res.json(rows[0])
+  })
+
+  // Collection: GET /stock?ids=p-1,p-2
+  app.get('/stock', (req, res) => {
+    const rows = rowsFor(
+      String(req.query.ids ?? '')
+        .split(',')
+        .filter(Boolean),
+    )
+    if (!rows) res.status(503).json({ message: 'inventory db down' })
+    else res.json(rows)
+  })
+
+  return new Promise<{
     url: string
     requests: string[]
     authorizations: (string | undefined)[]
     close: () => void
   }>((resolve) => {
-    const requests: string[] = []
-    const authorizations: (string | undefined)[] = []
-    const server = createServer(async (request, response) => {
-      const { pathname, searchParams } = new URL(request.url ?? '/', 'http://inventory')
-      requests.push(`${pathname}${searchParams.size ? `?${searchParams}` : ''}`)
-      authorizations.push(request.headers.authorization)
-      log.debug(`[inventory] ${request.method} ${request.url}`)
-      await sleep(delayMs)
-      const skus = pathname.startsWith('/stock/')
-        ? [decodeURIComponent(pathname.slice('/stock/'.length))]
-        : (searchParams.get('skus')?.split(',') ?? [])
-      if (skus.some((sku) => failingSkus.includes(sku))) {
-        response
-          .writeHead(503, { 'content-type': 'application/json' })
-          .end('{"message":"inventory db down"}')
-        return
-      }
-      const rows: StockRow[] = skus.map((sku) => ({ sku, available: stockBySku.get(sku) ?? 0 }))
-      response
-        .writeHead(200, { 'content-type': 'application/json' })
-        .end(JSON.stringify(pathname.startsWith('/stock/') ? rows[0] : rows))
-    }).listen(port, () => {
-      const url = `http://localhost:${(server.address() as AddressInfo).port}`
-      resolve({ url, requests, authorizations, close: () => server.close() })
+    const server = app.listen(port, () => {
+      const address = server.address()
+      const actualPort = typeof address === 'object' && address ? address.port : port
+      resolve({
+        url: `http://localhost:${actualPort}`,
+        requests,
+        authorizations,
+        close: () => server.close(),
+      })
     })
   })
+}

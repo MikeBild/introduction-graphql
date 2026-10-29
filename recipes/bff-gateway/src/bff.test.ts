@@ -1,23 +1,24 @@
-import { expect, it } from 'vitest'
-import { yoga } from './bff-web.ts'
-import { createTestClient } from './test-client.ts'
+import { afterAll, expect, it } from 'vitest'
+import { createWebBff } from './bff-web.ts'
+import { startTestServer } from './test-client.ts'
 
-const client = createTestClient(yoga)
+const { execute: client, close } = await startTestServer(await createWebBff())
+afterAll(close)
 // as customer c-1 (Ada Lovelace)
 const execute = (query: string) => client(query, {}, { authorization: 'c-1' })
 
 it('the web BFF serves exactly what the order page shows', async () => {
   const result = await execute(
-    `query OrderPage { orderPage(id: "o-1") { id customerName canCancel } }`,
+    `query OrderPage { orderPage(id: "o-1") { id totalCents customerName canCancel } }`,
   )
   expect(result.data).toEqual({
-    orderPage: { id: 'o-1', customerName: 'Ada Lovelace', canCancel: true },
+    orderPage: { id: 'o-1', totalCents: 2580, customerName: 'Ada Lovelace', canCancel: true },
   })
 })
 
 it('the cancel rule is enforced – but only inside the web resolver', async () => {
-  const open = await execute(`mutation Cancel { cancelOrder(id: "o-1") { status canCancel } }`)
-  expect(open.data).toEqual({ cancelOrder: { status: 'CANCELLED', canCancel: false } })
+  const placed = await execute(`mutation Cancel { cancelOrder(id: "o-1") { status canCancel } }`)
+  expect(placed.data).toEqual({ cancelOrder: { status: 'CANCELLED', canCancel: false } })
 })
 
 it('customers see and cancel only their own orders', async () => {

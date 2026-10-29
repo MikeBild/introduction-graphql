@@ -28,7 +28,7 @@ it('the gateway joins orders and customers via the Customer entity', async () =>
   expect(result.errors).toBeUndefined()
   expect(result.data?.orders[0]).toEqual({
     id: 'o-1',
-    status: 'OPEN',
+    status: 'PLACED',
     customer: { name: 'Ada Lovelace' },
   })
 })

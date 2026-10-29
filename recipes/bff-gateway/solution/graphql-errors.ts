@@ -5,9 +5,9 @@ import type { CancelResult } from './domain/order-rules.ts'
 export const unwrapCancel = (result: CancelResult) => {
   if (result.ok) return result.order
   throw new GraphQLError(
-    result.reason === 'NOT_FOUND' ? 'Order not found' : 'Only open orders can be cancelled',
-    {
-      extensions: { code: result.reason },
-    },
+    result.reason === 'NOT_FOUND'
+      ? 'Order not found'
+      : 'Only draft or placed orders can be cancelled',
+    { extensions: { code: result.reason } },
   )
 }
