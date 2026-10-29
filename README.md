@@ -75,12 +75,22 @@ Runnable recipes, from easy to hard, all around one running example: the worksho
 - [Tracing and Metrics](recipes/tracing/README.md) – Apollo Server 5, Express 5, OpenTelemetry
 - [BFF and Domain Boundaries](recipes/bff-gateway/README.md) – Apollo Server 5, Express 5
 
+## Workshops and slides
+
+The exercises belong to these German-language workshops:
+
+- [GraphQL vom Schema bis Production](https://workshops.mikebild.dev/w/graphql/onsite/)
+- [GraphQL-APIs entwerfen und bauen](https://workshops.mikebild.dev/w/graphql-kompakt/online/)
+- [GraphQL in 60 Minuten](https://workshops.mikebild.dev/w/mini-kurs/online/)
+- [Fullstack mit TypeScript, Node.js, GraphQL und React in 6 Tagen](https://workshops.mikebild.dev/w/fullstack/onsite/)
+
+Slides: [slides.mikebild.dev/introduction-graphql](https://slides.mikebild.dev/introduction-graphql.html)
+
 ## Resources
 
 - [Introduction to NodeJS](https://github.com/mikebild/introduction-nodejs)
 - [Introduction to React](https://github.com/mikebild/introduction-react)
 - [GraphQL Resources](introduction-graphql/resources.md)
-- [Apollo Resources](introduction-apollo/resources.md)
 
 ## Issue Reporting
 
