@@ -1,5 +1,4 @@
-import assert from 'node:assert/strict'
-import { after, test } from 'node:test'
+import { afterAll, expect, it } from 'vitest'
 import { parse } from 'graphql'
 import { createCustomersSubgraph, customersTypeDefs } from './customers-subgraph.ts'
 import { createOrdersSubgraph, ordersTypeDefs } from './orders-subgraph.ts'
@@ -13,25 +12,25 @@ const subgraphs = [
   { name: 'orders', typeDefs: ordersTypeDefs, url: orders.url },
 ]
 const gateway = createGateway(composeSupergraph(subgraphs))
-after(async () => {
+afterAll(async () => {
   await gateway.dispose()
   customers.close()
   orders.close()
 })
 
-test('the gateway joins orders and customers via the Customer entity', async () => {
+it('the gateway joins orders and customers via the Customer entity', async () => {
   const result = await createTestClient(gateway)<{
     orders: { id: string; customer: { name: string } }[]
   }>(`query OrdersWithCustomer { orders { id status customer { name } } }`)
-  assert.equal(result.errors, undefined)
-  assert.deepEqual(result.data?.orders[0], {
+  expect(result.errors).toBeUndefined()
+  expect(result.data?.orders[0]).toEqual({
     id: 'o-1',
     status: 'OPEN',
     customer: { name: 'Ada Lovelace' },
   })
 })
 
-test('composition fails when two subgraphs disagree about a shared type', () => {
+it('composition fails when two subgraphs disagree about a shared type', () => {
   const conflicting = parse(/* GraphQL */ `
     extend schema @link(url: "https://specs.apollo.dev/federation/v2.3", import: ["@key"])
     type Customer @key(fields: "id", resolvable: false) {
@@ -41,12 +40,10 @@ test('composition fails when two subgraphs disagree about a shared type', () => 
       ping: String
     }
   `)
-  assert.throws(
-    () =>
-      composeSupergraph([
-        ...subgraphs,
-        { name: 'billing', typeDefs: conflicting, url: 'http://billing/graphql' },
-      ]),
-    /Composition failed/,
-  )
+  expect(() =>
+    composeSupergraph([
+      ...subgraphs,
+      { name: 'billing', typeDefs: conflicting, url: 'http://billing/graphql' },
+    ]),
+  ).toThrow(/Composition failed/)
 })

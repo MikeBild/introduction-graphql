@@ -1,5 +1,4 @@
-import assert from 'node:assert/strict'
-import { after, test } from 'node:test'
+import { afterAll, expect, it } from 'vitest'
 import { createCustomersSubgraph, customersTypeDefs } from '../src/customers-subgraph.ts'
 import { composeSupergraph, createGateway, listen } from '../src/supergraph.ts'
 import { createTestClient } from '../src/test-client.ts'
@@ -12,18 +11,18 @@ const supergraphSdl = composeSupergraph([
   { name: 'orders', typeDefs: ordersTypeDefs, url: orders.url },
 ])
 const gateway = createGateway(supergraphSdl)
-after(async () => {
+afterAll(async () => {
   await gateway.dispose()
   customers.close()
   orders.close()
 })
 
-test('Customer.orders comes from the orders subgraph, name from the customers subgraph', async () => {
+it('Customer.orders comes from the orders subgraph, name from the customers subgraph', async () => {
   const result = await createTestClient(gateway)<{
     customers: { name: string; orders: { id: string }[] }[]
   }>(`query CustomersWithOrders { customers { name orders { id status } } }`)
-  assert.equal(result.errors, undefined)
-  assert.deepEqual(result.data?.customers, [
+  expect(result.errors).toBeUndefined()
+  expect(result.data?.customers).toEqual([
     { name: 'Ada Lovelace', orders: [{ id: 'o-1', status: 'OPEN' }] },
     {
       name: 'Alan Turing',
@@ -35,6 +34,6 @@ test('Customer.orders comes from the orders subgraph, name from the customers su
   ])
 })
 
-test('the supergraph records which subgraph resolves which field', () => {
-  assert.match(supergraphSdl, /orders: \[Order!\]! @join__field\(graph: ORDERS\)/)
+it('the supergraph records which subgraph resolves which field', () => {
+  expect(supergraphSdl).toMatch(/orders: \[Order!\]! @join__field\(graph: ORDERS\)/)
 })

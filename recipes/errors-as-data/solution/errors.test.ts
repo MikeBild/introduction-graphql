@@ -1,5 +1,4 @@
-import assert from 'node:assert/strict'
-import { test } from 'node:test'
+import { expect, it } from 'vitest'
 import { createTestClient } from '../src/test-client.ts'
 import { yoga } from './yoga.ts'
 
@@ -34,48 +33,48 @@ const placeOrder = /* GraphQL */ `
   }
 `
 
-test('out of stock is a typed result, not an error', async () => {
+it('out of stock is a typed result, not an error', async () => {
   const result = await execute<PlaceOrderData>(
     placeOrder,
     { input: { productId: 'p-2', quantity: 1, street: 'Main St 1' } },
     asCustomer,
   )
-  assert.equal(result.errors, undefined)
-  assert.deepEqual(result.data?.placeOrder, {
+  expect(result.errors).toBeUndefined()
+  expect(result.data?.placeOrder).toEqual({
     __typename: 'OutOfStock',
     productId: 'p-2',
     message: 'Not enough items in stock.',
   })
 })
 
-test('an invalid address names the field', async () => {
+it('an invalid address names the field', async () => {
   const result = await execute<PlaceOrderData>(
     placeOrder,
     { input: { productId: 'p-1', quantity: 1, street: ' ' } },
     asCustomer,
   )
-  assert.deepEqual(result.data?.placeOrder, {
+  expect(result.data?.placeOrder).toEqual({
     __typename: 'InvalidAddress',
     field: 'street',
     message: 'Street must not be empty.',
   })
 })
 
-test('success returns the order', async () => {
+it('success returns the order', async () => {
   const result = await execute<PlaceOrderData>(
     placeOrder,
     { input: { productId: 'p-1', quantity: 2, street: 'Main St 1' } },
     asCustomer,
   )
-  assert.deepEqual(result.data?.placeOrder, {
+  expect(result.data?.placeOrder).toEqual({
     __typename: 'PlaceOrderSuccess',
     order: { id: 'o-2' },
   })
 })
 
-test('technical and cross-cutting errors stay in the errors field', async () => {
+it('technical and cross-cutting errors stay in the errors field', async () => {
   const result = await execute<PlaceOrderData>(placeOrder, {
     input: { productId: 'p-1', quantity: 1, street: 'Main St 1' },
   })
-  assert.equal(result.errors?.[0]?.extensions?.code, 'UNAUTHENTICATED')
+  expect(result.errors?.[0]?.extensions?.code).toBe('UNAUTHENTICATED')
 })
