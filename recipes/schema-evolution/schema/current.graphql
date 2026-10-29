@@ -2,19 +2,26 @@
 type Order {
   id: ID!
   status: OrderStatus!
-  total: Float!
+  "Total in whole cents"
+  total: Int!
   # new and optional: an additive change
-  placedAt: String
+  createdAt: String
 }
 
 enum OrderStatus {
-  OPEN
+  DRAFT
+  PLACED
   PAID
+  CANCELLED
+}
+
+input OrderItemInput {
+  productId: ID!
+  quantity: Int!
 }
 
 input PlaceOrderInput {
-  productId: ID!
-  quantity: Int!
+  items: [OrderItemInput!]!
 }
 
 type Query {

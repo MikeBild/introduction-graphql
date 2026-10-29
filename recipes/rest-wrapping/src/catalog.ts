@@ -1,7 +1,8 @@
-export type Product = { id: string; sku: string; title: string }
+export type Product = { id: string; name: string; priceCents: number }
 
+// The catalog belongs to the GraphQL service; the stock lives in another team's REST service.
 export const products: Product[] = [
-  { id: 'p-1', sku: 'KB-1', title: 'Keyboard' },
-  { id: 'p-2', sku: 'MS-2', title: 'Mouse' },
-  { id: 'p-3', sku: 'MN-3', title: 'Monitor' },
+  { id: 'p-1', name: 'Hammer', priceCents: 1990 },
+  { id: 'p-2', name: 'Screwdriver set', priceCents: 2490 },
+  { id: 'p-3', name: 'Cordless drill', priceCents: 8900 },
 ]

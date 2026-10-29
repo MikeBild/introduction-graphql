@@ -1,17 +1,17 @@
-import assert from 'node:assert/strict'
-import { test } from 'node:test'
+import { afterAll, expect, it } from 'vitest'
+import { createApp } from './app.ts'
 import type { Customer, Order, Product } from './data.ts'
-import { restHandler } from './rest.ts'
-import { createTestClient } from './test-client.ts'
-import { yoga } from './yoga.ts'
+import { startTestServer } from './test-client.ts'
 
-const execute = createTestClient(yoga)
+const { url, execute, close } = await startTestServer(await createApp())
+afterAll(close)
+const apiUrl = url.replace('/graphql', '/api')
 
 // Counts requests and bytes like the network tab in the browser would.
 const createRestClient = () => {
   const stats = { requests: 0, bytes: 0 }
   const get = async <T>(path: string): Promise<T> => {
-    const body = await (await restHandler(new Request(`http://localhost${path}`))).text()
+    const body = await (await fetch(`${apiUrl}${path}`)).text()
     stats.requests += 1
     stats.bytes += body.length
     return JSON.parse(body) as T
@@ -19,9 +19,9 @@ const createRestClient = () => {
   return { get, stats }
 }
 
-test('REST: the open-orders view needs a request waterfall and overfetches', async () => {
+it('REST: the open-orders view needs a request waterfall and overfetches', async () => {
   const { get, stats } = createRestClient()
-  const openOrders = await get<Order[]>('/orders?status=OPEN')
+  const openOrders = await get<Order[]>('/orders?status=PLACED')
   const customers = await Promise.all(
     openOrders.map((order) => get<Customer>(`/customers/${order.customerId}`)),
   )
@@ -30,17 +30,22 @@ test('REST: the open-orders view needs a request waterfall and overfetches', asy
   ]
   const products = await get<Product[]>(`/products?ids=${productIds.join(',')}`)
 
-  assert.equal(customers.length, 2)
-  assert.equal(products.length, 2)
-  assert.equal(stats.requests, 4)
-  assert.ok('phone' in (customers[0] ?? {}), 'REST returns fields the view never shows')
+  expect(customers.length).toBe(2)
+  expect(products.length).toBe(2)
+  expect(stats.requests).toBe(4)
+  expect('phone' in (customers[0] ?? {}), 'REST returns fields the view never shows').toBeTruthy()
 })
 
-test('GraphQL: one request returns exactly the requested fields', async () => {
+it('REST: an unknown customer is a 404', async () => {
+  const response = await fetch(`${apiUrl}/customers/c-404`)
+  expect(response.status).toBe(404)
+})
+
+it('GraphQL: one request returns exactly the requested fields', async () => {
   const result = await execute<{ orders: { id: string; customer: { name: string } }[] }>(
     /* GraphQL */ `
       query OpenOrders {
-        orders(status: OPEN) {
+        orders(status: PLACED) {
           id
           customer {
             name
@@ -49,8 +54,18 @@ test('GraphQL: one request returns exactly the requested fields', async () => {
       }
     `,
   )
-  assert.deepEqual(result.data?.orders, [
+  expect(result.data?.orders).toEqual([
     { id: 'o-1', customer: { name: 'Ada Lovelace' } },
     { id: 'o-3', customer: { name: 'Alan Turing' } },
+  ])
+})
+
+it('GraphQL: OrderItem knows only the productId – the product name needs a second API', async () => {
+  const result = await execute<{ orders: { items: { productId: string }[] }[] }>(
+    `query { orders(status: PLACED) { items { productId quantity } } }`,
+  )
+  expect(result.data?.orders[0]?.items).toEqual([
+    { productId: 'p-1', quantity: 1 },
+    { productId: 'p-2', quantity: 2 },
   ])
 })

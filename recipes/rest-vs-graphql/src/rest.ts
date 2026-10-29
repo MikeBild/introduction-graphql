@@ -1,29 +1,26 @@
+import { Router } from 'express'
 import { customers, findCustomer, orders, products } from './data.ts'
 import { log } from './logger.ts'
 
-const json = (body: unknown, status = 200) =>
-  new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json' } })
-
 // A classic resource API: fixed endpoints, full objects, one resource per URL.
-export const restHandler = async (request: Request): Promise<Response> => {
-  const { pathname, searchParams } = new URL(request.url)
-  log.debug(`[rest] ${request.method} ${pathname}${searchParams.size ? `?${searchParams}` : ''}`)
-
-  if (pathname === '/orders') {
-    const status = searchParams.get('status')
-    return json(status ? orders.filter((order) => order.status === status) : orders)
-  }
-  const customerMatch = pathname.match(/^\/customers\/([\w-]+)$/)
-  if (customerMatch) {
-    const customer = findCustomer(customerMatch[1] ?? '')
-    return customer ? json(customer) : json({ message: 'Customer not found' }, 404)
-  }
-  if (pathname === '/customers') return json(customers)
-  if (pathname === '/products') {
-    const productIds = searchParams.get('ids')?.split(',') ?? []
-    return json(
-      productIds.length ? products.filter((product) => productIds.includes(product.id)) : products,
-    )
-  }
-  return json({ message: 'Not found' }, 404)
-}
+export const restRouter = Router()
+  .use((req, _res, next) => {
+    log.debug(`[rest] ${req.method} ${req.originalUrl}`)
+    next()
+  })
+  .get('/orders', (req, res) => {
+    const status = req.query.status
+    res.json(status ? orders.filter((order) => order.status === status) : orders)
+  })
+  .get('/customers', (_req, res) => {
+    res.json(customers)
+  })
+  .get('/customers/:id', (req, res) => {
+    const customer = findCustomer(req.params.id)
+    if (customer) res.json(customer)
+    else res.status(404).json({ message: 'Customer not found' })
+  })
+  .get('/products', (req, res) => {
+    const ids = typeof req.query.ids === 'string' ? req.query.ids.split(',') : []
+    res.json(ids.length ? products.filter((product) => ids.includes(product.id)) : products)
+  })

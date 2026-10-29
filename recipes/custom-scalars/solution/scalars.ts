@@ -11,15 +11,14 @@ const toDate = (value: unknown): Date => {
   return date
 }
 
-// graphql 17 names: coerceOutputValue, coerceInputValue, coerceInputLiteral.
-// The older serialize, parseValue and parseLiteral still work but are deprecated until v18.
+// graphql 16: serialize (output), parseValue (variables) and parseLiteral (values in the query text).
 export const DateTime = new GraphQLScalarType<Date, string>({
   name: 'DateTime',
   specifiedByURL: 'https://www.rfc-editor.org/rfc/rfc3339',
-  coerceOutputValue: (value) => {
+  serialize: (value) => {
     if (!(value instanceof Date)) throw new GraphQLError('DateTime can only serialize Date values')
     return value.toISOString()
   },
-  coerceInputValue: toDate,
-  coerceInputLiteral: (ast) => toDate(ast.kind === Kind.STRING ? ast.value : null),
+  parseValue: toDate,
+  parseLiteral: (ast) => toDate(ast.kind === Kind.STRING ? ast.value : null),
 })

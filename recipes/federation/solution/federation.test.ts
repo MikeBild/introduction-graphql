@@ -1,40 +1,42 @@
-import assert from 'node:assert/strict'
-import { after, test } from 'node:test'
+import { afterAll, expect, it } from 'vitest'
 import { createCustomersSubgraph, customersTypeDefs } from '../src/customers-subgraph.ts'
 import { composeSupergraph, createGateway, listen } from '../src/supergraph.ts'
 import { createTestClient } from '../src/test-client.ts'
 import { createOrdersSubgraph, ordersTypeDefs } from './orders-subgraph.ts'
 
-const customers = await listen(createCustomersSubgraph())
-const orders = await listen(createOrdersSubgraph())
+const customers = await listen(await createCustomersSubgraph())
+const orders = await listen(await createOrdersSubgraph())
 const supergraphSdl = composeSupergraph([
   { name: 'customers', typeDefs: customersTypeDefs, url: customers.url },
   { name: 'orders', typeDefs: ordersTypeDefs, url: orders.url },
 ])
-const gateway = createGateway(supergraphSdl)
-after(async () => {
-  await gateway.dispose()
+const gateway = await createGateway(supergraphSdl)
+const gatewayServer = await listen(gateway.app)
+const execute = createTestClient(gatewayServer.url)
+afterAll(async () => {
+  await gateway.stop()
+  gatewayServer.close()
   customers.close()
   orders.close()
 })
 
-test('Customer.orders comes from the orders subgraph, name from the customers subgraph', async () => {
-  const result = await createTestClient(gateway)<{
+it('Customer.orders comes from the orders subgraph, name from the customers subgraph', async () => {
+  const result = await execute<{
     customers: { name: string; orders: { id: string }[] }[]
   }>(`query CustomersWithOrders { customers { name orders { id status } } }`)
-  assert.equal(result.errors, undefined)
-  assert.deepEqual(result.data?.customers, [
-    { name: 'Ada Lovelace', orders: [{ id: 'o-1', status: 'OPEN' }] },
+  expect(result.errors).toBeUndefined()
+  expect(result.data?.customers).toEqual([
+    { name: 'Ada Lovelace', orders: [{ id: 'o-1', status: 'PLACED' }] },
     {
       name: 'Alan Turing',
       orders: [
         { id: 'o-2', status: 'PAID' },
-        { id: 'o-3', status: 'OPEN' },
+        { id: 'o-3', status: 'PLACED' },
       ],
     },
   ])
 })
 
-test('the supergraph records which subgraph resolves which field', () => {
-  assert.match(supergraphSdl, /orders: \[Order!\]! @join__field\(graph: ORDERS\)/)
+it('the supergraph records which subgraph resolves which field', () => {
+  expect(supergraphSdl).toMatch(/orders: \[Order!\]! @join__field\(graph: ORDERS\)/)
 })

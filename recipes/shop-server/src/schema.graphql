@@ -1,0 +1,59 @@
+"Lifecycle of an order: DRAFT → PLACED → PAID → SHIPPED; CANCELLED only from DRAFT or PLACED"
+enum OrderStatus {
+  DRAFT
+  PLACED
+  PAID
+  SHIPPED
+  CANCELLED
+}
+
+"A product of the workshop shop. Money is always in whole cents."
+type Product {
+  id: ID!
+  name: String!
+  priceCents: Int!
+  stock: Int!
+}
+
+type OrderItem {
+  productId: ID!
+  quantity: Int!
+  "Unit price at the time of ordering"
+  priceCents: Int!
+}
+
+type Order {
+  id: ID!
+  customerId: ID!
+  items: [OrderItem!]!
+  status: OrderStatus!
+  "Sum of quantity × priceCents"
+  totalCents: Int!
+  "ISO 8601 timestamp"
+  createdAt: String!
+}
+
+type Query {
+  products: [Product!]!
+  "All orders, or only those in the given status"
+  orders(status: OrderStatus): [Order!]!
+  order(id: ID!): Order
+}
+
+input OrderItemInput {
+  productId: ID!
+  quantity: Int!
+}
+
+input PlaceOrderInput {
+  items: [OrderItemInput!]!
+}
+
+type PlaceOrderPayload {
+  order: Order!
+}
+
+type Mutation {
+  "Places an order for the signed-in customer. Needs the header authorization: Bearer <token>"
+  placeOrder(input: PlaceOrderInput!): PlaceOrderPayload!
+}

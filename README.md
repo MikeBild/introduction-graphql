@@ -6,7 +6,7 @@
   - JavaScript/TypeScript
   - NodeJS
   - React
-- NodeJS LTS
+- Node.js 26 or newer (the recipes run TypeScript directly, use Apollo Server 5 on Express 5 and test with Vitest)
 - Linux, OSX or Windows operation system
 - VS Code
 - Chrome and Developer Tools
@@ -41,24 +41,39 @@
 - [Coming Soon - Defer, Batch, etc.](introduction-graphql/soon.md)
 ## Examples
 
-- [Apollo Example](apollo-example/README.md)
 - [DotNet (C#) Server Example](graphql-server-example-dotnet/README.md)
+- [Legacy: Apollo Server 2 and React 17 example](legacy/apollo-example/README.md) – replaced by the shop recipes below
 
 ## Exercises
 
-Small, runnable GraphQL Yoga recipes with an exercise, tests and a solution:
+Runnable recipes, from easy to hard, all around one running example: the workshop shop with products, customers and orders (money in whole cents, order status DRAFT → PLACED → PAID → SHIPPED, CANCELLED only from DRAFT or PLACED). `src/` is the starting point, `solution/` a possible solution, the README holds the exercise. Node.js 26 or newer; servers run Apollo Server 5 on Express 5. In each folder `npm ci`, `npm test` (Vitest) and `npm run typecheck`.
 
-- [REST vs. GraphQL](recipes/rest-vs-graphql/README.md)
-- [Operations: Variables, Fragments, Aliases](recipes/operations-fragments/README.md)
-- [Errors as Data](recipes/errors-as-data/README.md)
-- [Custom Scalars](recipes/custom-scalars/README.md)
-- [Wrapping REST](recipes/rest-wrapping/README.md)
-- [Query Cost Limits and Persisted Operations](recipes/query-cost-limits/README.md)
-- [Response Caching](recipes/response-caching/README.md)
-- [Schema Evolution](recipes/schema-evolution/README.md)
-- [Federation](recipes/federation/README.md)
-- [Tracing and Metrics](recipes/tracing/README.md)
-- [BFF and Domain Boundaries](recipes/bff-gateway/README.md)
+### Level 1 – basics
+
+- [REST vs. GraphQL](recipes/rest-vs-graphql/README.md) – Apollo Server 5, Express 5
+- [Workshop shop: a first Apollo Server on Express (SDL, mutations, testing)](recipes/shop-server/README.md) – Apollo Server 5, Express 5
+- [Operations: Variables, Fragments, Aliases](recipes/operations-fragments/README.md) – Apollo Server 5, Express 5
+- [Resolvers without N+1: DataLoader for products](recipes/dataloader/README.md) – Apollo Server 5, Express 5, DataLoader
+- [Errors as Data](recipes/errors-as-data/README.md) – Apollo Server 5, Express 5
+
+### Level 2 – everyday practice
+
+- [Workshop shop: a React client with Apollo Client 4 and Codegen](recipes/shop-client/README.md) – React 19, Apollo Client 4, GraphQL Codegen (typescript-operations)
+- [Authentication, access tokens (OIDC, jose) and authorization](recipes/auth/README.md) – Apollo Server 5, Express 5, jose, Apollo Client 4
+- [Pagination of orders with Connections and Apollo cache policies](recipes/pagination/README.md) – Apollo Server 5, Express 5, Apollo Client 4
+- [Optimistic UI with the Apollo Client cache](recipes/optimistic-ui/README.md) – Apollo Server 5, Express 5, Apollo Client 4
+- [Custom Scalars](recipes/custom-scalars/README.md) – Apollo Server 5, Express 5, graphql-scalars
+- [Wrapping REST](recipes/rest-wrapping/README.md) – Apollo Server 5, Express 5, DataLoader
+
+### Level 3 – architecture and operations
+
+- [Live order status with subscriptions](recipes/subscriptions/README.md) – Apollo Server 5, Express 5, graphql-ws, ws, Apollo Client 4
+- [Apollo Federation](recipes/federation/README.md) – Apollo Server 5, Express 5, Apollo Gateway
+- [Query Cost Limits and Persisted Operations](recipes/query-cost-limits/README.md) – Apollo Server 5, Express 5
+- [Response Caching with @cacheControl](recipes/response-caching/README.md) – Apollo Server 5, Express 5, Apollo response cache plugin
+- [Schema Evolution](recipes/schema-evolution/README.md) – Apollo Server 5, Express 5, GraphQL Inspector
+- [Tracing and Metrics](recipes/tracing/README.md) – Apollo Server 5, Express 5, OpenTelemetry
+- [BFF and Domain Boundaries](recipes/bff-gateway/README.md) – Apollo Server 5, Express 5
 
 ## Resources
 

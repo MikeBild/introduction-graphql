@@ -1,6 +1,6 @@
 # BFF and Domain Boundaries
 
-A Backend for Frontend for the web shop (`src/bff-web.ts`) on top of two domain modules (`src/domain/orders.ts`, `src/domain/customers.ts`). The schema follows the web page, not the database – good. But the rule "only open orders can be cancelled" lives in a resolver – a job or a second client would have to copy it.
+A Backend for Frontend for the workshop shop's web pages (`src/bff-web.ts`, Apollo Server 5 on Express 5) on top of two domain modules (`src/domain/orders.ts`, `src/domain/customers.ts`). The schema follows the web page, not the database – good. But the rule "only DRAFT or PLACED orders can be cancelled" lives in a resolver – a job or a second client would have to copy it.
 
 ```
 web shop -> web BFF ─┐
@@ -13,13 +13,13 @@ nightly job ─────────┘   domain customers
 ```sh
 npm install
 npm test
-npm start            # web BFF with GraphiQL on http://localhost:4000/graphql
+npm start            # web BFF with Apollo Sandbox on http://localhost:4000/graphql
 ```
 
 ## Exercise
 
 1. Move the cancel rule out of the resolver into the orders domain. Return a result (`{ ok, order }` or `{ ok: false, reason }`) and translate it to a `GraphQLError` code only in the API layer.
-2. Add a second BFF for the mobile app with a lean `myOrders` list (customer from the `authorization` header) – it reuses the domain, not the web resolvers.
+2. Add a second BFF for the mobile app with a lean `myOrders` list (customer from the `authorization` header) – its own Apollo Server on its own Express app (`src/bff-app-factory.ts`), reusing the domain, not the web resolvers.
 3. Write a nightly job function `cancelStaleOrders(now, maxAgeDays)` that uses the same rule without GraphQL.
 4. Decide for your platform: BFF per client, one central graph, or federation? Write a short ADR:
 

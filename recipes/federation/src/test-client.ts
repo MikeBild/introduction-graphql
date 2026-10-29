@@ -1,23 +1,20 @@
 export type GraphQLResponse<TData> = {
+  status: number
   data?: TData | null
   errors?: { message: string; path?: (string | number)[]; extensions?: Record<string, unknown> }[]
-  extensions?: Record<string, unknown>
 }
 
-type FetchHandler = { fetch: (url: string, init: RequestInit) => Promise<Response> | Response }
-
-// Sends a GraphQL request through yoga.fetch, no network or port needed.
+// Sends a GraphQL request over HTTP to a running server.
 export const createTestClient =
-  (server: FetchHandler) =>
+  (url: string) =>
   async <TData = Record<string, unknown>>(
     query: string,
     variables: Record<string, unknown> = {},
-    headers: Record<string, string> = {},
   ): Promise<GraphQLResponse<TData>> => {
-    const response = await server.fetch('http://localhost/graphql', {
+    const response = await fetch(url, {
       method: 'POST',
-      headers: { 'content-type': 'application/json', ...headers },
+      headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ query, variables }),
     })
-    return (await response.json()) as GraphQLResponse<TData>
+    return { status: response.status, ...((await response.json()) as object) }
   }

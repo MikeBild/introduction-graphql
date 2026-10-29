@@ -1,11 +1,12 @@
-import loglevel from 'loglevel'
-import { Logger } from 'graphql-yoga'
+// A tiny console logger. LOG_LEVEL: debug, info, warn or error (default info).
+const levels = ['debug', 'info', 'warn', 'error'] as const
+type Level = (typeof levels)[number]
 
-export const log = loglevel.getLogger('operations-fragments')
-// LOG_LEVEL is also read by Yoga's logger: trace, debug, info, warn or error
-log.setLevel((process.env.LOG_LEVEL ?? 'info') as loglevel.LogLevelDesc)
+const threshold = Math.max(0, levels.indexOf((process.env.LOG_LEVEL ?? 'info') as Level))
+const at =
+  (level: Level) =>
+  (...args: unknown[]) => {
+    if (levels.indexOf(level) >= threshold) console[level](...args)
+  }
 
-// Bridges Yoga's built-in logger to loglevel, so all server output shares one level.
-export const yogaLogger = new Logger({
-  writers: [{ write: (level, attributes, message) => log[level](message ?? '', attributes ?? '') }],
-})
+export const log = { debug: at('debug'), info: at('info'), warn: at('warn'), error: at('error') }

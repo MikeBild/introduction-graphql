@@ -1,16 +1,23 @@
-import { createSchema, createYoga, type YogaInitialContext } from 'graphql-yoga'
-import { ordersOfCustomer, type Order } from '../src/domain/orders.ts'
-import { yogaLogger } from '../src/logger.ts'
+import { requireCustomer, type Context } from '../src/auth.ts'
+import { createBffApp } from '../src/bff-app-factory.ts'
+import { ordersOfCustomer, totalCents, type Order } from '../src/domain/orders.ts'
 import { canCancel, cancelOrder } from './domain/order-rules.ts'
 import { unwrapCancel } from './graphql-errors.ts'
-import { customerIdOf } from '../src/auth.ts'
 
 // BFF for the mobile app: a lean list for small screens, built by the app team.
 const typeDefs = /* GraphQL */ `
+  enum OrderStatus {
+    DRAFT
+    PLACED
+    PAID
+    SHIPPED
+    CANCELLED
+  }
+
   type OrderTile {
     id: ID!
-    status: String!
-    total: Float!
+    status: OrderStatus!
+    totalCents: Int!
     canCancel: Boolean!
   }
 
@@ -23,23 +30,27 @@ const typeDefs = /* GraphQL */ `
   }
 `
 
-const toTile = (order: Order) => ({ ...order, canCancel: canCancel(order) })
+const toTile = (order: Order) => ({
+  ...order,
+  totalCents: totalCents(order),
+  canCancel: canCancel(order),
+})
 
-export const yoga = createYoga({
-  logging: yogaLogger,
-  schema: createSchema<YogaInitialContext>({
+export const createAppBff = () =>
+  createBffApp({
     typeDefs,
     resolvers: {
       Query: {
-        myOrders: (_parent: unknown, _args: unknown, context: YogaInitialContext) =>
-          ordersOfCustomer(customerIdOf(context)).map(toTile),
+        myOrders: (_parent: unknown, _args: unknown, context: Context) =>
+          ordersOfCustomer(requireCustomer(context)).map(toTile),
       },
       Mutation: {
-        cancelOrder: (_parent: unknown, { id }: { id: string }, context: YogaInitialContext) =>
+        cancelOrder: (_parent: unknown, { id }: { id: string }, context: Context) =>
           toTile(
-            unwrapCancel(cancelOrder(id, { kind: 'customer', customerId: customerIdOf(context) })),
+            unwrapCancel(
+              cancelOrder(id, { kind: 'customer', customerId: requireCustomer(context) }),
+            ),
           ),
       },
     },
-  }),
-})
+  })

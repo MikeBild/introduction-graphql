@@ -10,9 +10,7 @@ const upstreamError = (error: unknown, url: string) => {
   log.warn(`[inventory] ${isTimeout ? 'timeout' : 'failed'} ${url}: ${String(error)}`)
   return new GraphQLError(
     isTimeout ? 'Inventory did not answer in time.' : 'Inventory is not available.',
-    {
-      extensions: { code: isTimeout ? 'UPSTREAM_TIMEOUT' : 'UPSTREAM_ERROR' },
-    },
+    { extensions: { code: isTimeout ? 'UPSTREAM_TIMEOUT' : 'UPSTREAM_ERROR' } },
   )
 }
 
@@ -30,11 +28,11 @@ export const fetchJson = async <T>(url: string, token: string | null): Promise<T
   }
 }
 
-// Created per request: bundles all SKUs of one GraphQL request into a single REST call.
+// Created per request: bundles all product ids of one GraphQL request into a single REST call.
 export const createStockLoader = (inventoryUrl: string, token: string | null) =>
-  new DataLoader<string, number | null>(async (skus) => {
-    const query = new URLSearchParams({ skus: skus.join(',') })
+  new DataLoader<string, number | null>(async (ids) => {
+    const query = new URLSearchParams({ ids: ids.join(',') })
     const rows = await fetchJson<StockRow[]>(`${inventoryUrl}/stock?${query}`, token)
-    const availableBySku = new Map(rows.map((row) => [row.sku, row.available]))
-    return skus.map((sku) => availableBySku.get(sku) ?? null)
+    const stockById = new Map(rows.map((row) => [row.productId, row.stock]))
+    return ids.map((id) => stockById.get(id) ?? null)
   })

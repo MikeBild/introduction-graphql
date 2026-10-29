@@ -2,25 +2,32 @@
 type Order {
   id: ID!
   status: OrderStatus!
-  total: Float! @deprecated(reason: "Use totalPrice, it includes the currency.")
+  "Total in whole cents"
+  total: Int! @deprecated(reason: "Use totalPrice, it includes the currency.")
   totalPrice: Money!
-  placedAt: String
+  createdAt: String
 }
 
+"Money in whole cents plus currency – never a float"
 type Money {
-  "decimal string, no float rounding"
-  amount: String!
+  amountCents: Int!
   currency: String!
 }
 
 enum OrderStatus {
-  OPEN
+  DRAFT
+  PLACED
   PAID
+  CANCELLED
+}
+
+input OrderItemInput {
+  productId: ID!
+  quantity: Int!
 }
 
 input PlaceOrderInput {
-  productId: ID!
-  quantity: Int!
+  items: [OrderItemInput!]!
   "new input fields must be optional"
   note: String
 }

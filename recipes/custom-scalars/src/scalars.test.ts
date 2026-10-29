@@ -1,30 +1,30 @@
-import assert from 'node:assert/strict'
-import { test } from 'node:test'
-import { createTestClient } from './test-client.ts'
-import { yoga } from './yoga.ts'
+import { afterAll, expect, it } from 'vitest'
+import { createApp } from './app.ts'
+import { startTestServer } from './test-client.ts'
 
-const execute = createTestClient(yoga)
+const { execute, close } = await startTestServer(await createApp())
+afterAll(close)
 
-test('placedAt is returned as an ISO string', async () => {
-  const result = await execute<{ orders: { id: string; placedAt: string }[] }>(
-    `{ orders { id placedAt } }`,
+it('createdAt is returned as an ISO string', async () => {
+  const result = await execute<{ orders: { id: string; createdAt: string }[] }>(
+    `{ orders { id createdAt } }`,
   )
-  assert.equal(result.data?.orders[1]?.placedAt, '2026-10-05T08:30:00.000Z')
+  expect(result.data?.orders[1]?.createdAt).toBe('2026-10-05T08:30:00.000Z')
 })
 
-test('String accepts any text – "not-an-email" is stored without complaint', async () => {
-  const result = await execute<{ updateContactEmail: { contactEmail: string } }>(
-    `mutation Update($email: String!) { updateContactEmail(orderId: "o-1", email: $email) { contactEmail } }`,
+it('String accepts any text – "not-an-email" is stored without complaint', async () => {
+  const result = await execute<{ updateCustomerEmail: { email: string } }>(
+    `mutation Update($email: String!) { updateCustomerEmail(customerId: "c-1", email: $email) { email } }`,
     { email: 'not-an-email' },
   )
-  assert.equal(result.errors, undefined)
-  assert.equal(result.data?.updateContactEmail.contactEmail, 'not-an-email')
+  expect(result.errors).toBeUndefined()
+  expect(result.data?.updateCustomerEmail.email).toBe('not-an-email')
 })
 
-test('an invalid date filter silently becomes "Invalid Date" and matches nothing', async () => {
+it('an invalid date filter silently becomes "Invalid Date" and matches nothing', async () => {
   const result = await execute<{ orders: unknown[] }>(
-    `{ orders(filter: { placedAfter: "yesterday" }) { id } }`,
+    `{ orders(filter: { createdAfter: "yesterday" }) { id } }`,
   )
-  assert.equal(result.errors, undefined)
-  assert.deepEqual(result.data?.orders, [])
+  expect(result.errors).toBeUndefined()
+  expect(result.data?.orders).toEqual([])
 })

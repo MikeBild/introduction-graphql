@@ -8,9 +8,8 @@
     "allowImportingTsExtensions": true,
     "erasableSyntaxOnly": true,
     "verbatimModuleSyntax": true,
-    "resolveJsonModule": true,
     "skipLibCheck": true,
     "types": ["node"]
   },
-  "include": ["src", "solution"]
+  "include": ["src", "solution", "vitest.config.ts"]
 }

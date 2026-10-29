@@ -1,39 +1,35 @@
-import assert from 'node:assert/strict'
-import { test } from 'node:test'
+import { afterAll, expect, it } from 'vitest'
+import { createApp } from '../src/app.ts'
 import { loadOperation, runOperation } from '../src/operations.ts'
-import { yoga } from '../src/yoga.ts'
+import { startTestServer } from '../src/test-client.ts'
 
-const run = runOperation(yoga)
+const { url, close } = await startTestServer(await createApp())
+afterAll(close)
+const run = runOperation(url)
 const document = await loadOperation(
   new URL('./operations/order-overview.graphql', import.meta.url),
 )
 
-type OrderRow = { id: string; status: string; total: number; customer: { name: string } }
+type OrderRow = { id: string; status: string; totalCents: number; customer: { name: string } }
 
-test('aliases load open and paid orders in one request', async () => {
+it('aliases load placed (open) and paid orders in one request', async () => {
   const result = await run<{ open: OrderRow[]; paid: OrderRow[] }>(
     document,
     { first: 5 },
     'OrderOverview',
   )
-  assert.equal(result.errors, undefined)
-  assert.deepEqual(
-    result.data?.open.map((order) => order.id),
-    ['o-1', 'o-3'],
-  )
-  assert.deepEqual(
-    result.data?.paid.map((order) => order.id),
-    ['o-2', 'o-4'],
-  )
-  assert.deepEqual(result.data?.paid[0], {
+  expect(result.errors).toBeUndefined()
+  expect(result.data?.open.map((order) => order.id)).toEqual(['o-1', 'o-3'])
+  expect(result.data?.paid.map((order) => order.id)).toEqual(['o-2', 'o-4'])
+  expect(result.data?.paid[0]).toEqual({
     id: 'o-2',
     status: 'PAID',
-    total: 349,
+    totalCents: 34900,
     customer: { name: 'Alan Turing' },
   })
 })
 
-test('@include switches items per variable', async () => {
+it('@include switches items per variable', async () => {
   const withItems = await run<{ order: { items?: unknown[] } }>(
     document,
     { id: 'o-1', withItems: true },
@@ -44,11 +40,11 @@ test('@include switches items per variable', async () => {
     { id: 'o-1', withItems: false },
     'OrderDetail',
   )
-  assert.equal(withItems.data?.order.items?.length, 2)
-  assert.equal('items' in (withoutItems.data?.order ?? {}), false)
+  expect(withItems.data?.order.items?.length).toBe(2)
+  expect('items' in (withoutItems.data?.order ?? {})).toBe(false)
 })
 
-test('a document with several operations needs operationName', async () => {
+it('a document with several operations needs operationName', async () => {
   const result = await run(document, { first: 1 })
-  assert.match(result.errors?.[0]?.message ?? '', /Could not determine what operation to execute/)
+  expect(result.errors?.[0]?.message ?? '').toMatch(/Must provide operation name/)
 })

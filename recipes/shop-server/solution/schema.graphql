@@ -1,0 +1,81 @@
+"Lifecycle of an order: DRAFT → PLACED → PAID → SHIPPED; CANCELLED only from DRAFT or PLACED"
+enum OrderStatus {
+  DRAFT
+  PLACED
+  PAID
+  SHIPPED
+  CANCELLED
+}
+
+"A product of the workshop shop. Money is always in whole cents."
+type Product {
+  id: ID!
+  name: String!
+  priceCents: Int!
+  stock: Int!
+}
+
+"A customer of the shop"
+type Customer {
+  id: ID!
+  name: String!
+  email: String!
+  "All orders of this customer, newest first"
+  orders: [Order!]!
+}
+
+type OrderItem {
+  productId: ID!
+  product: Product!
+  quantity: Int!
+  "Unit price at the time of ordering"
+  priceCents: Int!
+}
+
+type Order {
+  id: ID!
+  customerId: ID!
+  customer: Customer!
+  items: [OrderItem!]!
+  status: OrderStatus!
+  "Sum of quantity × priceCents"
+  totalCents: Int!
+  "ISO 8601 timestamp"
+  createdAt: String!
+}
+
+type Query {
+  products: [Product!]!
+  "All orders, or only those in the given status"
+  orders(status: OrderStatus): [Order!]!
+  order(id: ID!): Order
+  customer(id: ID!): Customer
+}
+
+input OrderItemInput {
+  productId: ID!
+  quantity: Int!
+}
+
+input PlaceOrderInput {
+  items: [OrderItemInput!]!
+}
+
+type PlaceOrderPayload {
+  order: Order!
+}
+
+input CancelOrderInput {
+  orderId: ID!
+}
+
+type CancelOrderPayload {
+  order: Order!
+}
+
+type Mutation {
+  "Places an order for the signed-in customer. Needs the header authorization: Bearer <token>"
+  placeOrder(input: PlaceOrderInput!): PlaceOrderPayload!
+  "Cancels an order of the signed-in customer. Only DRAFT or PLACED orders can be cancelled."
+  cancelOrder(input: CancelOrderInput!): CancelOrderPayload!
+}

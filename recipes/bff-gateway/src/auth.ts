@@ -1,10 +1,10 @@
 import { GraphQLError } from 'graphql'
-import type { YogaInitialContext } from 'graphql-yoga'
+
+export type Context = { customerId: string | null }
 
 // Stand-in for authentication: the customer id comes from the Authorization header.
 // In production derive it from a verified token (signature, iss, aud, exp) – see introduction-nodejs EXAMPLES/AUTH/jwt-oidc.
-export const customerIdOf = ({ request }: YogaInitialContext) => {
-  const customerId = request.headers.get('authorization')
+export const requireCustomer = ({ customerId }: Context) => {
   if (!customerId)
     throw new GraphQLError('Not authenticated', { extensions: { code: 'UNAUTHENTICATED' } })
   return customerId
