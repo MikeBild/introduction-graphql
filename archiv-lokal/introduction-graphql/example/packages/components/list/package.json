@@ -1,0 +1,16 @@
+{
+  "private": true,
+  "name": "@introduction-graphql/list",
+  "version": "1.0.0",
+  "description": "A list component",
+  "main": "build/index.js",
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/react": "^16.7.18",
+    "react": "^16.7.0",
+    "typescript": "^3.2.2"
+  }
+}

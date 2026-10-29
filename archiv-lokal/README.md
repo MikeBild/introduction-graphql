@@ -1,0 +1,3 @@
+# Archiv: lokales Material
+
+Dieser Ordner enthält Dateien, die bis 2026 nur lokal in iCloud lagen und in keinem Branch dieses Repos vorkamen: `~/Documents/introduction-graphql` (→ `archiv-lokal/introduction-graphql/`). Sie wurden am 2026-10-29 unverändert hierher kopiert, damit die lokalen Kopien gelöscht werden können. Es handelt sich um Altbestand, nicht gepflegt: Code und Beispiele sind weder aktualisiert noch getestet. Abhängigkeiten, Build-Artefakte und Logs wurden nicht übernommen, Dateien mit möglichem Secret- oder Kundenbezug ebenfalls nicht. Der aktuelle Stand des Workshops liegt auf `master`.

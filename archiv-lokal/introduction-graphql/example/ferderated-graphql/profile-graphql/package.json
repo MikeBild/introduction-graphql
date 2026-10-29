@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "@apollo/federation": "^0.6.4",
+    "apollo-server": "^2.6.4",
+    "graphql": "^14.3.1"
+  }
+}
