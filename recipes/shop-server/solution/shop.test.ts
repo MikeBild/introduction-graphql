@@ -39,6 +39,11 @@ describe('queries', () => {
     })
   })
 
+  it('filters orders by status', async () => {
+    const result = await post(`query { orders(status: PAID) { id status } }`)
+    expect(result.data.orders).toEqual([{ id: 'o-2', status: 'PAID' }])
+  })
+
   it('goes from an order to its customer and from an item to its product', async () => {
     const result = await post(
       `query { order(id: "o-2") { customer { name } items { product { name } quantity } } }`,

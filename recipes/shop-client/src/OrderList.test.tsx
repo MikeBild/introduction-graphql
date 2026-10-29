@@ -1,7 +1,7 @@
 import { MockedProvider } from '@apollo/client/testing/react'
 import { cleanup, render, screen } from '@testing-library/react'
 import { afterEach, expect, it } from 'vitest'
-import { OrderList, OrdersQuery } from './OrderList.tsx'
+import { ORDERS_PAGE, OrderList } from './OrderList.tsx'
 
 afterEach(cleanup)
 
@@ -17,7 +17,7 @@ it('renders the orders once the query has answered', async () => {
     <MockedProvider
       mocks={[
         {
-          request: { query: OrdersQuery },
+          request: { query: ORDERS_PAGE, variables: { status: 'PLACED' } },
           result: { data: { orders: [order('o-1', 2580), order('o-2', 2490)] } },
         },
       ]}
@@ -31,7 +31,14 @@ it('renders the orders once the query has answered', async () => {
 
 it('shows an empty list while loading and when the request fails – no loading or error state', async () => {
   const { container } = render(
-    <MockedProvider mocks={[{ request: { query: OrdersQuery }, error: new Error('Network down') }]}>
+    <MockedProvider
+      mocks={[
+        {
+          request: { query: ORDERS_PAGE, variables: { status: 'PLACED' } },
+          error: new Error('Network down'),
+        },
+      ]}
+    >
       <OrderList />
     </MockedProvider>,
   )

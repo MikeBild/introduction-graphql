@@ -1,7 +1,7 @@
 {
   "name": "@introduction-graphql/auth",
   "version": "1.0.0",
-  "description": "Authentication in the request context, authorization per field in the business logic",
+  "description": "Authentication in the request context, access tokens verified with jose, authorization per field in the business logic, the token sent from Apollo Client",
   "private": true,
   "type": "module",
   "author": "Mike Bild <mike.bild@gmail.com>",
@@ -18,10 +18,13 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@apollo/client": "^4.3.5",
     "@apollo/server": "^5.5.1",
     "@as-integrations/express5": "^1.1.2",
     "express": "^5.3.0",
-    "graphql": "^16.14.2"
+    "graphql": "^16.14.2",
+    "jose": "^6.2.14",
+    "rxjs": "^7.8.2"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",

@@ -58,8 +58,8 @@ Runnable recipes, from easy to hard, all around one running example: the worksho
 
 ### Level 2 – everyday practice
 
-- [Workshop shop: a React client with Apollo Client 4 and Codegen](recipes/shop-client/README.md) – React 19, Apollo Client 4, GraphQL Codegen
-- [Authentication and Authorization](recipes/auth/README.md) – Apollo Server 5, Express 5
+- [Workshop shop: a React client with Apollo Client 4 and Codegen](recipes/shop-client/README.md) – React 19, Apollo Client 4, GraphQL Codegen (typescript-operations)
+- [Authentication, access tokens (OIDC, jose) and authorization](recipes/auth/README.md) – Apollo Server 5, Express 5, jose, Apollo Client 4
 - [Pagination of orders with Connections and Apollo cache policies](recipes/pagination/README.md) – Apollo Server 5, Express 5, Apollo Client 4
 - [Optimistic UI with the Apollo Client cache](recipes/optimistic-ui/README.md) – Apollo Server 5, Express 5, Apollo Client 4
 - [Custom Scalars](recipes/custom-scalars/README.md) – Apollo Server 5, Express 5, graphql-scalars
@@ -67,6 +67,7 @@ Runnable recipes, from easy to hard, all around one running example: the worksho
 
 ### Level 3 – architecture and operations
 
+- [Live order status with subscriptions](recipes/subscriptions/README.md) – Apollo Server 5, Express 5, graphql-ws, ws, Apollo Client 4
 - [Apollo Federation](recipes/federation/README.md) – Apollo Server 5, Express 5, Apollo Gateway
 - [Query Cost Limits and Persisted Operations](recipes/query-cost-limits/README.md) – Apollo Server 5, Express 5
 - [Response Caching with @cacheControl](recipes/response-caching/README.md) – Apollo Server 5, Express 5, Apollo response cache plugin

@@ -13,7 +13,7 @@ npm start            # Apollo Sandbox on http://localhost:4000/graphql, send hea
 ## Exercise
 
 1. Run `npm test` and read `src/errors.test.ts`: which error has a code, which one leaks an internal message, and why is `customer` only `null` in one order?
-2. Model the expected failures in the schema: `union PlaceOrderResult = PlaceOrderSuccess | OutOfStock | InvalidAddress` as the return type of `placeOrder`.
+2. Model the expected failures in the schema: `union PlaceOrderResult = PlaceOrderSuccess | OutOfStock | EmptyOrder` as the return type of `placeOrder`.
 3. Return the business failures as values (with `__typename`) instead of throwing. Keep `UNAUTHENTICATED` as a `GraphQLError`.
 4. Query the result with `__typename` and inline fragments and assert all three cases in a test.
 5. Add a `formatError` to `ApolloServer` that logs technical errors and replaces their message with `Internal server error` – code and path stay.

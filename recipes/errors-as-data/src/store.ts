@@ -6,7 +6,6 @@ export type Order = {
   customerId: string
   items: OrderItem[]
   status: OrderStatus
-  street: string
   createdAt: string
 }
 export type Product = { id: string; name: string; priceCents: number; stock: number }
@@ -22,7 +21,6 @@ export const orders: Order[] = [
     customerId: 'c-1',
     items: [{ productId: 'p-1', quantity: 1, priceCents: 8900 }],
     status: 'PLACED',
-    street: 'Main St 1',
     createdAt: '2026-10-01T09:00:00Z',
   },
 ]
@@ -36,7 +34,6 @@ export const missingStock = (items: { productId: string; quantity: number }[]) =
 export const createOrder = (
   customerId: string,
   items: { productId: string; quantity: number }[],
-  street: string,
 ): Order => {
   const order: Order = {
     id: `o-${orders.length + 1}`,
@@ -46,7 +43,6 @@ export const createOrder = (
       priceCents: products.get(line.productId)?.priceCents ?? 0,
     })),
     status: 'PLACED',
-    street,
     createdAt: new Date().toISOString(),
   }
   orders.push(order)

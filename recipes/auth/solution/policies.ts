@@ -9,15 +9,15 @@ export const requireUser = (user: User | null): User => {
   return user
 }
 
-export const requireRole = (user: User | null, role: User['role']): User => {
+export const requireRole = (user: User | null, role: string): User => {
   const known = requireUser(user)
-  if (known.role !== role)
+  if (!known.roles.includes(role))
     throw new GraphQLError('Not allowed', { extensions: { code: 'FORBIDDEN' } })
   return known
 }
 
 export const canSeeOrder = (user: User, order: Order) =>
-  user.role === 'SUPPORT' || order.customerId === user.id
+  order.customerId === user.id || user.roles.includes('SUPPORT')
 
 export const canSeeContactData = (user: User | null, _customer: Customer) =>
-  user?.role === 'SUPPORT'
+  !!user?.roles.includes('SUPPORT')

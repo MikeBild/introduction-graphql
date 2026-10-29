@@ -27,7 +27,8 @@ const requireUser = (user: Customer | null) => {
 const resolvers = {
   Query: {
     // TODO: answer Query.products – right now nothing resolves it.
-    orders: () => orders,
+    orders: (_parent: unknown, { status }: { status?: Order['status'] | null }) =>
+      status ? orders.filter((order) => order.status === status) : orders,
     order: (_parent: unknown, { id }: { id: string }) => findOrder(id) ?? null,
   },
   Mutation: {

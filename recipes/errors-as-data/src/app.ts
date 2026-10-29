@@ -6,7 +6,7 @@ import { log } from './logger.ts'
 import { createOrder, customers, missingStock, orders, type Order } from './store.ts'
 
 export type Context = { customerId: string | null }
-type PlaceOrderInput = { items: { productId: string; quantity: number }[]; street: string }
+type PlaceOrderInput = { items: { productId: string; quantity: number }[] }
 
 const typeDefs = /* GraphQL */ `
   enum OrderStatus {
@@ -42,7 +42,6 @@ const typeDefs = /* GraphQL */ `
 
   input PlaceOrderInput {
     items: [OrderItemInput!]!
-    street: String!
   }
 
   type Query {
@@ -66,10 +65,10 @@ const resolvers = {
     placeOrder: (_parent: unknown, { input }: { input: PlaceOrderInput }, context: Context) => {
       const customerId = requireCustomer(context)
       // Expected business failures thrown as plain errors: the client only sees a technical error.
+      if (input.items.length === 0) throw new Error('An order needs at least one item')
       const missing = missingStock(input.items)
       if (missing) throw new Error(`Product ${missing.productId} is out of stock`)
-      if (input.street.trim() === '') throw new Error('Street must not be empty')
-      const order = createOrder(customerId, input.items, input.street)
+      const order = createOrder(customerId, input.items)
       log.info(`[orders] placed ${order.id} for ${customerId}`)
       return order
     },

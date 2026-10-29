@@ -7,7 +7,7 @@ const { execute, close } = await startTestServer(await createApp())
 afterAll(close)
 
 it('verifyToken maps a bearer token to a user, anything else to null', async () => {
-  expect(await verifyToken('Bearer token-support')).toEqual({ id: 'u-1', role: 'SUPPORT' })
+  expect(await verifyToken('Bearer token-support')).toEqual({ id: 'u-1', roles: ['SUPPORT'] })
   expect(await verifyToken('Bearer unknown')).toBeNull()
   expect(await verifyToken(null)).toBeNull()
 })

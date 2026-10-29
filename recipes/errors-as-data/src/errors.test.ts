@@ -15,14 +15,14 @@ const placeOrder = /* GraphQL */ `
 const keyboard = [{ productId: 'p-1', quantity: 1 }]
 
 it('a GraphQLError with extensions.code reaches the client', async () => {
-  const result = await execute(placeOrder, { input: { items: keyboard, street: 'Main St 1' } })
+  const result = await execute(placeOrder, { input: { items: keyboard } })
   expect(result.errors?.[0]?.extensions?.code).toBe('UNAUTHENTICATED')
 })
 
 it('a plain Error becomes INTERNAL_SERVER_ERROR – "out of stock" looks like a crash', async () => {
   const result = await execute(
     placeOrder,
-    { input: { items: [{ productId: 'p-2', quantity: 1 }], street: 'Main St 1' } },
+    { input: { items: [{ productId: 'p-2', quantity: 1 }] } },
     { authorization: 'c-1' },
   )
   expect(result.data).toBeNull()
@@ -32,11 +32,7 @@ it('a plain Error becomes INTERNAL_SERVER_ERROR – "out of stock" looks like a 
 })
 
 it('a failing nullable field costs only that field (partial data)', async () => {
-  await execute(
-    placeOrder,
-    { input: { items: keyboard, street: 'Elm St 2' } },
-    { authorization: 'c-404' },
-  )
+  await execute(placeOrder, { input: { items: keyboard } }, { authorization: 'c-404' })
   const result = await execute<{ orders: { id: string; customer: { name: string } | null }[] }>(
     `query Orders { orders { id customer { name } } }`,
   )

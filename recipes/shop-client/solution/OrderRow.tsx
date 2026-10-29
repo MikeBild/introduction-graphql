@@ -1,20 +1,31 @@
+import { gql, type TypedDocumentNode } from '@apollo/client'
+import { useFragment } from '@apollo/client/react'
 import { formatCents } from '../src/money.ts'
-import { graphql, useFragment, type FragmentType } from './gql'
-import { StatusBadge } from './StatusBadge.tsx'
+import type { OrderRowFragment } from './__generated__/graphql.ts'
 
-export const OrderRowFragment = graphql(`
+// The row declares the fields it renders. useFragment reads them from the normalized cache.
+export const ORDER_ROW: TypedDocumentNode<OrderRowFragment> = gql`
   fragment OrderRow on Order {
     id
+    status
     totalCents
-    ...StatusBadge
   }
-`)
+`
 
-export const OrderRow = (props: { order: FragmentType<typeof OrderRowFragment> }) => {
-  const order = useFragment(OrderRowFragment, props.order)
+const labels = {
+  DRAFT: 'draft',
+  PLACED: 'placed',
+  PAID: 'paid',
+  SHIPPED: 'shipped',
+  CANCELLED: 'cancelled',
+} as const
+
+export const OrderRow = ({ order }: { order: { __typename: 'Order'; id: string } }) => {
+  const { data, complete } = useFragment({ fragment: ORDER_ROW, from: order })
+  if (!complete) return null
   return (
     <li>
-      {order.id} {formatCents(order.totalCents)} <StatusBadge order={order} />
+      {data.id} {formatCents(data.totalCents)} <small>{labels[data.status]}</small>
     </li>
   )
 }
