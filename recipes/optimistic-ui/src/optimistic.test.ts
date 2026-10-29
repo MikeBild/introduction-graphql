@@ -7,13 +7,16 @@ import {
   type OrderDetailData,
   type OrdersData,
 } from './operations.ts'
-import { createApp } from './yoga.ts'
+import { createApp } from './app.ts'
+import { startTestServer } from './test-client.ts'
 
-const stops: (() => void)[] = []
-afterEach(() => stops.splice(0).forEach((stop) => stop()))
+const stops: (() => unknown)[] = []
+afterEach(() => Promise.all(stops.splice(0).map((stop) => stop())))
 
 const setup = async () => {
-  const network = createNetwork(createApp())
+  const server = await startTestServer(await createApp())
+  stops.push(server.close)
+  const network = createNetwork(server.url)
   const client = createClient(network)
   const list = watch<OrdersData>(client, OrdersQuery)
   const detail = watch<OrderDetailData>(client, OrderDetailQuery, { id: 'o-1' })

@@ -1,7 +1,7 @@
 {
   "name": "@introduction-graphql/articles-server",
   "version": "1.0.0",
-  "description": "A first GraphQL Yoga server in TypeScript strict: SDL file, resolvers, input and payload, Vitest via yoga.fetch",
+  "description": "A first Apollo Server 5 on Express 5 in TypeScript strict: SDL file, resolvers, input and payload, Vitest over HTTP",
   "private": true,
   "type": "module",
   "author": "Mike Bild <mike.bild@gmail.com>",
@@ -13,16 +13,18 @@
     "start": "node src/server.ts",
     "start:solution": "node solution/server.ts",
     "test": "vitest run",
+    "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
-    "format": "prettier --write .",
-    "test:watch": "vitest"
+    "format": "prettier --write ."
   },
   "dependencies": {
-    "graphql": "^17.0.2",
-    "graphql-yoga": "^6.0.1",
-    "loglevel": "^1.9.2"
+    "@apollo/server": "^5.5.1",
+    "@as-integrations/express5": "^1.1.2",
+    "express": "^5.3.0",
+    "graphql": "^16.14.2"
   },
   "devDependencies": {
+    "@types/express": "^5.0.6",
     "@types/node": "^26.6.6",
     "prettier": "^3.9.10",
     "typescript": "^7.0.2",

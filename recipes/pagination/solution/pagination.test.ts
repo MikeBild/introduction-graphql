@@ -1,7 +1,8 @@
-import { expect, it } from 'vitest'
+import { afterAll, expect, it, vi } from 'vitest'
 import { createStore } from '../src/store.ts'
-import { createTestClient } from '../src/test-client.ts'
-import { createApp } from './yoga.ts'
+import { startTestServer } from '../src/test-client.ts'
+import { createApp } from './app.ts'
+import { createClient, OrdersPageQuery, type OrdersPageData } from './client.ts'
 
 type OrdersData = {
   orders: {
@@ -29,8 +30,16 @@ const page = /* GraphQL */ `
 const ids = (result: { data?: OrdersData | null }) =>
   result.data?.orders.edges.map((edge) => edge.node.id)
 
+const closes: (() => Promise<void>)[] = []
+afterAll(() => Promise.all(closes.map((close) => close())))
+const start = async (store = createStore()) => {
+  const server = await startTestServer(await createApp(store))
+  closes.push(server.close)
+  return server
+}
+
 it('pages forward with first and after until hasNextPage is false', async () => {
-  const execute = createTestClient(createApp(createStore(5)))
+  const { execute } = await start(createStore(5))
   const first = await execute<OrdersData>(page, { first: 2 })
   expect(ids(first)).toEqual(['o-0005', 'o-0004'])
   expect(first.data?.orders.pageInfo).toMatchObject({ hasNextPage: true, hasPreviousPage: false })
@@ -50,7 +59,7 @@ it('pages forward with first and after until hasNextPage is false', async () => 
 })
 
 it('reports no next page when the last page is exactly full', async () => {
-  const execute = createTestClient(createApp(createStore(4)))
+  const { execute } = await start(createStore(4))
   const first = await execute<OrdersData>(page, { first: 2 })
   const second = await execute<OrdersData>(page, {
     first: 2,
@@ -62,7 +71,7 @@ it('reports no next page when the last page is exactly full', async () => {
 
 it('a new order on top does not shift the next page', async () => {
   const store = createStore(5)
-  const execute = createTestClient(createApp(store))
+  const { execute } = await start(store)
   const first = await execute<OrdersData>(page, { first: 2 })
   store.place(99)
   const second = await execute<OrdersData>(page, {
@@ -73,14 +82,41 @@ it('a new order on top does not shift the next page', async () => {
 })
 
 it('caps first at 100', async () => {
-  const execute = createTestClient(createApp(createStore(500)))
+  const { execute } = await start(createStore(500))
   const result = await execute<OrdersData>(page, { first: 100_000 })
   expect(result.data?.orders.edges).toHaveLength(100)
   expect(result.data?.orders.pageInfo.hasNextPage).toBe(true)
 })
 
 it('rejects a cursor it did not issue', async () => {
-  const execute = createTestClient(createApp(createStore(5)))
+  const { execute } = await start(createStore(5))
   const result = await execute<OrdersData>(page, { first: 2, after: 'not-a-cursor' })
   expect(result.errors?.[0]?.extensions?.code).toBe('BAD_USER_INPUT')
+})
+
+it('Apollo Client: fetchMore merges the next page into the same cached list', async () => {
+  const { url } = await start(createStore(5))
+  const requests: string[] = []
+  const client = createClient(url, (name) => requests.push(name))
+
+  let latest: OrdersPageData | undefined
+  const query = client.watchQuery<OrdersPageData>({
+    query: OrdersPageQuery,
+    variables: { first: 2 },
+  })
+  const subscription = query.subscribe((result) => (latest = result.data as OrdersPageData))
+  await vi.waitFor(() => expect(latest?.orders.edges).toHaveLength(2))
+
+  await query.fetchMore({ variables: { after: latest?.orders.pageInfo.endCursor } })
+  await vi.waitFor(() => expect(latest?.orders.edges).toHaveLength(4))
+
+  expect(latest?.orders.edges.map((edge) => edge.node.id)).toEqual([
+    'o-0005',
+    'o-0004',
+    'o-0003',
+    'o-0002',
+  ])
+  expect(latest?.orders.pageInfo.hasNextPage).toBe(true)
+  expect(requests).toEqual(['OrdersPage', 'OrdersPage'])
+  subscription.unsubscribe()
 })

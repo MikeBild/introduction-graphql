@@ -5,21 +5,24 @@ import { createOrdersSubgraph, ordersTypeDefs } from './orders-subgraph.ts'
 import { composeSupergraph, createGateway, listen } from './supergraph.ts'
 import { createTestClient } from './test-client.ts'
 
-const customers = await listen(createCustomersSubgraph())
-const orders = await listen(createOrdersSubgraph())
+const customers = await listen(await createCustomersSubgraph())
+const orders = await listen(await createOrdersSubgraph())
 const subgraphs = [
   { name: 'customers', typeDefs: customersTypeDefs, url: customers.url },
   { name: 'orders', typeDefs: ordersTypeDefs, url: orders.url },
 ]
-const gateway = createGateway(composeSupergraph(subgraphs))
+const gateway = await createGateway(composeSupergraph(subgraphs))
+const gatewayServer = await listen(gateway.app)
+const execute = createTestClient(gatewayServer.url)
 afterAll(async () => {
-  await gateway.dispose()
+  await gateway.stop()
+  gatewayServer.close()
   customers.close()
   orders.close()
 })
 
 it('the gateway joins orders and customers via the Customer entity', async () => {
-  const result = await createTestClient(gateway)<{
+  const result = await execute<{
     orders: { id: string; customer: { name: string } }[]
   }>(`query OrdersWithCustomer { orders { id status customer { name } } }`)
   expect(result.errors).toBeUndefined()

@@ -1,8 +1,9 @@
-import { expect, it } from 'vitest'
-import { createTestClient } from './test-client.ts'
-import { yoga } from './yoga.ts'
+import { afterAll, expect, it } from 'vitest'
+import { createApp } from './app.ts'
+import { startTestServer } from './test-client.ts'
 
-const execute = createTestClient(yoga)
+const { execute, close } = await startTestServer(await createApp())
+afterAll(close)
 
 it('answers article(id)', async () => {
   const result = await execute<{ article: { title: string } | null }>(
@@ -13,8 +14,9 @@ it('answers article(id)', async () => {
 
 it('Query.articles has no resolver yet: the non-null list fails', async () => {
   const result = await execute(`query { articles { id } }`)
+  expect(result.status).toBe(200)
   expect(result.data).toBeNull()
   expect(result.errors?.[0]?.path).toEqual(['articles'])
-  // Yoga masks the internal message ("Cannot return null for non-nullable field"), see the log.
-  expect(result.errors?.[0]?.message).toBe('Unexpected error.')
+  // Apollo Server passes the internal message on to the client.
+  expect(result.errors?.[0]?.message).toMatch(/Cannot return null for non-nullable field/)
 })

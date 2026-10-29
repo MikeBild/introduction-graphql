@@ -1,7 +1,6 @@
 import { buildSubgraphSchema } from '@apollo/subgraph'
 import { parse } from 'graphql'
-import { createYoga } from 'graphql-yoga'
-import { yogaLogger } from './logger.ts'
+import { createSubgraphApp } from './supergraph.ts'
 
 type Customer = { id: string; name: string }
 const customers: Customer[] = [
@@ -24,8 +23,7 @@ export const customersTypeDefs = parse(/* GraphQL */ `
 `)
 
 export const createCustomersSubgraph = () =>
-  createYoga({
-    logging: yogaLogger,
+  createSubgraphApp({
     schema: buildSubgraphSchema([
       {
         typeDefs: customersTypeDefs,

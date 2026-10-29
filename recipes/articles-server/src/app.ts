@@ -1,8 +1,9 @@
 import { readFileSync } from 'node:fs'
+import { ApolloServer } from '@apollo/server'
+import { expressMiddleware } from '@as-integrations/express5'
+import express from 'express'
 import { GraphQLError } from 'graphql'
-import { createSchema, createYoga } from 'graphql-yoga'
 import { addArticle, articles, verifyToken, type Author } from './data.ts'
-import { yogaLogger } from './logger.ts'
 
 export type Context = { user: Author | null }
 
@@ -30,8 +31,18 @@ const resolvers = {
   },
 }
 
-export const yoga = createYoga({
-  logging: yogaLogger,
-  context: ({ request }): Context => ({ user: verifyToken(request.headers.get('authorization')) }),
-  schema: createSchema<Context>({ typeDefs, resolvers }),
-})
+export const createApp = async () => {
+  const server = new ApolloServer<Context>({ typeDefs, resolvers })
+  await server.start()
+  const app = express()
+  app.use(
+    '/graphql',
+    express.json(),
+    expressMiddleware(server, {
+      context: async ({ req }): Promise<Context> => ({
+        user: verifyToken(req.headers.authorization ?? null),
+      }),
+    }),
+  )
+  return app
+}

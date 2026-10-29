@@ -1,6 +1,7 @@
 import { afterEach, expect, it, vi } from 'vitest'
 import { createClient, createNetwork, watch } from '../src/client.ts'
-import { createApp } from '../src/yoga.ts'
+import { createApp } from '../src/app.ts'
+import { startTestServer } from '../src/test-client.ts'
 import {
   cancelOrder,
   OrderDetailQuery,
@@ -9,11 +10,13 @@ import {
   type OrdersData,
 } from './operations.ts'
 
-const stops: (() => void)[] = []
-afterEach(() => stops.splice(0).forEach((stop) => stop()))
+const stops: (() => unknown)[] = []
+afterEach(() => Promise.all(stops.splice(0).map((stop) => stop())))
 
 const setup = async (orderId: string) => {
-  const network = createNetwork(createApp())
+  const server = await startTestServer(await createApp())
+  stops.push(server.close)
+  const network = createNetwork(server.url)
   const client = createClient(network)
   const list = watch<OrdersData>(client, OrdersQuery)
   const detail = watch<OrderDetailData>(client, OrderDetailQuery, { id: orderId })

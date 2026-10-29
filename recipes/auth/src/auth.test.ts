@@ -1,9 +1,10 @@
-import { expect, it } from 'vitest'
+import { afterAll, expect, it } from 'vitest'
+import { createApp } from './app.ts'
+import { startTestServer } from './test-client.ts'
 import { verifyToken } from './data.ts'
-import { createTestClient } from './test-client.ts'
-import { yoga } from './yoga.ts'
 
-const execute = createTestClient(yoga)
+const { execute, close } = await startTestServer(await createApp())
+afterAll(close)
 
 it('verifyToken maps a bearer token to a user, anything else to null', async () => {
   expect(await verifyToken('Bearer token-support')).toEqual({ id: 'u-1', role: 'SUPPORT' })

@@ -1,6 +1,6 @@
 # Optimistic UI with a normalized cache
 
-An order API (`src/yoga.ts`) and an Apollo Client 4 with `InMemoryCache` (`src/client.ts`) – no browser needed. Two watched queries stand in for two components: the order list (`Orders`) and the order detail (`OrderDetail`). `createNetwork` records every request and can hold the server responses back, so you can see what the UI shows while the server is still busy.
+An order API on Apollo Server 5 with Express 5 (`src/app.ts`) and an Apollo Client 4 with `InMemoryCache` (`src/client.ts`) – no browser needed. Two watched queries stand in for two components: the order list (`Orders`) and the order detail (`OrderDetail`). `createNetwork` records every request and can hold the server responses back, so you can see what the UI shows while the server is still busy.
 
 `src/operations.ts` cancels an order and then refetches both views: the user waits for three requests.
 
@@ -9,7 +9,7 @@ An order API (`src/yoga.ts`) and an Apollo Client 4 with `InMemoryCache` (`src/c
 ```sh
 npm install
 npm test
-npm start            # GraphiQL on http://localhost:4000/graphql
+npm start            # Apollo Sandbox on http://localhost:4000/graphql
 ```
 
 ## Exercise

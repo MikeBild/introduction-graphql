@@ -1,15 +1,13 @@
-import { describe, expect, it } from 'vitest'
-import { yoga } from './yoga.ts'
+import { afterAll, describe, expect, it } from 'vitest'
+import { startTestServer } from '../src/test-client.ts'
+import { createApp } from './app.ts'
 
-// Straight through yoga.fetch: no port, no network, the whole HTTP pipeline.
-const post = async (query: string, variables = {}, headers: Record<string, string> = {}) => {
-  const response = await yoga.fetch('http://test/graphql', {
-    method: 'POST',
-    headers: { 'content-type': 'application/json', ...headers },
-    body: JSON.stringify({ query, variables }),
-  })
-  return { status: response.status, ...(await response.json()) }
-}
+// Real HTTP requests against the Express app on a free port.
+const { execute, close } = await startTestServer(await createApp())
+afterAll(close)
+const post = (query: string, variables = {}, headers: Record<string, string> = {}) =>
+  // Untyped JSON on purpose: the tests read it like a client would.
+  execute<any>(query, variables, headers) as Promise<any>
 const asAda = { authorization: 'Bearer token-ada' }
 
 describe('queries', () => {
@@ -85,6 +83,8 @@ describe('mutations', () => {
       asAda,
     )
     expect(result.status).toBe(400)
-    expect(result.errors[0].message).toMatch(/required field "title"/)
+    expect(result.errors[0].message).toMatch(
+      /Field "title" of required type "String!" was not provided/,
+    )
   })
 })
