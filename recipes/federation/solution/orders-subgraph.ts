@@ -1,7 +1,6 @@
 import { buildSubgraphSchema } from '@apollo/subgraph'
 import { parse } from 'graphql'
-import { createYoga } from 'graphql-yoga'
-import { yogaLogger } from '../src/logger.ts'
+import { createSubgraphApp } from '../src/supergraph.ts'
 import { orders, type Order } from '../src/orders-subgraph.ts'
 
 // The order team contributes Customer.orders – the customer team does not have to change anything.
@@ -30,8 +29,7 @@ export const ordersTypeDefs = parse(/* GraphQL */ `
 `)
 
 export const createOrdersSubgraph = () =>
-  createYoga({
-    logging: yogaLogger,
+  createSubgraphApp({
     schema: buildSubgraphSchema([
       {
         typeDefs: ordersTypeDefs,

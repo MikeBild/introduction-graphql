@@ -1,10 +1,11 @@
-import { beforeEach, expect, it } from 'vitest'
+import { afterAll, beforeEach, expect, it } from 'vitest'
+import { createApp } from './app.ts'
+import { startTestServer } from '../src/test-client.ts'
 import { db } from '../src/db.ts'
-import { createTestClient } from '../src/test-client.ts'
 import { createLoaders } from './loaders.ts'
-import { yoga } from './yoga.ts'
 
-const execute = createTestClient(yoga)
+const { execute, close } = await startTestServer(await createApp())
+afterAll(close)
 type OrdersData = { orders: { id: string; customer: { name: string } | null }[] }
 const ordersWithCustomers = /* GraphQL */ `
   query OrdersWithCustomers {

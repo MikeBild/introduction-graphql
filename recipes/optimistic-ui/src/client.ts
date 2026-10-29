@@ -1,10 +1,8 @@
 import { ApolloClient, HttpLink, InMemoryCache, type DocumentNode } from '@apollo/client'
 
-type FetchHandler = { fetch: (url: string, init: RequestInit) => Promise<Response> | Response }
-
 // A network between client and server you can inspect and pause: it records the operation
 // name of every request and, while held, keeps the server responses back.
-export const createNetwork = (server: FetchHandler) => {
+export const createNetwork = (url: string) => {
   const requests: string[] = []
   let gate: Promise<void> | undefined
   let open = () => {}
@@ -17,9 +15,9 @@ export const createNetwork = (server: FetchHandler) => {
       gate = undefined
       open()
     },
-    fetch: async (input: RequestInfo | URL, init: RequestInit = {}) => {
+    fetch: async (_input: RequestInfo | URL, init: RequestInit = {}) => {
       requests.push(JSON.parse(String(init.body)).operationName)
-      const response = await server.fetch(String(input), init)
+      const response = await fetch(url, init)
       await gate
       return response
     },
@@ -29,7 +27,7 @@ export const createNetwork = (server: FetchHandler) => {
 export const createClient = (network: ReturnType<typeof createNetwork>) =>
   new ApolloClient({
     cache: new InMemoryCache(),
-    link: new HttpLink({ uri: 'http://localhost/graphql', fetch: network.fetch }),
+    link: new HttpLink({ fetch: network.fetch }),
   })
 
 // Stands in for a component: subscribes to a query and keeps the latest data, like useQuery.

@@ -11,7 +11,7 @@ npm install
 npm test
 
 # in a second terminal: the server on port 4000
-cd ../articles-server && npm install && npm run start:solution
+cd ../articles-server && npm install && npm run start:solution   # Apollo Server 5 on Express 5
 
 npm start            # http://localhost:5173, /graphql is proxied to port 4000
 ```

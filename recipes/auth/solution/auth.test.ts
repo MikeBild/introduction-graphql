@@ -1,8 +1,9 @@
-import { describe, expect, it } from 'vitest'
-import { createTestClient } from '../src/test-client.ts'
-import { yoga } from './yoga.ts'
+import { afterAll, describe, expect, it } from 'vitest'
+import { createApp } from './app.ts'
+import { startTestServer } from '../src/test-client.ts'
 
-const execute = createTestClient(yoga)
+const { execute, close } = await startTestServer(await createApp())
+afterAll(close)
 const as = (token: string) => ({ authorization: `Bearer ${token}` })
 type OrdersData = { orders: { id: string; customer: { name: string; email: string | null } }[] }
 const ordersWithEmail = `query { orders { id customer { name email } } }`
