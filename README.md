@@ -6,7 +6,7 @@
   - JavaScript/TypeScript
   - NodeJS
   - React
-- NodeJS LTS
+- Node.js 26 or newer (the recipes run TypeScript directly and test with Vitest)
 - Linux, OSX or Windows operation system
 - VS Code
 - Chrome and Developer Tools
@@ -41,14 +41,20 @@
 - [Coming Soon - Defer, Batch, etc.](introduction-graphql/soon.md)
 ## Examples
 
-- [Apollo Example](apollo-example/README.md)
 - [DotNet (C#) Server Example](graphql-server-example-dotnet/README.md)
+- [Legacy: Apollo Server 2 and React 17 example](legacy/apollo-example/README.md) – replaced by the articles recipes below
 
 ## Exercises
 
-Small, runnable GraphQL Yoga recipes with an exercise, tests and a solution:
+Small, runnable recipes with an exercise, tests and a solution. In each folder: `npm ci`, `npm test` (Vitest), `npm run typecheck`.
 
 - [REST vs. GraphQL](recipes/rest-vs-graphql/README.md)
+- [Articles: a first GraphQL Yoga server](recipes/articles-server/README.md)
+- [Articles: a React client with Apollo Client 4 and Codegen](recipes/articles-client/README.md)
+- [Resolvers without N+1: DataLoader](recipes/dataloader/README.md)
+- [Pagination with Connections](recipes/pagination/README.md)
+- [Authentication and Authorization](recipes/auth/README.md)
+- [Optimistic UI with a normalized cache](recipes/optimistic-ui/README.md)
 - [Operations: Variables, Fragments, Aliases](recipes/operations-fragments/README.md)
 - [Errors as Data](recipes/errors-as-data/README.md)
 - [Custom Scalars](recipes/custom-scalars/README.md)

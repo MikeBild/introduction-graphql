@@ -10,13 +10,7 @@
     "verbatimModuleSyntax": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "types": [
-      "node"
-    ]
+    "types": ["node"]
   },
-  "include": [
-    "src",
-    "solution",
-    "vitest.config.ts"
-  ]
+  "include": ["src", "solution", "vitest.config.ts"]
 }
