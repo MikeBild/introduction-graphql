@@ -1,0 +1,34 @@
+enum ArticleState {
+  DRAFT
+  PUBLISHED
+}
+
+"An article in the newsroom"
+type Article {
+  id: ID!
+  title: String!
+  content: String!
+  state: ArticleState!
+  authorId: ID!
+  "ISO 8601 timestamp"
+  createdAt: String!
+}
+
+type Query {
+  articles: [Article!]!
+  article(id: ID!): Article
+}
+
+input ArticleAddInput {
+  title: String!
+  content: String!
+}
+
+type ArticleAddPayload {
+  article: Article!
+}
+
+type Mutation {
+  "Adds a draft for the signed-in author. Needs the header authorization: Bearer <token>"
+  articleAdd(input: ArticleAddInput!): ArticleAddPayload!
+}
