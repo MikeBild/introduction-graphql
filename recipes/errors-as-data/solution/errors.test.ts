@@ -10,7 +10,7 @@ type PlaceOrderData = {
   placeOrder:
     | { __typename: 'PlaceOrderSuccess'; order: { id: string } }
     | { __typename: 'OutOfStock'; productId: string; message: string }
-    | { __typename: 'InvalidAddress'; field: string; message: string }
+    | { __typename: 'EmptyOrder'; message: string }
 }
 
 const placeOrder = /* GraphQL */ `
@@ -26,8 +26,7 @@ const placeOrder = /* GraphQL */ `
         productId
         message
       }
-      ... on InvalidAddress {
-        field
+      ... on EmptyOrder {
         message
       }
     }
@@ -37,7 +36,7 @@ const placeOrder = /* GraphQL */ `
 it('out of stock is a typed result, not an error', async () => {
   const result = await execute<PlaceOrderData>(
     placeOrder,
-    { input: { items: [{ productId: 'p-2', quantity: 1 }], street: 'Main St 1' } },
+    { input: { items: [{ productId: 'p-2', quantity: 1 }] } },
     asCustomer,
   )
   expect(result.errors).toBeUndefined()
@@ -48,23 +47,19 @@ it('out of stock is a typed result, not an error', async () => {
   })
 })
 
-it('an invalid address names the field', async () => {
-  const result = await execute<PlaceOrderData>(
-    placeOrder,
-    { input: { items: [{ productId: 'p-1', quantity: 1 }], street: ' ' } },
-    asCustomer,
-  )
+it('an order without items is a typed result, too', async () => {
+  const result = await execute<PlaceOrderData>(placeOrder, { input: { items: [] } }, asCustomer)
+  expect(result.errors).toBeUndefined()
   expect(result.data?.placeOrder).toEqual({
-    __typename: 'InvalidAddress',
-    field: 'street',
-    message: 'Street must not be empty.',
+    __typename: 'EmptyOrder',
+    message: 'An order needs at least one item.',
   })
 })
 
 it('success returns the order', async () => {
   const result = await execute<PlaceOrderData>(
     placeOrder,
-    { input: { items: [{ productId: 'p-1', quantity: 2 }], street: 'Main St 1' } },
+    { input: { items: [{ productId: 'p-1', quantity: 2 }] } },
     asCustomer,
   )
   expect(result.data?.placeOrder).toEqual({
@@ -75,7 +70,7 @@ it('success returns the order', async () => {
 
 it('technical and cross-cutting errors stay in the errors field', async () => {
   const result = await execute<PlaceOrderData>(placeOrder, {
-    input: { items: [{ productId: 'p-1', quantity: 1 }], street: 'Main St 1' },
+    input: { items: [{ productId: 'p-1', quantity: 1 }] },
   })
   expect(result.errors?.[0]?.extensions?.code).toBe('UNAUTHENTICATED')
 })
@@ -83,7 +78,7 @@ it('technical and cross-cutting errors stay in the errors field', async () => {
 it('formatError masks internal messages, but keeps code and path', async () => {
   await execute(
     placeOrder,
-    { input: { items: [{ productId: 'p-1', quantity: 1 }], street: 'Elm St 2' } },
+    { input: { items: [{ productId: 'p-1', quantity: 1 }] } },
     { authorization: 'c-404' },
   )
   const result = await execute(`query Orders { orders { id customer { name } } }`)

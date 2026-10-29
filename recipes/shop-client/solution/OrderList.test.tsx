@@ -1,24 +1,26 @@
 import { MockedProvider } from '@apollo/client/testing/react'
 import { cleanup, render, screen } from '@testing-library/react'
 import { afterEach, expect, it } from 'vitest'
-import { OrderList, OrdersPageQuery } from './OrderList.tsx'
+import { ORDERS_PAGE, OrderList } from './OrderList.tsx'
 
 afterEach(cleanup)
 
-const order = (id: string, totalCents: number, status: 'PLACED' | 'PAID') => ({
+const order = (id: string, totalCents: number, status: 'PLACED') => ({
   __typename: 'Order' as const,
   id,
   totalCents,
   status,
 })
 
-it('renders one row per order, each through its own fragment', async () => {
+it('renders one row per order, each read through useFragment from the cache', async () => {
   render(
     <MockedProvider
       mocks={[
         {
-          request: { query: OrdersPageQuery },
-          result: { data: { orders: [order('o-1', 2580, 'PLACED'), order('o-2', 2490, 'PAID')] } },
+          request: { query: ORDERS_PAGE, variables: { status: 'PLACED' } },
+          result: {
+            data: { orders: [order('o-1', 2580, 'PLACED'), order('o-2', 2490, 'PLACED')] },
+          },
         },
       ]}
     >
@@ -30,13 +32,18 @@ it('renders one row per order, each through its own fragment', async () => {
   // Intl puts a non-breaking space before the euro sign.
   expect(
     screen.getAllByRole('listitem').map((item) => item.textContent?.replace(/\s+/g, ' ')),
-  ).toEqual(['o-1 25,80 € placed', 'o-2 24,90 € paid'])
+  ).toEqual(['o-1 25,80 € placed', 'o-2 24,90 € placed'])
 })
 
 it('renders the error state', async () => {
   render(
     <MockedProvider
-      mocks={[{ request: { query: OrdersPageQuery }, error: new Error('Network down') }]}
+      mocks={[
+        {
+          request: { query: ORDERS_PAGE, variables: { status: 'PLACED' } },
+          error: new Error('Network down'),
+        },
+      ]}
     >
       <OrderList />
     </MockedProvider>,
@@ -47,10 +54,15 @@ it('renders the error state', async () => {
 it('renders an empty state', async () => {
   render(
     <MockedProvider
-      mocks={[{ request: { query: OrdersPageQuery }, result: { data: { orders: [] } } }]}
+      mocks={[
+        {
+          request: { query: ORDERS_PAGE, variables: { status: 'PLACED' } },
+          result: { data: { orders: [] } },
+        },
+      ]}
     >
       <OrderList />
     </MockedProvider>,
   )
-  expect(await screen.findByText('No orders yet.')).toBeTruthy()
+  expect(await screen.findByText('No open orders.')).toBeTruthy()
 })

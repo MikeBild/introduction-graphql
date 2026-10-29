@@ -7,12 +7,12 @@ import { log } from '../src/logger.ts'
 import { createOrder, customers, missingStock, orders, type Order } from '../src/store.ts'
 
 export type Context = { customerId: string | null }
-type PlaceOrderInput = { items: { productId: string; quantity: number }[]; street: string }
+type PlaceOrderInput = { items: { productId: string; quantity: number }[] }
 
 type PlaceOrderResult =
   | { __typename: 'PlaceOrderSuccess'; order: Order }
   | { __typename: 'OutOfStock'; productId: string; message: string }
-  | { __typename: 'InvalidAddress'; field: string; message: string }
+  | { __typename: 'EmptyOrder'; message: string }
 
 const typeDefs = /* GraphQL */ `
   enum OrderStatus {
@@ -48,7 +48,6 @@ const typeDefs = /* GraphQL */ `
 
   input PlaceOrderInput {
     items: [OrderItemInput!]!
-    street: String!
   }
 
   type PlaceOrderSuccess {
@@ -60,12 +59,11 @@ const typeDefs = /* GraphQL */ `
     message: String!
   }
 
-  type InvalidAddress {
-    field: String!
+  type EmptyOrder {
     message: String!
   }
 
-  union PlaceOrderResult = PlaceOrderSuccess | OutOfStock | InvalidAddress
+  union PlaceOrderResult = PlaceOrderSuccess | OutOfStock | EmptyOrder
 
   type Query {
     orders: [Order!]!
@@ -84,6 +82,8 @@ const requireCustomer = ({ customerId }: Context) => {
 
 // Expected business failures are values of the schema, not exceptions.
 const placeOrder = (input: PlaceOrderInput, customerId: string): PlaceOrderResult => {
+  if (input.items.length === 0)
+    return { __typename: 'EmptyOrder', message: 'An order needs at least one item.' }
   const missing = missingStock(input.items)
   if (missing)
     return {
@@ -91,9 +91,7 @@ const placeOrder = (input: PlaceOrderInput, customerId: string): PlaceOrderResul
       productId: missing.productId,
       message: 'Not enough items in stock.',
     }
-  if (input.street.trim() === '')
-    return { __typename: 'InvalidAddress', field: 'street', message: 'Street must not be empty.' }
-  const order = createOrder(customerId, input.items, input.street)
+  const order = createOrder(customerId, input.items)
   log.info(`[orders] placed ${order.id} for ${customerId}`)
   return { __typename: 'PlaceOrderSuccess', order }
 }

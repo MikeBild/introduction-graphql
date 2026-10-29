@@ -46,7 +46,8 @@ const cancelOrder = (user: Customer, orderId: string) => {
 const resolvers = {
   Query: {
     products: () => products,
-    orders: () => orders.toSorted(newestFirst),
+    orders: (_parent: unknown, { status }: { status?: Order['status'] | null }) =>
+      orders.filter((order) => !status || order.status === status).toSorted(newestFirst),
     order: (_parent: unknown, { id }: { id: string }) => findOrder(id) ?? null,
     customer: (_parent: unknown, { id }: { id: string }) =>
       customers.find((customer) => customer.id === id) ?? null,

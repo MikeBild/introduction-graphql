@@ -65,7 +65,11 @@ const resolvers = {
   },
 }
 
-export const createApp = async () => {
+// verifyToken is pluggable: the stand-in from src/data.ts, or the jose verifier (verify-token.ts).
+export const createApp = async (
+  options: { verifyToken?: (header: string | null) => Promise<User | null> } = {},
+) => {
+  const verify = options.verifyToken ?? verifyToken
   const server = new ApolloServer<Context>({ typeDefs, resolvers })
   await server.start()
   const app = express()
@@ -75,7 +79,7 @@ export const createApp = async () => {
     expressMiddleware(server, {
       // Authentication: who is asking? A missing or unknown token is not an error, just no user.
       context: async ({ req }): Promise<Context> => ({
-        user: await verifyToken(req.headers.authorization ?? null),
+        user: await verify(req.headers.authorization ?? null),
       }),
     }),
   )

@@ -1,0 +1,40 @@
+{
+  "name": "@introduction-graphql/subscriptions",
+  "version": "1.0.0",
+  "description": "Live order status in the workshop shop: GraphQL subscriptions over WebSocket with graphql-ws and ws on Apollo Server 5 and Express 5",
+  "private": true,
+  "type": "module",
+  "author": "Mike Bild <mike.bild@gmail.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=26"
+  },
+  "scripts": {
+    "start": "node src/server.ts",
+    "start:solution": "node solution/server.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "@apollo/client": "^4.3.5",
+    "@apollo/server": "^5.5.1",
+    "@as-integrations/express5": "^1.1.2",
+    "@graphql-tools/schema": "^11.0.7",
+    "express": "^5.3.0",
+    "graphql": "^16.14.2",
+    "graphql-subscriptions": "^3.0.0",
+    "graphql-ws": "^6.4.1",
+    "rxjs": "^7.8.2",
+    "ws": "^8.22.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.6.6",
+    "@types/ws": "^8.18.2",
+    "prettier": "^3.9.10",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.5"
+  }
+}

@@ -12,8 +12,8 @@ Runnable recipes, from easy to hard, all around one running example: the worksho
 
 ### Level 2 – everyday practice
 
-- [Workshop shop: a React client with Apollo Client 4 and Codegen](shop-client/README.md) – React 19, Apollo Client 4, GraphQL Codegen
-- [Authentication and Authorization](auth/README.md) – Apollo Server 5, Express 5
+- [Workshop shop: a React client with Apollo Client 4 and Codegen](shop-client/README.md) – React 19, Apollo Client 4, GraphQL Codegen (typescript-operations)
+- [Authentication, access tokens (OIDC, jose) and authorization](auth/README.md) – Apollo Server 5, Express 5, jose, Apollo Client 4
 - [Pagination of orders with Connections and Apollo cache policies](pagination/README.md) – Apollo Server 5, Express 5, Apollo Client 4
 - [Optimistic UI with the Apollo Client cache](optimistic-ui/README.md) – Apollo Server 5, Express 5, Apollo Client 4
 - [Custom Scalars](custom-scalars/README.md) – Apollo Server 5, Express 5, graphql-scalars
@@ -21,6 +21,7 @@ Runnable recipes, from easy to hard, all around one running example: the worksho
 
 ### Level 3 – architecture and operations
 
+- [Live order status with subscriptions](subscriptions/README.md) – Apollo Server 5, Express 5, graphql-ws, ws, Apollo Client 4
 - [Apollo Federation](federation/README.md) – Apollo Server 5, Express 5, Apollo Gateway
 - [Query Cost Limits and Persisted Operations](query-cost-limits/README.md) – Apollo Server 5, Express 5
 - [Response Caching with @cacheControl](response-caching/README.md) – Apollo Server 5, Express 5, Apollo response cache plugin
@@ -32,5 +33,4 @@ Runnable recipes, from easy to hard, all around one running example: the worksho
 
 - [Prefetching data](prefetching/README.md)
 - [Verify GraphQL-Tags with Webpack-Loader](verify-graphql-tags/README.md)
-- [External Pub/Sub and GraphQL-Subscriptions](external-pubsub-subscriptions/README.md)
 - [Server-Side Rendering](server-side-rendering-apollo/README.md)

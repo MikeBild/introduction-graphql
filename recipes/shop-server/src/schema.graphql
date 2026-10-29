@@ -35,7 +35,8 @@ type Order {
 
 type Query {
   products: [Product!]!
-  orders: [Order!]!
+  "All orders, or only those in the given status"
+  orders(status: OrderStatus): [Order!]!
   order(id: ID!): Order
 }
 

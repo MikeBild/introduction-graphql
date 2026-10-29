@@ -1,7 +1,7 @@
 {
   "name": "@introduction-graphql/shop-client",
   "version": "1.0.0",
-  "description": "The workshop shop in React 19 with Apollo Client 4: a fragment per component, loading and error state, typed documents via GraphQL Codegen",
+  "description": "The workshop shop in React 19 with Apollo Client 4: a fragment per row via useFragment, loading, error and empty state, operation types via GraphQL Codegen",
   "private": true,
   "type": "module",
   "author": "Mike Bild <mike.bild@gmail.com>",
@@ -28,8 +28,7 @@
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^7.4.6",
-    "@graphql-codegen/client-preset": "^6.2.3",
-    "@graphql-typed-document-node/core": "^3.2.0",
+    "@graphql-codegen/typescript-operations": "^6.2.0",
     "@testing-library/dom": "^10.4.2",
     "@testing-library/react": "^16.3.3",
     "@types/node": "^26.6.6",
