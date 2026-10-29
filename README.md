@@ -7,7 +7,7 @@
   - NodeJS
   - React
 - Node.js 26 or newer (the recipes run TypeScript directly, use Apollo Server 5 on Express 5 and test with Vitest)
-- Linux, OSX or Windows operation system
+- Linux, OSX or Windows operating system
 - VS Code
 - Chrome and Developer Tools
 - Postman, cURL or httpie
@@ -26,7 +26,7 @@
 - [Introspection](introduction-graphql/introspection.md)
 - [Type System](introduction-graphql/types.md)
 - [Schema](introduction-graphql/schema.md)
-- [Execution and Validation Engine]()
+- Execution and Validation Engine
   - [Validation](introduction-graphql/validation.md)
   - [Resolver](introduction-graphql/resolver.md)
   - [Error Handling](introduction-graphql/errors.md)
@@ -79,7 +79,7 @@ Runnable recipes, from easy to hard, all around one running example: the worksho
 
 The exercises belong to these German-language workshops:
 
-- [GraphQL vom Schema bis Produktion](https://workshops.mikebild.dev/w/graphql/onsite/)
+- [GraphQL vom Schema bis zur Produktion](https://workshops.mikebild.dev/w/graphql/onsite/)
 - [GraphQL-APIs entwerfen und bauen](https://workshops.mikebild.dev/w/graphql-kompakt/online/)
 - [GraphQL in 60 Minuten](https://workshops.mikebild.dev/w/mini-kurs/online/)
 - [Fullstack mit TypeScript, Node.js, GraphQL und React in 6 Tagen](https://workshops.mikebild.dev/w/fullstack/onsite/)
