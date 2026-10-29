@@ -1,12 +1,13 @@
-import { createSchema, type YogaInitialContext } from 'graphql-yoga'
 import { log } from './logger.ts'
 
-type Product = { id: string; title: string; price: number }
+export type Context = { userId: string | null }
+type Product = { id: string; name: string; priceCents: number; stock: number }
 
 const products: Product[] = [
-  { id: 'p-1', title: 'Keyboard', price: 89 },
-  { id: 'p-2', title: 'Mouse', price: 39 },
+  { id: 'p-1', name: 'Hammer', priceCents: 1990, stock: 12 },
+  { id: 'p-2', name: 'Screwdriver set', priceCents: 2490, stock: 0 },
 ]
+
 const cartsByUser = new Map([
   ['user-ada', ['p-1']],
   ['user-alan', ['p-2']],
@@ -20,49 +21,48 @@ const read = <T>(label: string, value: T): T => {
   return value
 }
 
-export const schema = createSchema<YogaInitialContext>({
-  typeDefs: /* GraphQL */ `
-    type Product {
-      id: ID!
-      title: String!
-      price: Float!
-    }
+export const typeDefs = /* GraphQL */ `
+  type Product {
+    id: ID!
+    name: String!
+    priceCents: Int!
+    stock: Int!
+  }
 
-    type Viewer {
-      id: ID!
-      cart: [Product!]!
-    }
+  type Viewer {
+    id: ID!
+    cart: [Product!]!
+  }
 
-    type Query {
-      products: [Product!]!
-      me: Viewer
-    }
+  type Query {
+    products: [Product!]!
+    me: Viewer
+  }
 
-    type Mutation {
-      updatePrice(id: ID!, price: Float!): Product
-    }
-  `,
-  resolvers: {
-    Query: {
-      products: () => read('products', products),
-      me: (_parent: unknown, _args: unknown, { request }: YogaInitialContext) => {
-        const userId = request.headers.get('authorization')
-        return userId ? { id: userId } : null
-      },
-    },
-    Viewer: {
-      cart: ({ id }: { id: string }) =>
-        read(
-          `cart ${id}`,
-          products.filter((product) => cartsByUser.get(id)?.includes(product.id)),
-        ),
-    },
-    Mutation: {
-      updatePrice: (_parent: unknown, { id, price }: { id: string; price: number }) => {
-        const product = products.find((candidate) => candidate.id === id)
-        if (product) product.price = price
-        return product ?? null
-      },
+  type Mutation {
+    updatePrice(id: ID!, priceCents: Int!): Product
+  }
+`
+
+export const createResolvers = ({ onProductChanged = () => {} } = {}) => ({
+  Query: {
+    products: () => read('products', products),
+    me: (_parent: unknown, _args: unknown, { userId }: Context) => (userId ? { id: userId } : null),
+  },
+  Viewer: {
+    cart: ({ id }: { id: string }) =>
+      read(
+        `cart ${id}`,
+        products.filter((product) => cartsByUser.get(id)?.includes(product.id)),
+      ),
+  },
+  Mutation: {
+    updatePrice: (_parent: unknown, { id, priceCents }: { id: string; priceCents: number }) => {
+      const product = products.find((candidate) => candidate.id === id)
+      if (!product) return null
+      product.priceCents = priceCents
+      onProductChanged()
+      return product
     },
   },
 })

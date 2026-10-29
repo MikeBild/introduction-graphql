@@ -9,7 +9,7 @@ const MAX_FIRST = 100
 const typeDefs = /* GraphQL */ `
   type Order {
     id: ID!
-    total: Float!
+    totalCents: Int!
     createdAt: String!
   }
 

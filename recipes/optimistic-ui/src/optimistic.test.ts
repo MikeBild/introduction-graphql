@@ -32,7 +32,7 @@ const setup = async () => {
 it('the list and the detail view share the same order in the cache', async () => {
   const { network, status } = await setup()
   expect(network.requests.toSorted()).toEqual(['OrderDetail', 'Orders'])
-  expect(status()).toEqual({ list: 'OPEN', detail: 'OPEN' })
+  expect(status()).toEqual({ list: 'PLACED', detail: 'PLACED' })
 })
 
 it('cancel with refetch: the UI waits for the server, then needs two more requests', async () => {
@@ -42,7 +42,7 @@ it('cancel with refetch: the UI waits for the server, then needs two more reques
   const done = cancelOrder(client, 'o-1')
   await new Promise((resolve) => setTimeout(resolve, 20))
   // The user clicked, nothing happens until the server answers.
-  expect(status()).toEqual({ list: 'OPEN', detail: 'OPEN' })
+  expect(status()).toEqual({ list: 'PLACED', detail: 'PLACED' })
   network.release()
   await done
   expect(status()).toEqual({ list: 'CANCELLED', detail: 'CANCELLED' })

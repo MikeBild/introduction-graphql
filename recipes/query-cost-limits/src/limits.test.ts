@@ -1,9 +1,10 @@
-import { beforeEach, expect, it } from 'vitest'
+import { afterAll, beforeEach, expect, it } from 'vitest'
+import { createApp } from './app.ts'
 import { load } from './schema.ts'
-import { createTestClient } from './test-client.ts'
-import { yoga } from './yoga.ts'
+import { startTestServer } from './test-client.ts'
 
-const execute = createTestClient(yoga)
+const { execute, close } = await startTestServer(await createApp())
+afterAll(close)
 beforeEach(() => {
   load.resolvedOrders = 0
 })

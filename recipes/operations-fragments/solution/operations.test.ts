@@ -1,15 +1,18 @@
-import { expect, it } from 'vitest'
+import { afterAll, expect, it } from 'vitest'
+import { createApp } from '../src/app.ts'
 import { loadOperation, runOperation } from '../src/operations.ts'
-import { yoga } from '../src/yoga.ts'
+import { startTestServer } from '../src/test-client.ts'
 
-const run = runOperation(yoga)
+const { url, close } = await startTestServer(await createApp())
+afterAll(close)
+const run = runOperation(url)
 const document = await loadOperation(
   new URL('./operations/order-overview.graphql', import.meta.url),
 )
 
-type OrderRow = { id: string; status: string; total: number; customer: { name: string } }
+type OrderRow = { id: string; status: string; totalCents: number; customer: { name: string } }
 
-it('aliases load open and paid orders in one request', async () => {
+it('aliases load placed (open) and paid orders in one request', async () => {
   const result = await run<{ open: OrderRow[]; paid: OrderRow[] }>(
     document,
     { first: 5 },
@@ -21,7 +24,7 @@ it('aliases load open and paid orders in one request', async () => {
   expect(result.data?.paid[0]).toEqual({
     id: 'o-2',
     status: 'PAID',
-    total: 349,
+    totalCents: 34900,
     customer: { name: 'Alan Turing' },
   })
 })
@@ -43,5 +46,5 @@ it('@include switches items per variable', async () => {
 
 it('a document with several operations needs operationName', async () => {
   const result = await run(document, { first: 1 })
-  expect(result.errors?.[0]?.message ?? '').toMatch(/Could not determine what operation to execute/)
+  expect(result.errors?.[0]?.message ?? '').toMatch(/Must provide operation name/)
 })

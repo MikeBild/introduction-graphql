@@ -26,12 +26,12 @@ it('Customer.orders comes from the orders subgraph, name from the customers subg
   }>(`query CustomersWithOrders { customers { name orders { id status } } }`)
   expect(result.errors).toBeUndefined()
   expect(result.data?.customers).toEqual([
-    { name: 'Ada Lovelace', orders: [{ id: 'o-1', status: 'OPEN' }] },
+    { name: 'Ada Lovelace', orders: [{ id: 'o-1', status: 'PLACED' }] },
     {
       name: 'Alan Turing',
       orders: [
         { id: 'o-2', status: 'PAID' },
-        { id: 'o-3', status: 'OPEN' },
+        { id: 'o-3', status: 'PLACED' },
       ],
     },
   ])

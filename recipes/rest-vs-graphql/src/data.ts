@@ -1,26 +1,20 @@
-export type OrderStatus = 'OPEN' | 'PAID' | 'SHIPPED'
-export type Customer = {
-  id: string
-  name: string
-  email: string
-  phone: string
-  street: string
-  city: string
-}
+// Werkstatt-Shop: money is always integer cents.
+export type OrderStatus = 'DRAFT' | 'PLACED' | 'PAID' | 'SHIPPED' | 'CANCELLED'
+export type Customer = { id: string; name: string; email: string; phone: string; city: string }
 export type Product = {
   id: string
-  title: string
+  name: string
   description: string
-  price: number
+  priceCents: number
   stock: number
 }
-export type OrderItem = { productId: string; quantity: number }
+export type OrderItem = { productId: string; quantity: number; priceCents: number }
 export type Order = {
   id: string
-  status: OrderStatus
   customerId: string
-  createdAt: string
   items: OrderItem[]
+  status: OrderStatus
+  createdAt: string
 }
 
 export const customers: Customer[] = [
@@ -29,7 +23,6 @@ export const customers: Customer[] = [
     name: 'Ada Lovelace',
     email: 'ada@example.com',
     phone: '+49 30 1234',
-    street: 'Main St 1',
     city: 'Berlin',
   },
   {
@@ -37,7 +30,6 @@ export const customers: Customer[] = [
     name: 'Alan Turing',
     email: 'alan@example.com',
     phone: '+49 40 5678',
-    street: 'Harbour 2',
     city: 'Hamburg',
   },
 ]
@@ -45,23 +37,23 @@ export const customers: Customer[] = [
 export const products: Product[] = [
   {
     id: 'p-1',
-    title: 'Keyboard',
+    name: 'Keyboard',
     description: 'Mechanical keyboard with brown switches',
-    price: 89,
+    priceCents: 8900,
     stock: 12,
   },
   {
     id: 'p-2',
-    title: 'Mouse',
+    name: 'Mouse',
     description: 'Wireless mouse with silent buttons',
-    price: 39,
+    priceCents: 3900,
     stock: 0,
   },
   {
     id: 'p-3',
-    title: 'Monitor',
+    name: 'Monitor',
     description: '27 inch 4K monitor with USB-C',
-    price: 349,
+    priceCents: 34900,
     stock: 4,
   },
 ]
@@ -69,27 +61,27 @@ export const products: Product[] = [
 export const orders: Order[] = [
   {
     id: 'o-1',
-    status: 'OPEN',
     customerId: 'c-1',
-    createdAt: '2026-10-01T09:00:00Z',
     items: [
-      { productId: 'p-1', quantity: 1 },
-      { productId: 'p-2', quantity: 2 },
+      { productId: 'p-1', quantity: 1, priceCents: 8900 },
+      { productId: 'p-2', quantity: 2, priceCents: 3900 },
     ],
+    status: 'PLACED',
+    createdAt: '2026-10-01T09:00:00Z',
   },
   {
     id: 'o-2',
-    status: 'PAID',
     customerId: 'c-2',
+    items: [{ productId: 'p-3', quantity: 1, priceCents: 34900 }],
+    status: 'PAID',
     createdAt: '2026-10-02T10:30:00Z',
-    items: [{ productId: 'p-3', quantity: 1 }],
   },
   {
     id: 'o-3',
-    status: 'OPEN',
     customerId: 'c-2',
+    items: [{ productId: 'p-1', quantity: 3, priceCents: 8900 }],
+    status: 'PLACED',
     createdAt: '2026-10-03T14:15:00Z',
-    items: [{ productId: 'p-1', quantity: 3 }],
   },
 ]
 

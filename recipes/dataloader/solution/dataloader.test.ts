@@ -6,13 +6,15 @@ import { createLoaders } from './loaders.ts'
 
 const { execute, close } = await startTestServer(await createApp())
 afterAll(close)
-type OrdersData = { orders: { id: string; customer: { name: string } | null }[] }
-const ordersWithCustomers = /* GraphQL */ `
-  query OrdersWithCustomers {
+type OrdersData = { orders: { id: string; items: { product: { name: string } | null }[] }[] }
+const ordersWithProducts = /* GraphQL */ `
+  query OrdersWithProducts {
     orders {
       id
-      customer {
-        name
+      items {
+        product {
+          name
+        }
       }
     }
   }
@@ -20,44 +22,40 @@ const ordersWithCustomers = /* GraphQL */ `
 
 beforeEach(() => db.resetQueries())
 
-it('needs exactly two database queries for the list with customers', async () => {
-  const result = await execute<OrdersData>(ordersWithCustomers)
+it('needs exactly two database queries for the list with products', async () => {
+  const result = await execute<OrdersData>(ordersWithProducts)
   expect(result.errors).toBeUndefined()
-  expect(result.data?.orders.map((order) => order.customer?.name ?? null)).toEqual([
-    'Ada Lovelace',
-    'Grace Hopper',
-    'Ada Lovelace',
-    'Alan Turing',
-    null,
-  ])
+  expect(
+    result.data?.orders.flatMap((order) => order.items.map((item) => item.product?.name ?? null)),
+  ).toEqual(['Hammer', 'Screwdriver set', 'Hammer', 'Workbench', null])
   expect(db.queries()).toBe(2)
 })
 
 it('creates fresh loaders per request: no cache across requests', async () => {
-  await execute(ordersWithCustomers)
-  await execute(ordersWithCustomers)
+  await execute(ordersWithProducts)
+  await execute(ordersWithProducts)
   expect(db.queries()).toBe(4)
 })
 
 it('returns results in key order, with null for missing keys', async () => {
-  const { customer } = createLoaders()
-  // findByIds returns table order (c-1, c-3), the loader must map it back to the keys.
-  const rows = await customer.loadMany(['c-3', 'c-404', 'c-1'])
+  const { product } = createLoaders()
+  // findByIds returns table order (p-1, p-3), the loader must map it back to the keys.
+  const rows = await product.loadMany(['p-3', 'p-404', 'p-1'])
   expect(rows.map((row) => (row && 'name' in row ? row.name : null))).toEqual([
-    'Alan Turing',
+    'Workbench',
     null,
-    'Ada Lovelace',
+    'Hammer',
   ])
   expect(db.queries()).toBe(1)
 })
 
 it('clears the loader after a mutation, so the payload shows the new name', async () => {
-  const result = await execute<{ renameCustomer: { name: string } | null }>(/* GraphQL */ `
+  const result = await execute<{ renameProduct: { name: string } | null }>(/* GraphQL */ `
     mutation Rename {
-      renameCustomer(id: "c-2", name: "Grace B. Hopper") {
+      renameProduct(id: "p-2", name: "Screwdriver set, 12 pieces") {
         name
       }
     }
   `)
-  expect(result.data?.renameCustomer).toEqual({ name: 'Grace B. Hopper' })
+  expect(result.data?.renameProduct).toEqual({ name: 'Screwdriver set, 12 pieces' })
 })

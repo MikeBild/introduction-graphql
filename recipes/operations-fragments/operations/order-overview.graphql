@@ -1,5 +1,5 @@
 query OrderOverview($first: Int!) {
-  open: orders(status: OPEN, first: $first) {
+  open: orders(status: PLACED, first: $first) {
     ...OrderRow
   }
   # add the paid orders here

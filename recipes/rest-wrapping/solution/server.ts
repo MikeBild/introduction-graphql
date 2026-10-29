@@ -1,13 +1,12 @@
-import { createServer } from 'node:http'
 import { startInventoryService } from '../src/inventory-service.ts'
 import { log } from '../src/logger.ts'
-import { createGateway } from './yoga.ts'
+import { createApp } from './app.ts'
 
 const port = Number(process.env.PORT ?? 4000)
 const inventory = await startInventoryService({ port: port + 1, delayMs: 50 })
-const yoga = createGateway({ inventoryUrl: inventory.url })
+const app = await createApp({ inventoryUrl: inventory.url })
 
-log.info(`[server] inventory REST service at ${inventory.url}/stock?skus=KB-1,MS-2`)
-createServer(yoga).listen(port, () =>
-  log.info(`[server] GraphQL Yoga ready at http://localhost:${port}${yoga.graphqlEndpoint}`),
+log.info(`[server] inventory REST service at ${inventory.url}/stock?ids=p-1,p-2`)
+app.listen(port, () =>
+  log.info(`[server] Apollo Server ready at http://localhost:${port}/graphql (Apollo Sandbox)`),
 )

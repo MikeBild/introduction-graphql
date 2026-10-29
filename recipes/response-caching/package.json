@@ -1,7 +1,7 @@
 {
   "name": "@introduction-graphql/response-caching",
   "version": "1.0.0",
-  "description": "Server-side response cache with sessions, TTL per type and invalidation via mutations",
+  "description": "Response caching on Apollo Server 5 with Express 5: @cacheControl hints, response cache plugin, sessions and invalidation",
   "private": true,
   "type": "module",
   "author": "Mike Bild <mike.bild@gmail.com>",
@@ -13,17 +13,20 @@
     "start": "node src/server.ts",
     "start:solution": "node solution/server.ts",
     "test": "vitest run",
+    "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
-    "format": "prettier --write .",
-    "test:watch": "vitest"
+    "format": "prettier --write ."
   },
   "dependencies": {
-    "graphql": "^17.0.2",
-    "graphql-yoga": "^6.0.1",
-    "loglevel": "^1.9.2",
-    "@graphql-yoga/plugin-response-cache": "^4.0.1"
+    "@apollo/server": "^5.5.1",
+    "@apollo/server-plugin-response-cache": "^5.0.0",
+    "@apollo/utils.keyvaluecache": "^4.0.0",
+    "@as-integrations/express5": "^1.1.2",
+    "express": "^5.3.0",
+    "graphql": "^16.14.2"
   },
   "devDependencies": {
+    "@types/express": "^5.0.6",
     "@types/node": "^26.6.6",
     "prettier": "^3.9.10",
     "typescript": "^7.0.2",

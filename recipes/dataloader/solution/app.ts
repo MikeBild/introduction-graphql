@@ -1,22 +1,37 @@
 import { ApolloServer } from '@apollo/server'
 import { expressMiddleware } from '@as-integrations/express5'
 import express from 'express'
-import { db, type OrderRow } from '../src/db.ts'
+import { db, type OrderItemRow } from '../src/db.ts'
 import { createLoaders, type Loaders } from './loaders.ts'
 
 export type Context = { loaders: Loaders }
 
 const typeDefs = /* GraphQL */ `
-  type Customer {
+  enum OrderStatus {
+    DRAFT
+    PLACED
+    PAID
+    SHIPPED
+    CANCELLED
+  }
+
+  type Product {
     id: ID!
     name: String!
+    priceCents: Int!
+  }
+
+  type OrderItem {
+    quantity: Int!
+    priceCents: Int!
+    "null when the product no longer exists"
+    product: Product
   }
 
   type Order {
     id: ID!
-    total: Float!
-    "null when the customer no longer exists"
-    customer: Customer
+    status: OrderStatus!
+    items: [OrderItem!]!
   }
 
   type Query {
@@ -24,7 +39,7 @@ const typeDefs = /* GraphQL */ `
   }
 
   type Mutation {
-    renameCustomer(id: ID!, name: String!): Customer
+    renameProduct(id: ID!, name: String!): Product
   }
 `
 
@@ -33,20 +48,20 @@ const resolvers = {
     orders: () => db.orders.findMany(),
   },
   Mutation: {
-    renameCustomer: async (
+    renameProduct: async (
       _parent: unknown,
       { id, name }: { id: string; name: string },
       { loaders }: Context,
     ) => {
-      if (!(await loaders.customer.load(id))) return null
-      await db.customers.rename(id, name)
+      if (!(await loaders.product.load(id))) return null
+      await db.products.rename(id, name)
       // The loader still holds the old name for this request: clear it, then reload.
-      return loaders.customer.clear(id).load(id)
+      return loaders.product.clear(id).load(id)
     },
   },
-  Order: {
-    customer: (order: OrderRow, _args: unknown, { loaders }: Context) =>
-      loaders.customer.load(order.customerId),
+  OrderItem: {
+    product: (item: OrderItemRow, _args: unknown, { loaders }: Context) =>
+      loaders.product.load(item.productId),
   },
 }
 

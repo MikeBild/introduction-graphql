@@ -1,7 +1,7 @@
 import { gql, type ApolloClient } from '@apollo/client'
 
 export type OrdersData = { orders: { id: string; status: string }[] }
-export type OrderDetailData = { order: { id: string; total: number; status: string } | null }
+export type OrderDetailData = { order: { id: string; totalCents: number; status: string } | null }
 
 // The list view
 export const OrdersQuery = gql`
@@ -18,7 +18,7 @@ export const OrderDetailQuery = gql`
   query OrderDetail($id: ID!) {
     order(id: $id) {
       id
-      total
+      totalCents
       status
     }
   }

@@ -5,12 +5,14 @@ import { db } from './db.ts'
 
 const { execute, close } = await startTestServer(await createApp())
 afterAll(close)
-const ordersWithCustomers = /* GraphQL */ `
-  query OrdersWithCustomers {
+const ordersWithProducts = /* GraphQL */ `
+  query OrdersWithProducts {
     orders {
       id
-      customer {
-        name
+      items {
+        product {
+          name
+        }
       }
     }
   }
@@ -18,22 +20,18 @@ const ordersWithCustomers = /* GraphQL */ `
 
 beforeEach(() => db.resetQueries())
 
-it('loads every order and its customer', async () => {
-  const result = await execute<{ orders: { id: string; customer: { name: string } | null }[] }>(
-    ordersWithCustomers,
-  )
+it('loads every order with the products of its items', async () => {
+  const result = await execute<{
+    orders: { id: string; items: { product: { name: string } | null }[] }[]
+  }>(ordersWithProducts)
   expect(result.errors).toBeUndefined()
-  expect(result.data?.orders.map((order) => order.customer?.name ?? null)).toEqual([
-    'Ada Lovelace',
-    'Grace Hopper',
-    'Ada Lovelace',
-    'Alan Turing',
-    null,
-  ])
+  expect(
+    result.data?.orders.flatMap((order) => order.items.map((item) => item.product?.name ?? null)),
+  ).toEqual(['Hammer', 'Screwdriver set', 'Hammer', 'Workbench', null])
 })
 
-it('needs 1 + N database queries: one for the list, one per order', async () => {
-  await execute(ordersWithCustomers)
-  // 1 x orders + 5 x customers, even though c-1 appears twice
+it('needs 1 + N database queries: one for the list, one per order item', async () => {
+  await execute(ordersWithProducts)
+  // 1 x orders + 5 x products, even though p-1 appears twice
   expect(db.queries()).toBe(6)
 })

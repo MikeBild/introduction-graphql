@@ -1,8 +1,9 @@
-import { expect, it } from 'vitest'
-import { createTestClient } from '../src/test-client.ts'
-import { yoga } from './yoga.ts'
+import { afterAll, expect, it } from 'vitest'
+import { startTestServer } from '../src/test-client.ts'
+import { createApp } from './app.ts'
 
-const execute = createTestClient(yoga)
+const { execute, close } = await startTestServer(await createApp())
+afterAll(close)
 const asCustomer = { authorization: 'c-1' }
 
 type PlaceOrderData = {
@@ -36,7 +37,7 @@ const placeOrder = /* GraphQL */ `
 it('out of stock is a typed result, not an error', async () => {
   const result = await execute<PlaceOrderData>(
     placeOrder,
-    { input: { productId: 'p-2', quantity: 1, street: 'Main St 1' } },
+    { input: { items: [{ productId: 'p-2', quantity: 1 }], street: 'Main St 1' } },
     asCustomer,
   )
   expect(result.errors).toBeUndefined()
@@ -50,7 +51,7 @@ it('out of stock is a typed result, not an error', async () => {
 it('an invalid address names the field', async () => {
   const result = await execute<PlaceOrderData>(
     placeOrder,
-    { input: { productId: 'p-1', quantity: 1, street: ' ' } },
+    { input: { items: [{ productId: 'p-1', quantity: 1 }], street: ' ' } },
     asCustomer,
   )
   expect(result.data?.placeOrder).toEqual({
@@ -63,7 +64,7 @@ it('an invalid address names the field', async () => {
 it('success returns the order', async () => {
   const result = await execute<PlaceOrderData>(
     placeOrder,
-    { input: { productId: 'p-1', quantity: 2, street: 'Main St 1' } },
+    { input: { items: [{ productId: 'p-1', quantity: 2 }], street: 'Main St 1' } },
     asCustomer,
   )
   expect(result.data?.placeOrder).toEqual({
@@ -74,7 +75,21 @@ it('success returns the order', async () => {
 
 it('technical and cross-cutting errors stay in the errors field', async () => {
   const result = await execute<PlaceOrderData>(placeOrder, {
-    input: { productId: 'p-1', quantity: 1, street: 'Main St 1' },
+    input: { items: [{ productId: 'p-1', quantity: 1 }], street: 'Main St 1' },
   })
   expect(result.errors?.[0]?.extensions?.code).toBe('UNAUTHENTICATED')
+})
+
+it('formatError masks internal messages, but keeps code and path', async () => {
+  await execute(
+    placeOrder,
+    { input: { items: [{ productId: 'p-1', quantity: 1 }], street: 'Elm St 2' } },
+    { authorization: 'c-404' },
+  )
+  const result = await execute(`query Orders { orders { id customer { name } } }`)
+  expect(result.errors?.[0]).toMatchObject({
+    message: 'Internal server error',
+    path: ['orders', 2, 'customer'],
+    extensions: { code: 'INTERNAL_SERVER_ERROR' },
+  })
 })

@@ -4,19 +4,21 @@ import express from 'express'
 import { GraphQLError } from 'graphql'
 import { log } from './logger.ts'
 
-export type OrderStatus = 'OPEN' | 'SHIPPED' | 'CANCELLED'
-export type Order = { id: string; total: number; status: OrderStatus }
+export type OrderStatus = 'DRAFT' | 'PLACED' | 'PAID' | 'SHIPPED' | 'CANCELLED'
+export type Order = { id: string; totalCents: number; status: OrderStatus }
 
 const typeDefs = /* GraphQL */ `
   enum OrderStatus {
-    OPEN
+    DRAFT
+    PLACED
+    PAID
     SHIPPED
     CANCELLED
   }
 
   type Order {
     id: ID!
-    total: Float!
+    totalCents: Int!
     status: OrderStatus!
   }
 
@@ -41,9 +43,9 @@ const typeDefs = /* GraphQL */ `
 // One app per call, each with its own data – tests do not share state.
 export const createApp = async () => {
   const orders: Order[] = [
-    { id: 'o-1', total: 42, status: 'OPEN' },
-    { id: 'o-2', total: 17, status: 'OPEN' },
-    { id: 'o-3', total: 99, status: 'SHIPPED' },
+    { id: 'o-1', totalCents: 2580, status: 'PLACED' },
+    { id: 'o-2', totalCents: 2490, status: 'PLACED' },
+    { id: 'o-3', totalCents: 18900, status: 'SHIPPED' },
   ]
   const server = new ApolloServer({
     typeDefs,
@@ -58,7 +60,8 @@ export const createApp = async () => {
           const order = orders.find((candidate) => candidate.id === input.orderId)
           if (!order)
             throw new GraphQLError('Order not found', { extensions: { code: 'NOT_FOUND' } })
-          if (order.status !== 'OPEN')
+          // CANCELLED only from DRAFT or PLACED
+          if (order.status !== 'DRAFT' && order.status !== 'PLACED')
             throw new GraphQLError(`Order ${order.id} is ${order.status}`, {
               extensions: { code: 'NOT_CANCELLABLE' },
             })

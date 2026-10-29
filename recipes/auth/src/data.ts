@@ -1,7 +1,7 @@
 export type Role = 'CUSTOMER' | 'SUPPORT'
 export type User = { id: string; role: Role }
 export type Customer = { id: string; name: string; email: string }
-export type Order = { id: string; total: number; customerId: string }
+export type Order = { id: string; totalCents: number; customerId: string }
 
 export const customers: Customer[] = [
   { id: 'c-1', name: 'Ada Lovelace', email: 'ada@example.com' },
@@ -9,9 +9,9 @@ export const customers: Customer[] = [
 ]
 
 export const orders: Order[] = [
-  { id: 'o-1', total: 42, customerId: 'c-1' },
-  { id: 'o-2', total: 17, customerId: 'c-2' },
-  { id: 'o-3', total: 99, customerId: 'c-1' },
+  { id: 'o-1', totalCents: 2580, customerId: 'c-1' },
+  { id: 'o-2', totalCents: 2490, customerId: 'c-2' },
+  { id: 'o-3', totalCents: 18900, customerId: 'c-1' },
 ]
 
 export const findCustomer = (id: string) => customers.find((customer) => customer.id === id)

@@ -1,12 +1,14 @@
+import { createRequire } from 'node:module'
 import { defineConfig } from 'vitest/config'
 
-// graphql 17 ships a separate "development" build. Vite would resolve it for the test files,
-// while Node loads the default build for graphql-yoga: two graphql instances, failing
-// instanceof checks and masked errors. Resolve with the same conditions as Node instead.
-const conditions = ['module-sync', 'node', 'import', 'default']
+// graphql 16 has no exports map: Vite would load its ESM build (index.mjs) for the test files,
+// while Node loads the CommonJS build (index.js) for Apollo Server and other dependencies.
+// Two graphql instances fail with "Cannot use GraphQLObjectType from another module or realm".
+// So the test files get the same file Node picks.
+const graphql = createRequire(import.meta.url).resolve('graphql')
 
 export default defineConfig({
-  ssr: { resolve: { conditions } },
+  resolve: { alias: [{ find: /^graphql$/, replacement: graphql }] },
   test: {
     include: ['src/**/*.test.ts', 'solution/**/*.test.ts'],
     // LOG_LEVEL is read by src/logger.ts: keep test output quiet
