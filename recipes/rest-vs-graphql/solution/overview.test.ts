@@ -1,5 +1,4 @@
-import assert from 'node:assert/strict'
-import { test } from 'node:test'
+import { expect, it } from 'vitest'
 import { orders } from '../src/data.ts'
 import { restHandler } from '../src/rest.ts'
 import { createTestClient } from '../src/test-client.ts'
@@ -32,10 +31,10 @@ const overviewQuery = /* GraphQL */ `
   }
 `
 
-test('GraphQL: the whole overview in one request', async () => {
+it('GraphQL: the whole overview in one request', async () => {
   const result = await execute<OverviewData>(overviewQuery)
-  assert.equal(result.errors, undefined)
-  assert.deepEqual(result.data?.orders[0], {
+  expect(result.errors).toBeUndefined()
+  expect(result.data?.orders[0]).toEqual({
     id: 'o-1',
     customer: { name: 'Ada Lovelace' },
     items: [
@@ -45,7 +44,7 @@ test('GraphQL: the whole overview in one request', async () => {
   })
 })
 
-test('GraphQL answer is smaller than the sum of the REST answers', async () => {
+it('GraphQL answer is smaller than the sum of the REST answers', async () => {
   const graphqlBytes = JSON.stringify(await execute(overviewQuery)).length
   const openOrders = orders.filter((order) => order.status === 'OPEN')
   const restPaths = [
@@ -59,5 +58,8 @@ test('GraphQL answer is smaller than the sum of the REST answers', async () => {
     ),
   )
   const restBytes = restBodies.reduce((sum, body) => sum + body.length, 0)
-  assert.ok(graphqlBytes < restBytes, `GraphQL ${graphqlBytes} bytes vs REST ${restBytes} bytes`)
+  expect(
+    graphqlBytes < restBytes,
+    `GraphQL ${graphqlBytes} bytes vs REST ${restBytes} bytes`,
+  ).toBeTruthy()
 })

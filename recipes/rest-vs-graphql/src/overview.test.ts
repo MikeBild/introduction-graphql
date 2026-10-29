@@ -1,5 +1,4 @@
-import assert from 'node:assert/strict'
-import { test } from 'node:test'
+import { expect, it } from 'vitest'
 import type { Customer, Order, Product } from './data.ts'
 import { restHandler } from './rest.ts'
 import { createTestClient } from './test-client.ts'
@@ -19,7 +18,7 @@ const createRestClient = () => {
   return { get, stats }
 }
 
-test('REST: the open-orders view needs a request waterfall and overfetches', async () => {
+it('REST: the open-orders view needs a request waterfall and overfetches', async () => {
   const { get, stats } = createRestClient()
   const openOrders = await get<Order[]>('/orders?status=OPEN')
   const customers = await Promise.all(
@@ -30,13 +29,13 @@ test('REST: the open-orders view needs a request waterfall and overfetches', asy
   ]
   const products = await get<Product[]>(`/products?ids=${productIds.join(',')}`)
 
-  assert.equal(customers.length, 2)
-  assert.equal(products.length, 2)
-  assert.equal(stats.requests, 4)
-  assert.ok('phone' in (customers[0] ?? {}), 'REST returns fields the view never shows')
+  expect(customers.length).toBe(2)
+  expect(products.length).toBe(2)
+  expect(stats.requests).toBe(4)
+  expect('phone' in (customers[0] ?? {}), 'REST returns fields the view never shows').toBeTruthy()
 })
 
-test('GraphQL: one request returns exactly the requested fields', async () => {
+it('GraphQL: one request returns exactly the requested fields', async () => {
   const result = await execute<{ orders: { id: string; customer: { name: string } }[] }>(
     /* GraphQL */ `
       query OpenOrders {
@@ -49,7 +48,7 @@ test('GraphQL: one request returns exactly the requested fields', async () => {
       }
     `,
   )
-  assert.deepEqual(result.data?.orders, [
+  expect(result.data?.orders).toEqual([
     { id: 'o-1', customer: { name: 'Ada Lovelace' } },
     { id: 'o-3', customer: { name: 'Alan Turing' } },
   ])

@@ -1,6 +1,5 @@
-import assert from 'node:assert/strict'
 import { createHash } from 'node:crypto'
-import { beforeEach, test } from 'node:test'
+import { beforeEach, expect, it } from 'vitest'
 import { load } from '../src/schema.ts'
 import { createTestClient, type GraphQLResponse } from '../src/test-client.ts'
 import { yoga } from './yoga.ts'
@@ -24,41 +23,41 @@ beforeEach(() => {
   load.resolvedOrders = 0
 })
 
-test('own clients send a hash from the manifest', async () => {
+it('own clients send a hash from the manifest', async () => {
   const document = 'query OrdersPage { orders(first: 20) { id status customer { name } } }'
   const result = await sendPersisted(createHash('sha256').update(document).digest('hex'))
-  assert.equal(result.errors, undefined)
-  assert.equal(result.data?.orders.length, 20)
+  expect(result.errors).toBeUndefined()
+  expect(result.data?.orders.length).toBe(20)
 })
 
-test('unknown hashes and ad-hoc queries are rejected without a partner key', async () => {
+it('unknown hashes and ad-hoc queries are rejected without a partner key', async () => {
   const unknown = await sendPersisted('0'.repeat(64))
-  assert.equal(unknown.errors?.[0]?.extensions?.code, 'PERSISTED_QUERY_NOT_IN_LIST')
+  expect(unknown.errors?.[0]?.extensions?.code).toBe('PERSISTED_QUERY_NOT_IN_LIST')
   const adHoc = await asAnyone(`{ orders(first: 1) { id } }`)
-  assert.equal(adHoc.errors?.[0]?.message, 'PersistedQueryOnly')
+  expect(adHoc.errors?.[0]?.message).toBe('PersistedQueryOnly')
 })
 
-test('partners may send own queries, but depth is limited', async () => {
+it('partners may send own queries, but depth is limited', async () => {
   const result = await asPartner(
     `{ orders { customer { orders { customer { orders { customer { name } } } } } } }`,
   )
-  assert.match(result.errors?.[0]?.message ?? '', /depth limit of 5 exceeded/)
-  assert.equal(load.resolvedOrders, 0, 'rejected before the first resolver')
+  expect(result.errors?.[0]?.message ?? '').toMatch(/depth limit of 5 exceeded/)
+  expect(load.resolvedOrders, 'rejected before the first resolver').toBe(0)
 })
 
-test('alias floods are rejected', async () => {
+it('alias floods are rejected', async () => {
   const aliases = Array.from(
     { length: 50 },
     (_, index) => `a${index}: orders(first: 1) { id }`,
   ).join('\n')
   const result = await asPartner(`query Aliases { ${aliases} }`)
-  assert.match(result.errors?.[0]?.message ?? '', /Aliases limit of 5 exceeded/)
+  expect(result.errors?.[0]?.message ?? '').toMatch(/Aliases limit of 5 exceeded/)
 })
 
-test('lists multiply the cost by their first argument, also via variables', async () => {
+it('lists multiply the cost by their first argument, also via variables', async () => {
   const query = `query Nested($size: Int!) { orders(first: $size) { customer { orders(first: $size) { id } } } }`
   const cheap = await asPartner(query, { size: 10 })
-  assert.equal(cheap.errors, undefined)
+  expect(cheap.errors).toBeUndefined()
   const expensive = await asPartner(query, { size: 100 })
-  assert.equal(expensive.errors?.[0]?.extensions?.code, 'QUERY_TOO_EXPENSIVE')
+  expect(expensive.errors?.[0]?.extensions?.code).toBe('QUERY_TOO_EXPENSIVE')
 })

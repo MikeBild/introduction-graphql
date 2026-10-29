@@ -1,9 +1,8 @@
-import assert from 'node:assert/strict'
-import { test } from 'node:test'
+import { expect, it } from 'vitest'
 import { createTestClient } from './test-client.ts'
 import { createServer } from './yoga.ts'
 
-test('field errors arrive with HTTP 200 – the operation log counts them', async () => {
+it('field errors arrive with HTTP 200 – the operation log counts them', async () => {
   const lines: string[] = []
   const server = createServer((line) => lines.push(line))
   const response = await server.fetch('http://localhost/graphql', {
@@ -14,13 +13,13 @@ test('field errors arrive with HTTP 200 – the operation log counts them', asyn
       operationName: 'OrdersPage',
     }),
   })
-  assert.equal(response.status, 200)
-  assert.match(lines[0] ?? '', /^\[graphql\] OrdersPage \d+ms errors=1$/)
+  expect(response.status).toBe(200)
+  expect(lines[0] ?? '').toMatch(/^\[graphql\] OrdersPage \d+ms errors=1$/)
 })
 
-test('a named query sent without operationName is logged as "anonymous"', async () => {
+it('a named query sent without operationName is logged as "anonymous"', async () => {
   const lines: string[] = []
   const execute = createTestClient(createServer((line) => lines.push(line)))
   await execute(`query OrdersPage { orders { id } }`)
-  assert.match(lines[0] ?? '', /^\[graphql\] anonymous \d+ms errors=0$/)
+  expect(lines[0] ?? '').toMatch(/^\[graphql\] anonymous \d+ms errors=0$/)
 })
