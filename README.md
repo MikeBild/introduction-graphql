@@ -79,7 +79,7 @@ Runnable recipes, from easy to hard, all around one running example: the worksho
 
 The exercises belong to these German-language workshops:
 
-- [GraphQL vom Schema bis Production](https://workshops.mikebild.dev/w/graphql/onsite/)
+- [GraphQL vom Schema bis Produktion](https://workshops.mikebild.dev/w/graphql/onsite/)
 - [GraphQL-APIs entwerfen und bauen](https://workshops.mikebild.dev/w/graphql-kompakt/online/)
 - [GraphQL in 60 Minuten](https://workshops.mikebild.dev/w/mini-kurs/online/)
 - [Fullstack mit TypeScript, Node.js, GraphQL und React in 6 Tagen](https://workshops.mikebild.dev/w/fullstack/onsite/)
