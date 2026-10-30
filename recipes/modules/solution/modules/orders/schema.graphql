@@ -1,0 +1,59 @@
+type OrderItem {
+  quantity: Int!
+  priceCents: Int!
+  "null when the product no longer exists"
+  product: Product
+}
+
+enum OrderStatus {
+  DRAFT
+  PLACED
+  PAID
+  SHIPPED
+  CANCELLED
+}
+
+type Order {
+  id: ID!
+  status: OrderStatus!
+  items: [OrderItem!]!
+  totalCents: Int!
+}
+
+type ChangeOrderItemsSuccess {
+  order: Order!
+}
+
+type OrderNotFound {
+  orderId: ID!
+  message: String!
+}
+
+type OrderNotEditable {
+  orderId: ID!
+  status: OrderStatus!
+  message: String!
+}
+
+union ChangeOrderItemsResult = ChangeOrderItemsSuccess | OrderNotFound | OrderNotEditable
+
+input ChangeOrderItemQuantityInput {
+  orderId: ID!
+  productId: ID!
+  quantity: Int!
+}
+
+input RemoveOrderItemInput {
+  orderId: ID!
+  productId: ID!
+}
+
+extend type Query {
+  "The orders of the signed-in customer"
+  orders: [Order!]!
+}
+
+extend type Mutation {
+  changeOrderItemQuantity(input: ChangeOrderItemQuantityInput!): ChangeOrderItemsResult!
+  removeOrderItem(input: RemoveOrderItemInput!): ChangeOrderItemsResult!
+}

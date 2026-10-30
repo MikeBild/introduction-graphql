@@ -1,0 +1,11 @@
+type Query
+
+type Mutation
+
+"""
+One customer, one type. Only the identity lives here: every module adds
+the fields of its own bounded context with `extend type Customer`.
+"""
+type Customer {
+  id: ID!
+}

@@ -1,0 +1,36 @@
+{
+  "name": "@introduction-graphql/fast-reads",
+  "version": "1.0.0",
+  "description": "Measure first: one IN query instead of N, keyset pagination instead of OFFSET, on a real SQLite file",
+  "private": true,
+  "type": "module",
+  "author": "Mike Bild <mike.bild@gmail.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=26.11"
+  },
+  "scripts": {
+    "seed": "node src/seed.ts",
+    "start": "node src/server.ts",
+    "start:solution": "node solution/server.ts",
+    "load": "node src/load.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "@apollo/server": "^5.5.1",
+    "@as-integrations/express5": "^1.1.2",
+    "dataloader": "^2.2.3",
+    "express": "^5.3.0",
+    "graphql": "^16.14.2"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.6.6",
+    "prettier": "^3.9.10",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.5"
+  }
+}

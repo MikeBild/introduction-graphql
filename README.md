@@ -59,7 +59,10 @@ Runnable recipes, from easy to hard, all around one running example: the worksho
 ### Level 2 – everyday practice
 
 - [Workshop shop: a React client with Apollo Client 4 and Codegen](recipes/shop-client/README.md) – React 19, Apollo Client 4, GraphQL Codegen (typescript-operations)
+- [One context per request](recipes/context/README.md) – Apollo Server 5, Express 5, DataLoader
+- [Layers and modules: one schema from many folders](recipes/modules/README.md) – Apollo Server 5, Express 5, zod
 - [Authentication, access tokens (OIDC, jose) and authorization](recipes/auth/README.md) – Apollo Server 5, Express 5, jose, Apollo Client 4
+- [The me pattern: every viewer gets their own view](recipes/me-pattern/README.md) – Apollo Server 5, Express 5
 - [Pagination of orders with Connections and Apollo cache policies](recipes/pagination/README.md) – Apollo Server 5, Express 5, Apollo Client 4
 - [Optimistic UI with the Apollo Client cache](recipes/optimistic-ui/README.md) – Apollo Server 5, Express 5, Apollo Client 4
 - [Custom Scalars](recipes/custom-scalars/README.md) – Apollo Server 5, Express 5, graphql-scalars
@@ -73,6 +76,8 @@ Runnable recipes, from easy to hard, all around one running example: the worksho
 - [Response Caching with @cacheControl](recipes/response-caching/README.md) – Apollo Server 5, Express 5, Apollo response cache plugin
 - [Schema Evolution](recipes/schema-evolution/README.md) – Apollo Server 5, Express 5, GraphQL Inspector
 - [Tracing and Metrics](recipes/tracing/README.md) – Apollo Server 5, Express 5, OpenTelemetry
+- [DDD in the graph: bounded contexts and aggregates](recipes/ddd/README.md) – Apollo Server 5, Express 5
+- [Fast reads: batches and keyset pagination](recipes/fast-reads/README.md) – Apollo Server 5, Express 5, DataLoader, node:sqlite
 - [BFF and Domain Boundaries](recipes/bff-gateway/README.md) – Apollo Server 5, Express 5
 
 ## Workshops and slides

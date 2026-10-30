@@ -13,7 +13,10 @@ Runnable recipes, from easy to hard, all around one running example: the worksho
 ### Level 2 – everyday practice
 
 - [Workshop shop: a React client with Apollo Client 4 and Codegen](shop-client/README.md) – React 19, Apollo Client 4, GraphQL Codegen (typescript-operations)
+- [One context per request](context/README.md) – Apollo Server 5, Express 5, DataLoader
+- [Layers and modules: one schema from many folders](modules/README.md) – Apollo Server 5, Express 5, zod
 - [Authentication, access tokens (OIDC, jose) and authorization](auth/README.md) – Apollo Server 5, Express 5, jose, Apollo Client 4
+- [The me pattern: every viewer gets their own view](me-pattern/README.md) – Apollo Server 5, Express 5
 - [Pagination of orders with Connections and Apollo cache policies](pagination/README.md) – Apollo Server 5, Express 5, Apollo Client 4
 - [Optimistic UI with the Apollo Client cache](optimistic-ui/README.md) – Apollo Server 5, Express 5, Apollo Client 4
 - [Custom Scalars](custom-scalars/README.md) – Apollo Server 5, Express 5, graphql-scalars
@@ -27,6 +30,8 @@ Runnable recipes, from easy to hard, all around one running example: the worksho
 - [Response Caching with @cacheControl](response-caching/README.md) – Apollo Server 5, Express 5, Apollo response cache plugin
 - [Schema Evolution](schema-evolution/README.md) – Apollo Server 5, Express 5, GraphQL Inspector
 - [Tracing and Metrics](tracing/README.md) – Apollo Server 5, Express 5, OpenTelemetry
+- [DDD in the graph: bounded contexts and aggregates](ddd/README.md) – Apollo Server 5, Express 5
+- [Fast reads: batches and keyset pagination](fast-reads/README.md) – Apollo Server 5, Express 5, DataLoader, node:sqlite
 - [BFF and Domain Boundaries](bff-gateway/README.md) – Apollo Server 5, Express 5
 
 ### Not written yet

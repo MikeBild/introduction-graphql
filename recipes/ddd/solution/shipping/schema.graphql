@@ -1,0 +1,26 @@
+"What the shipping context knows about a customer: where the parcel goes."
+type Address {
+  recipient: String!
+  street: String!
+  city: String!
+}
+
+type Shipment {
+  id: ID!
+  trackingNumber: String!
+  order: Order!
+}
+
+extend type Customer {
+  "null until the customer has entered an address"
+  shippingAddress: Address
+}
+
+extend type Order {
+  "null until the order has left the warehouse"
+  shipment: Shipment
+}
+
+extend type Query {
+  shipments: [Shipment!]!
+}

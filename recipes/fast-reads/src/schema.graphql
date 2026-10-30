@@ -1,0 +1,38 @@
+"Lifecycle of an order: DRAFT → PLACED → PAID → SHIPPED; CANCELLED only from DRAFT or PLACED"
+enum OrderStatus {
+  DRAFT
+  PLACED
+  PAID
+  SHIPPED
+  CANCELLED
+}
+
+"A product of the workshop shop. Money is always in whole cents."
+type Product {
+  id: ID!
+  name: String!
+  priceCents: Int!
+}
+
+type OrderItem {
+  quantity: Int!
+  "Unit price at the time of ordering"
+  priceCents: Int!
+  "null when the product no longer exists"
+  product: Product
+}
+
+type Order {
+  id: ID!
+  status: OrderStatus!
+  "ISO 8601 timestamp"
+  createdAt: String!
+  items: [OrderItem!]!
+  "Sum of quantity × priceCents"
+  totalCents: Int!
+}
+
+type Query {
+  "Newest first. first is capped at 100."
+  orders(first: Int = 20, offset: Int = 0): [Order!]!
+}
