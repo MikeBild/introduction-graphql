@@ -1,0 +1,35 @@
+enum OrderStatus {
+  DRAFT
+  PLACED
+  PAID
+  SHIPPED
+  CANCELLED
+}
+
+"A value inside the order: no id of its own, reachable only through the root."
+type OrderItem {
+  productId: ID!
+  quantity: Int!
+  priceCents: Int!
+}
+
+"The root of the Order aggregate."
+type Order {
+  id: ID!
+  status: OrderStatus!
+  items: [OrderItem!]!
+  totalCents: Int!
+  customer: Customer!
+}
+
+# What the order context knows about a customer: who gets the invoice.
+extend type Customer {
+  name: String!
+  email: String!
+}
+
+extend type Query {
+  order(id: ID!): Order
+  "The read model of all orders that are not finished yet"
+  openOrders: [Order!]!
+}

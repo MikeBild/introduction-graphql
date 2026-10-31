@@ -77,6 +77,7 @@ Runnable recipes, from easy to hard, all around one running example: the worksho
 - [Schema Evolution](recipes/schema-evolution/README.md) – Apollo Server 5, Express 5, GraphQL Inspector
 - [Tracing and Metrics](recipes/tracing/README.md) – Apollo Server 5, Express 5, OpenTelemetry
 - [DDD in the graph: bounded contexts and aggregates](recipes/ddd/README.md) – Apollo Server 5, Express 5
+- [The graph stays, services grow behind it: a module becomes a service](recipes/ddd-services/README.md) – Apollo Server 5, Express 5, DataLoader
 - [Fast reads: batches and keyset pagination](recipes/fast-reads/README.md) – Apollo Server 5, Express 5, DataLoader, node:sqlite
 - [BFF and Domain Boundaries](recipes/bff-gateway/README.md) – Apollo Server 5, Express 5
 
