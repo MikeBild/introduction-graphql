@@ -6,7 +6,7 @@
   - JavaScript/TypeScript
   - NodeJS
   - React
-- Node.js 26.11 or newer (the recipes run TypeScript directly, use Apollo Server 5 on Express 5 and test with Vitest)
+- Node.js 26 or newer (the recipes run TypeScript directly, use Apollo Server 5 on Express 5 and test with Vitest)
 - Linux, OSX or Windows operating system
 - VS Code
 - Chrome and Developer Tools
