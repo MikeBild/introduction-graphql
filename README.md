@@ -153,10 +153,15 @@ Die Theorie liegt als englische Kapitel im Ordner [`introduction-graphql/`](intr
 
 ## Workshop und Folien
 
-- Workshop: [„GraphQL vom Schema bis zur Produktion“](https://workshops.mikebild.dev/w/graphql/onsite/)
-- Workshop: [„GraphQL-APIs entwerfen und bauen“](https://workshops.mikebild.dev/w/graphql-kompakt/online/)
-- Workshop: [„GraphQL in 60 Minuten“](https://workshops.mikebild.dev/w/mini-kurs/online/)
+- Workshop: [„Architektur: DDD, CQRS und Event Sourcing“](https://workshops.mikebild.dev/w/architektur-ddd-cqrs/remote/)
 - Workshop: [„Fullstack mit TypeScript, Node.js, GraphQL und React in 6 Tagen“](https://workshops.mikebild.dev/w/fullstack/onsite/)
+- Workshop: [„GraphQL-APIs entwerfen und bauen“](https://workshops.mikebild.dev/w/graphql-kompakt/online/)
+- Workshop: [„GraphQL vom Schema bis zur Produktion“](https://workshops.mikebild.dev/w/graphql/onsite/)
+- Workshop: [„Microservices mit Node.js, Express 5 und Docker Compose“](https://workshops.mikebild.dev/w/microservices/remote/)
+- Workshop: [„GraphQL in 60 Minuten“](https://workshops.mikebild.dev/w/mini-kurs/online/)
+- Workshop: [„Node.js Backend, funktional und typsicher“](https://workshops.mikebild.dev/w/nodejs/remote/)
+- Workshop: [„React mit Vite bis zur installierbaren PWA“](https://workshops.mikebild.dev/w/react-fortgeschritten/remote/)
+- Workshop: [„React mit TypeScript bis zur Produktion“](https://workshops.mikebild.dev/w/react/remote/)
 - Folien: [slides.mikebild.dev/introduction-graphql](https://slides.mikebild.dev/introduction-graphql.html)
 - Beiträge auf mikebild.dev:
   - [GraphQL-Konzepte: Schema, Resolver, Ausführung](https://www.mikebild.dev/de/blog/graphql-konzepte-schema-resolver-ausfuehrung/)
