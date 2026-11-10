@@ -163,6 +163,7 @@ Die Theorie liegt als englische Kapitel im Ordner [`introduction-graphql/`](intr
 - Workshop: [„React mit Vite bis zur installierbaren PWA“](https://workshops.mikebild.dev/w/react-fortgeschritten/remote/)
 - Workshop: [„React mit TypeScript bis zur Produktion“](https://workshops.mikebild.dev/w/react/remote/)
 - Folien: [slides.mikebild.dev/introduction-graphql](https://slides.mikebild.dev/introduction-graphql.html)
+- PDF: [slides.mikebild.dev/introduction-graphql.pdf](https://slides.mikebild.dev/introduction-graphql.pdf)
 - Beiträge auf mikebild.dev:
   - [GraphQL-Konzepte: Schema, Resolver, Ausführung](https://www.mikebild.dev/de/blog/graphql-konzepte-schema-resolver-ausfuehrung/)
   - [GraphQL-Überblick: Vom Schema zur föderierten API](https://www.mikebild.dev/de/blog/graphql-ueberblick-vom-schema-zur-foederierten-api/)
