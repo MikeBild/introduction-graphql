@@ -1,6 +1,6 @@
 # Workshop shop: a React client with Apollo Client 4
 
-A React 19 page that lists the orders of the [shop server](../shop-server/README.md), with Apollo Client 4 and Vite. It replaces the old React 17 + apollo-boost client, which is kept for comparison in [`legacy/apollo-example/packages/client`](../../legacy/apollo-example/packages/client).
+A React 19 page that lists the orders of the [shop server](../shop-server/README.md), with Apollo Client 4 and Vite. It replaces the old React 17 + apollo-boost client, which is kept for comparison in [`archive/apollo-example/packages/client`](../../archive/apollo-example/packages/client).
 
 `src/OrderList.tsx` shows the open orders (`status: PLACED`) and works, but: one query for the whole page, hand-written types that nothing checks against the schema, and neither a loading nor an error state.
 

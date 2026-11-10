@@ -1,21 +1,23 @@
-# Übungen: GraphQL
+*English · [Deutsch](README.de.md)*
 
-Übungs-Repo zum Workshop „GraphQL vom Schema bis zur Produktion“. Die 24 Übungen folgen dem Workshop von einfach nach schwer, jede mit Startpunkt (`src/`), Tests und Lösung (`solution/`). Alle Übungen spielen im Werkstatt-Shop mit Produkten, Kunden und Bestellungen – Server mit Apollo Server 5 auf Express 5, Clients mit Apollo Client 4, Tests mit Vitest.
+# Exercises: GraphQL
 
-## Was du lernst
+Exercise repo for the workshop “GraphQL from schema to production”. The 24 exercises follow the workshop from easy to hard, each with a starting point (`src/`), tests and a solution (`solution/`). All exercises take place in the workshop shop with products, customers and orders – servers with Apollo Server 5 on Express 5, clients with Apollo Client 4, tests with Vitest.
 
-- Ein Schema in SDL entwerfen, Resolver schreiben und mit Apollo Server 5 auf Express 5 ausliefern – geprüft über HTTP mit Vitest
-- Clients mit Apollo Client 4 bauen: Operations mit Variables und Fragments, Pagination mit Connections, Optimistic UI mit dem normalisierten Cache
-- Den Graph in die Produktion bringen: DataLoader und Context pro Request, Authentication und Authorization, Errors as Data, Subscriptions, Federation, Query Cost Limits, Response Caching, Schema Evolution und Tracing
+## What you learn
 
-## Voraussetzungen
+- Design a schema in SDL, write resolvers and serve them with Apollo Server 5 on Express 5 – verified over HTTP with Vitest
+- Build clients with Apollo Client 4: operations with variables and fragments, pagination with connections, optimistic UI with the normalized cache
+- Take the graph to production: DataLoader and a context per request, authentication and authorization, Errors as Data, subscriptions, federation, query cost limits, response caching, schema evolution and tracing
 
-- **Node.js 26** oder neuer – die Übungen führen TypeScript direkt mit `node src/server.ts` aus, ohne Build-Schritt (`engines` in jeder `package.json`). Die Übung `fast-reads` braucht Node.js 26.11 für `node:sqlite`.
-- Ein Editor mit TypeScript-Support, zum Beispiel VS Code
-- Ein Browser für Apollo Sandbox unter http://localhost:4000/graphql, dazu `curl` für Anfragen von der Kommandozeile
-- Grundkenntnisse in TypeScript und Node.js, für die Client-Übungen auch React. Zum Auffrischen: [introduction-nodejs](https://github.com/MikeBild/introduction-nodejs) und [introduction-react](https://github.com/MikeBild/introduction-react)
+## Prerequisites
 
-## Einrichten
+- **Node.js 26** or newer – the exercises run TypeScript directly with `node src/server.ts`, without a build step (`engines` in every `package.json`). The exercise `fast-reads` needs Node.js 26.11 for `node:sqlite`.
+- An editor with TypeScript support, for example VS Code
+- A browser for Apollo Sandbox at http://localhost:4000/graphql, plus `curl` for requests from the command line
+- Basic knowledge of TypeScript and Node.js, and React for the client exercises. To refresh: [introduction-nodejs](https://github.com/MikeBild/introduction-nodejs) and [introduction-react](https://github.com/MikeBild/introduction-react)
+
+## Setup
 
 ```bash
 git clone https://github.com/MikeBild/introduction-graphql.git
@@ -23,164 +25,164 @@ cd introduction-graphql/recipes/shop-server
 npm install
 npm test             # Vitest
 npm run typecheck    # TypeScript strict
-npm start            # Apollo Sandbox auf http://localhost:4000/graphql
+npm start            # Apollo Sandbox on http://localhost:4000/graphql
 ```
 
-Es gibt kein gemeinsames `package.json` und kein Prüfscript für alle Übungen: Jede Übung unter `recipes/` ist ein eigenes npm-Projekt mit eigener `package-lock.json`.
+There is no shared `package.json` and no check script for all exercises: every exercise under `recipes/` is its own npm project with its own `package-lock.json`.
 
-## So arbeitest du mit einer Übung
+## How to work on an exercise
 
-Installiere die Abhängigkeiten im Ordner der Übung, nicht im Hauptverzeichnis:
+Install the dependencies in the folder of the exercise, not in the root directory:
 
 ```text
 recipes/
   dataloader/
-    README.md              Startpunkt, Aufgabe in Schritten, Lösung
-    package.json           Scripts: start, start:solution, test, test:watch, typecheck, format
-    src/                   dein Startpunkt
-      app.ts               Schema, Resolver und Express-App
-      server.ts            startet die App auf Port 4000 (PORT überschreibt)
-      db.ts                Beispieldaten des Werkstatt-Shops
-      test-client.ts       startet die App für die Tests auf einem freien Port
-      dataloader.test.ts   Tests mit Vitest über echte HTTP-Requests
-    solution/              eine mögliche Lösung, gleiche Struktur
+    README.md              starting point, task in steps, solution
+    package.json           scripts: start, start:solution, test, test:watch, typecheck, format
+    src/                   your starting point
+      app.ts               schema, resolvers and Express app
+      server.ts            starts the app on port 4000 (PORT overrides)
+      db.ts                sample data of the workshop shop
+      test-client.ts       starts the app for the tests on a free port
+      dataloader.test.ts   tests with Vitest over real HTTP requests
+    solution/              a possible solution, same structure
 ```
 
-1. Lies das `README.md` der Übung. Es beschreibt den Startpunkt und seine Schwächen, dann die Aufgabe in nummerierten Schritten.
-2. Starte mit `npm test`. Die Tests in `src/` dokumentieren das Problem: Manche schlagen fehl, manche sind grün aus dem falschen Grund. Arbeite die Schritte in `src/` ab, bis `npm test` und `npm run typecheck` grün sind und die Tests den richtigen Grund prüfen.
-3. Vergleiche danach mit `solution/`; `npm run start:solution` startet die Lösung.
+1. Read the `README.md` of the exercise. It describes the starting point and its weaknesses, then the task in numbered steps.
+2. Start with `npm test`. The tests in `src/` document the problem: some fail, some pass for the wrong reason. Work through the steps in `src/` until `npm test` and `npm run typecheck` pass and the tests check the right reason.
+3. Then compare with `solution/`; `npm run start:solution` starts the solution.
 
 ```bash
 cd recipes/dataloader
 npm install
-npm start               # Startpunkt mit Apollo Sandbox auf http://localhost:4000/graphql
-npm test                # Vitest einmal
-npm run test:watch      # Vitest im Watch Mode
+npm start               # starting point with Apollo Sandbox on http://localhost:4000/graphql
+npm test                # Vitest once
+npm run test:watch      # Vitest in watch mode
 npm run typecheck       # TypeScript strict
-npm run start:solution  # die Lösung
+npm run start:solution  # the solution
 ```
 
-Einige Übungen bringen eigene Scripts oder einen zweiten Prozess mit:
+Some exercises bring their own scripts or a second process:
 
-| Übung | Besonderheit |
+| Exercise | Special feature |
 | --- | --- |
-| `shop-client` | Vite-Projekt: `npm start` öffnet http://localhost:5173 und leitet `/graphql` an Port 4000 weiter. Starte vorher `shop-server` in einem zweiten Terminal (`npm run start:solution`). `npm run codegen` erzeugt die Typen der Operations. |
-| `fast-reads` | `npm run seed` schreibt `shop.db` mit 50.000 Bestellungen, `npm run load -- offset 0` misst Zugriffe und Latenz. |
-| `schema-evolution` | `npm run schema:diff` vergleicht `schema/production.graphql` mit `schema/current.graphql` und bricht bei Breaking Changes ab. |
-| `query-cost-limits` | `npm run manifest` baut `persisted-documents.json` aus den bekannten Operations neu. |
-| `ddd-services` | `npm run start:shipping` startet den Shipping-Service auf Port 4001. |
-| `federation` | Gateway auf Port 4000, die Subgraphs `customers` und `orders` auf 4001 und 4002. |
-| `rest-wrapping` | Der Inventory-REST-Service läuft auf Port 4001. |
-| `operations-fragments`, `optimistic-ui` | Kein `start:solution`: Die Lösung besteht aus Operations und Tests in `solution/`. |
+| `shop-client` | Vite project: `npm start` opens http://localhost:5173 and proxies `/graphql` to port 4000. Start `shop-server` in a second terminal first (`npm run start:solution`). `npm run codegen` generates the types of the operations. |
+| `fast-reads` | `npm run seed` writes `shop.db` with 50,000 orders, `npm run load -- offset 0` measures accesses and latency. |
+| `schema-evolution` | `npm run schema:diff` compares `schema/production.graphql` with `schema/current.graphql` and stops on breaking changes. |
+| `query-cost-limits` | `npm run manifest` rebuilds `persisted-documents.json` from the known operations. |
+| `ddd-services` | `npm run start:shipping` starts the shipping service on port 4001. |
+| `federation` | Gateway on port 4000, the subgraphs `customers` and `orders` on 4001 and 4002. |
+| `rest-wrapping` | The inventory REST service runs on port 4001. |
+| `operations-fragments`, `optimistic-ui` | No `start:solution`: the solution consists of operations and tests in `solution/`. |
 
-## Übungen
+## Exercises
 
-Die Reihenfolge geht von einfach nach schwer. Die Stufe zeigt den Schwierigkeitsgrad: 1 Grundlagen, 2 Alltag, 3 Architektur und Betrieb. Jede Übung läuft auf Apollo Server 5 und Express 5; die Spalte „Dazu“ nennt, was darüber hinaus im Spiel ist.
+The order goes from easy to hard. The level shows the difficulty: 1 basics, 2 everyday work, 3 architecture and operations. Every exercise runs on Apollo Server 5 and Express 5; the column “Plus” names what else is in play.
 
-### Stufe 1 – Grundlagen
+### Level 1 – Basics
 
-| Nr. | Lektion | Übung | Dazu |
+| No. | Lesson | Exercise | Plus |
 | --- | --- | --- | --- |
-| 01 | REST und GraphQL liefern dieselbe Übersicht – zähle Requests und Bytes | [rest-vs-graphql](recipes/rest-vs-graphql/README.md) | – |
-| 02 | Ein erster Apollo Server: SDL, Resolver, Mutation mit Input und Payload, Tests über HTTP | [shop-server](recipes/shop-server/README.md) | – |
-| 03 | Operations: Variables, Fragments, Aliases | [operations-fragments](recipes/operations-fragments/README.md) | – |
-| 04 | Resolver ohne N+1: DataLoader batcht pro Request | [dataloader](recipes/dataloader/README.md) | DataLoader |
-| 05 | Errors as Data: fachliche Fehler gehören ins Schema | [errors-as-data](recipes/errors-as-data/README.md) | – |
+| 01 | REST and GraphQL deliver the same overview – count requests and bytes | [rest-vs-graphql](recipes/rest-vs-graphql/README.md) | – |
+| 02 | A first Apollo Server: SDL, resolvers, a mutation with input and payload, tests over HTTP | [shop-server](recipes/shop-server/README.md) | – |
+| 03 | Operations: variables, fragments, aliases | [operations-fragments](recipes/operations-fragments/README.md) | – |
+| 04 | Resolvers without N+1: DataLoader batches per request | [dataloader](recipes/dataloader/README.md) | DataLoader |
+| 05 | Errors as Data: domain errors belong in the schema | [errors-as-data](recipes/errors-as-data/README.md) | – |
 
-### Stufe 2 – Alltag
+### Level 2 – Everyday work
 
-| Nr. | Lektion | Übung | Dazu |
+| No. | Lesson | Exercise | Plus |
 | --- | --- | --- | --- |
-| 06 | Ein React-Client mit Apollo Client 4: ein Fragment pro Zeile, Typen aus GraphQL Codegen | [shop-client](recipes/shop-client/README.md) | React 19, Apollo Client 4, Vite, GraphQL Codegen |
-| 07 | Ein Context pro Request: Identität, Loader, Tests ohne HTTP | [context](recipes/context/README.md) | DataLoader |
-| 08 | Schichten und Module: ein Schema aus vielen Ordnern | [modules](recipes/modules/README.md) | DataLoader, zod |
-| 09 | Authentication mit Access Tokens (OIDC, jose) und Authorization pro Feld | [auth](recipes/auth/README.md) | jose, Apollo Client 4 |
-| 10 | Das me-Pattern: Wer fragt, bekommt seine eigene Sicht | [me-pattern](recipes/me-pattern/README.md) | DataLoader |
-| 11 | Pagination mit Connections und Apollo Cache Policies | [pagination](recipes/pagination/README.md) | Apollo Client 4 |
-| 12 | Optimistic UI mit dem normalisierten Apollo-Client-Cache | [optimistic-ui](recipes/optimistic-ui/README.md) | Apollo Client 4 |
-| 13 | Custom Scalars prüfen an der Schema-Grenze | [custom-scalars](recipes/custom-scalars/README.md) | graphql-scalars |
-| 14 | Wrapping REST: eine GraphQL-Fassade vor einem fremden Service | [rest-wrapping](recipes/rest-wrapping/README.md) | DataLoader |
+| 06 | A React client with Apollo Client 4: one fragment per row, types from GraphQL Codegen | [shop-client](recipes/shop-client/README.md) | React 19, Apollo Client 4, Vite, GraphQL Codegen |
+| 07 | One context per request: identity, loaders, tests without HTTP | [context](recipes/context/README.md) | DataLoader |
+| 08 | Layers and modules: one schema from many folders | [modules](recipes/modules/README.md) | DataLoader, zod |
+| 09 | Authentication with access tokens (OIDC, jose) and authorization per field | [auth](recipes/auth/README.md) | jose, Apollo Client 4 |
+| 10 | The me pattern: whoever asks gets their own view | [me-pattern](recipes/me-pattern/README.md) | DataLoader |
+| 11 | Pagination with connections and Apollo cache policies | [pagination](recipes/pagination/README.md) | Apollo Client 4 |
+| 12 | Optimistic UI with the normalized Apollo Client cache | [optimistic-ui](recipes/optimistic-ui/README.md) | Apollo Client 4 |
+| 13 | Validate custom scalars at the schema boundary | [custom-scalars](recipes/custom-scalars/README.md) | graphql-scalars |
+| 14 | Wrapping REST: a GraphQL facade in front of a third-party service | [rest-wrapping](recipes/rest-wrapping/README.md) | DataLoader |
 
-### Stufe 3 – Architektur und Betrieb
+### Level 3 – Architecture and operations
 
-| Nr. | Lektion | Übung | Dazu |
+| No. | Lesson | Exercise | Plus |
 | --- | --- | --- | --- |
-| 15 | Live-Bestellstatus mit Subscriptions über WebSocket | [subscriptions](recipes/subscriptions/README.md) | graphql-ws, ws, Apollo Client 4 |
-| 16 | Apollo Federation: zwei Subgraphs, ein Supergraph | [federation](recipes/federation/README.md) | Apollo Gateway, Apollo Subgraph |
-| 17 | Query Cost Limits und Persisted Operations für einen öffentlichen Graph | [query-cost-limits](recipes/query-cost-limits/README.md) | – |
-| 18 | Response Caching mit `@cacheControl` | [response-caching](recipes/response-caching/README.md) | Apollo Response Cache Plugin |
-| 19 | Schema Evolution: additiv erweitern, Breaking Changes finden | [schema-evolution](recipes/schema-evolution/README.md) | GraphQL Inspector |
-| 20 | Tracing und Metrics pro Operation als Apollo-Server-Plugin | [tracing](recipes/tracing/README.md) | OpenTelemetry |
-| 21 | DDD im Graph: Bounded Contexts und Aggregates | [ddd](recipes/ddd/README.md) | DataLoader |
-| 22 | Der Graph bleibt, Services wachsen dahinter: ein Modul wird ein Service | [ddd-services](recipes/ddd-services/README.md) | DataLoader |
-| 23 | Schnelle Reads: erst messen, dann Batches und Keyset-Pagination | [fast-reads](recipes/fast-reads/README.md) | DataLoader, node:sqlite |
-| 24 | BFF und Domain Boundaries | [bff-gateway](recipes/bff-gateway/README.md) | – |
+| 15 | Live order status with subscriptions over WebSocket | [subscriptions](recipes/subscriptions/README.md) | graphql-ws, ws, Apollo Client 4 |
+| 16 | Apollo Federation: two subgraphs, one supergraph | [federation](recipes/federation/README.md) | Apollo Gateway, Apollo Subgraph |
+| 17 | Query cost limits and persisted operations for a public graph | [query-cost-limits](recipes/query-cost-limits/README.md) | – |
+| 18 | Response caching with `@cacheControl` | [response-caching](recipes/response-caching/README.md) | Apollo Response Cache Plugin |
+| 19 | Schema evolution: extend additively, find breaking changes | [schema-evolution](recipes/schema-evolution/README.md) | GraphQL Inspector |
+| 20 | Tracing and metrics per operation as an Apollo Server plugin | [tracing](recipes/tracing/README.md) | OpenTelemetry |
+| 21 | DDD in the graph: bounded contexts and aggregates | [ddd](recipes/ddd/README.md) | DataLoader |
+| 22 | The graph stays, services grow behind it: a module becomes a service | [ddd-services](recipes/ddd-services/README.md) | DataLoader |
+| 23 | Fast reads: measure first, then batches and keyset pagination | [fast-reads](recipes/fast-reads/README.md) | DataLoader, node:sqlite |
+| 24 | BFF and domain boundaries | [bff-gateway](recipes/bff-gateway/README.md) | – |
 
-Drei Ordner unter `recipes/` sind Platzhalter ohne Inhalt: [prefetching](recipes/prefetching/README.md), [verify-graphql-tags](recipes/verify-graphql-tags/README.md) und [server-side-rendering-apollo](recipes/server-side-rendering-apollo/README.md).
+Three folders under `recipes/` are placeholders without content: [prefetching](recipes/prefetching/README.md), [verify-graphql-tags](recipes/verify-graphql-tags/README.md) and [server-side-rendering-apollo](recipes/server-side-rendering-apollo/README.md).
 
-## Der Werkstatt-Shop
+## The workshop shop
 
-Produkte, Kunden und Bestellungen. Geld steht immer in ganzen Cent (`priceCents`, `totalCents`). Eine Bestellung durchläuft `DRAFT → PLACED → PAID → SHIPPED`; `CANCELLED` ist nur aus `DRAFT` oder `PLACED` erlaubt. Das Schema steht in [`recipes/shop-server/src/schema.graphql`](recipes/shop-server/src/schema.graphql), jede Übung bringt ihre eigenen Beispieldaten in `src/` mit. Wer anfragt, steht im Header – in `shop-server` als `authorization: Bearer token-ada` für `c-1` oder `token-grace` für `c-2`; jede Übung nennt ihren Header in der README.
+Products, customers and orders. Money is always in whole cents (`priceCents`, `totalCents`). An order moves through `DRAFT → PLACED → PAID → SHIPPED`; `CANCELLED` is only allowed from `DRAFT` or `PLACED`. The schema lives in [`recipes/shop-server/src/schema.graphql`](recipes/shop-server/src/schema.graphql); every exercise brings its own sample data in `src/`. The caller is in the header – in `shop-server` as `authorization: Bearer token-ada` for `c-1` or `token-grace` for `c-2`; every exercise names its header in the README.
 
 ## Stack
 
-**Stack (Oktober 2026):** Apollo Server 5 (`@apollo/server`) als Middleware in Express 5 (`@as-integrations/express5`) · graphql 16 · TypeScript 7 strict · Vitest 5 · Prettier. Es gibt keinen Build-Schritt: Node.js 26 führt die `.ts`-Dateien direkt aus, deshalb steht in jeder `tsconfig.json` `erasableSyntaxOnly`.
+**Stack (October 2026):** Apollo Server 5 (`@apollo/server`) as middleware in Express 5 (`@as-integrations/express5`) · graphql 16 · TypeScript 7 strict · Vitest 5 · Prettier. There is no build step: Node.js 26 runs the `.ts` files directly, which is why every `tsconfig.json` sets `erasableSyntaxOnly`.
 
-Weitere Pakete nur dort, wo die Übung sie braucht:
+Further packages only where the exercise needs them:
 
-- DataLoader 2 in `dataloader`, `context`, `modules`, `me-pattern`, `rest-wrapping`, `ddd`, `ddd-services` und `fast-reads`
-- Apollo Client 4 in `shop-client`, `auth`, `pagination`, `optimistic-ui` und `subscriptions`
-- React 19, Vite 8, Testing Library, jsdom und GraphQL Codegen 7 (`typescript-operations`) in `shop-client`
+- DataLoader 2 in `dataloader`, `context`, `modules`, `me-pattern`, `rest-wrapping`, `ddd`, `ddd-services` and `fast-reads`
+- Apollo Client 4 in `shop-client`, `auth`, `pagination`, `optimistic-ui` and `subscriptions`
+- React 19, Vite 8, Testing Library, jsdom and GraphQL Codegen 7 (`typescript-operations`) in `shop-client`
 - jose 6 in `auth`
 - zod 4 in `modules`
 - graphql-scalars 2 in `custom-scalars`
-- graphql-ws 6, ws 8 und graphql-subscriptions 3 in `subscriptions`
-- Apollo Gateway 2, `@apollo/subgraph` und `@apollo/composition` in `federation`
+- graphql-ws 6, ws 8 and graphql-subscriptions 3 in `subscriptions`
+- Apollo Gateway 2, `@apollo/subgraph` and `@apollo/composition` in `federation`
 - `@apollo/server-plugin-response-cache` 5 in `response-caching`
 - GraphQL Inspector 8 (`@graphql-inspector/core`) in `schema-evolution`
 - OpenTelemetry (`@opentelemetry/api`, `@opentelemetry/sdk-trace-base`) in `tracing`
-- `node:sqlite` aus der Node.js-Standardbibliothek in `fast-reads`
+- `node:sqlite` from the Node.js standard library in `fast-reads`
 
-## Kapitel
+## Chapters
 
-Die Theorie liegt als englische Kapitel im Ordner [`introduction-graphql/`](introduction-graphql/). Sie stammen aus der früheren Fassung des Workshops (Stand Januar 2022); die Codebeispiele dort nutzen zum Teil noch `express-graphql` und Mocha. Die aktuelle Umsetzung mit Apollo Server 5 zeigen die Übungen.
+The theory is available as English chapters in the folder [`introduction-graphql/`](introduction-graphql/). They come from the earlier version of the workshop (as of January 2022); some of the code samples there still use `express-graphql` and Mocha. The exercises show the current implementation with Apollo Server 5.
 
-- Einstieg: [Why GraphQL](introduction-graphql/intro.md) · [What is GraphQL](introduction-graphql/graphql.md) · [Architecture](introduction-graphql/architecture.md) · [Principles](introduction-graphql/principles.md)
-- Abfragen: [Queries](introduction-graphql/queries.md) · [Variables](introduction-graphql/variables.md) · [Fragments](introduction-graphql/fragments.md) · [Directives](introduction-graphql/directives.md) · [Introspection](introduction-graphql/introspection.md) · [Clients](introduction-graphql/clients.md)
-- Schema und Ausführung: [Type System](introduction-graphql/types.md) · [Schema](introduction-graphql/schema.md) · [Validation](introduction-graphql/validation.md) · [Resolver](introduction-graphql/resolver.md) · [Error Handling](introduction-graphql/errors.md) · [Mutations](introduction-graphql/mutations.md)
-- Weiterführend: [Paging](introduction-graphql/paging.md) · [Versioning](introduction-graphql/versioning.md) · [Subscriptions](introduction-graphql/subscriptions.md) · [Authentication and Authorization](introduction-graphql/auth.md) · [Caching](introduction-graphql/caching.md) · [Advanced GraphQL](introduction-graphql/advanced-graphql.md) · [Batch, Defer, Live](introduction-graphql/soon.md) · [GraphQL with ExpressJS](introduction-graphql/expressjs.md) · [Testing GraphQL](introduction-graphql/testing.md)
-- Außerdem: [GraphQL Specification](https://spec.graphql.org/) · [Resources](introduction-graphql/resources.md)
+- Getting started: [Why GraphQL](introduction-graphql/intro.md) · [What is GraphQL](introduction-graphql/graphql.md) · [Architecture](introduction-graphql/architecture.md) · [Principles](introduction-graphql/principles.md)
+- Queries: [Queries](introduction-graphql/queries.md) · [Variables](introduction-graphql/variables.md) · [Fragments](introduction-graphql/fragments.md) · [Directives](introduction-graphql/directives.md) · [Introspection](introduction-graphql/introspection.md) · [Clients](introduction-graphql/clients.md)
+- Schema and execution: [Type System](introduction-graphql/types.md) · [Schema](introduction-graphql/schema.md) · [Validation](introduction-graphql/validation.md) · [Resolver](introduction-graphql/resolver.md) · [Error Handling](introduction-graphql/errors.md) · [Mutations](introduction-graphql/mutations.md)
+- Further reading: [Paging](introduction-graphql/paging.md) · [Versioning](introduction-graphql/versioning.md) · [Subscriptions](introduction-graphql/subscriptions.md) · [Authentication and Authorization](introduction-graphql/auth.md) · [Caching](introduction-graphql/caching.md) · [Advanced GraphQL](introduction-graphql/advanced-graphql.md) · [Batch, Defer, Live](introduction-graphql/soon.md) · [GraphQL with ExpressJS](introduction-graphql/expressjs.md) · [Testing GraphQL](introduction-graphql/testing.md)
+- Also: [GraphQL Specification](https://spec.graphql.org/) · [Resources](introduction-graphql/resources.md)
 
-## Workshop und Folien
+## Workshop and slides
 
-- Workshop: [„Architektur: DDD, CQRS und Event Sourcing“](https://workshops.mikebild.dev/w/architektur-ddd-cqrs/remote/)
-- Workshop: [„Fullstack mit TypeScript, Node.js, GraphQL und React in 6 Tagen“](https://workshops.mikebild.dev/w/fullstack/onsite/)
-- Workshop: [„GraphQL-APIs entwerfen und bauen“](https://workshops.mikebild.dev/w/graphql-kompakt/online/)
-- Workshop: [„GraphQL vom Schema bis zur Produktion“](https://workshops.mikebild.dev/w/graphql/onsite/)
-- Workshop: [„Microservices mit Node.js, Express 5 und Docker Compose“](https://workshops.mikebild.dev/w/microservices/remote/)
-- Workshop: [„GraphQL in 60 Minuten“](https://workshops.mikebild.dev/w/mini-kurs/online/)
-- Workshop: [„Node.js Backend, funktional und typsicher“](https://workshops.mikebild.dev/w/nodejs/remote/)
-- Workshop: [„React mit Vite bis zur installierbaren PWA“](https://workshops.mikebild.dev/w/react-fortgeschritten/remote/)
-- Workshop: [„React mit TypeScript bis zur Produktion“](https://workshops.mikebild.dev/w/react/remote/)
-- Folien: [slides.mikebild.dev/introduction-graphql](https://slides.mikebild.dev/introduction-graphql.html)
+- Workshop: [“Architecture: DDD, CQRS, and Event Sourcing”](https://workshops.mikebild.dev/w/architektur-ddd-cqrs/remote/)
+- Workshop: [“Full-stack with TypeScript, Node.js, GraphQL, and React in 6 days”](https://workshops.mikebild.dev/w/fullstack/onsite/)
+- Workshop: [“Design and build GraphQL APIs”](https://workshops.mikebild.dev/w/graphql-kompakt/online/)
+- Workshop: [“GraphQL from schema to production”](https://workshops.mikebild.dev/w/graphql/onsite/)
+- Workshop: [“Microservices with Node.js, Express 5, and Docker Compose”](https://workshops.mikebild.dev/w/microservices/remote/)
+- Workshop: [“GraphQL in 60 minutes”](https://workshops.mikebild.dev/w/mini-kurs/online/)
+- Workshop: [“Node.js backend, functional and type-safe”](https://workshops.mikebild.dev/w/nodejs/remote/)
+- Workshop: [“React with Vite to an installable PWA”](https://workshops.mikebild.dev/w/react-fortgeschritten/remote/)
+- Workshop: [“React with TypeScript all the way to production”](https://workshops.mikebild.dev/w/react/remote/)
+- Slides: [slides.mikebild.dev/introduction-graphql](https://slides.mikebild.dev/introduction-graphql.html)
 - PDF: [slides.mikebild.dev/introduction-graphql.pdf](https://slides.mikebild.dev/introduction-graphql.pdf)
-- Beiträge auf mikebild.dev:
+- Articles on mikebild.dev (in German):
   - [GraphQL-Konzepte: Schema, Resolver, Ausführung](https://www.mikebild.dev/de/blog/graphql-konzepte-schema-resolver-ausfuehrung/)
   - [GraphQL-Überblick: Vom Schema zur föderierten API](https://www.mikebild.dev/de/blog/graphql-ueberblick-vom-schema-zur-foederierten-api/)
 
-## Archiv
+## Archive
 
-Ältere Beispiele bleiben zum Vergleich im Repo, werden aber nicht weiter gepflegt. Ihr Code stammt aus dem Januar 2022:
+Older examples stay in the repo for comparison but are no longer maintained. Their code dates from January 2022:
 
-- [`legacy/apollo-example/`](legacy/apollo-example/README.md) – Apollo Server 2 und React 17 mit apollo-boost als Lerna-Monorepo mit Parcel. Ersetzt durch `shop-server` und `shop-client`, deren READMEs zum Vergleich darauf verweisen.
-- [`legacy/external-pubsub-subscriptions/`](legacy/external-pubsub-subscriptions/README.md) – nur ein Verweis auf die Übung `subscriptions`.
-- [`aws-example/`](aws-example/README.md) – AWS AppSync mit Lambda über AWS CDK 2 und ein React-17-Client. Die README dort ist noch die des Apollo-Beispiels.
-- [`graphql-server-example-dotnet/`](graphql-server-example-dotnet/README.md) – ein GraphQL-Server in C# mit GraphQL.Server.All 5.2 auf .NET Core 3.1. Die Tasks in `.vscode/` gehören zu diesem Beispiel.
+- [`archive/apollo-example/`](archive/apollo-example/README.md) – Apollo Server 2 and React 17 with apollo-boost as a Lerna monorepo with Parcel. Replaced by `shop-server` and `shop-client`, whose READMEs point to it for comparison.
+- [`archive/external-pubsub-subscriptions/`](archive/external-pubsub-subscriptions/README.md) – only a pointer to the exercise `subscriptions`.
+- [`aws-example/`](aws-example/README.md) – AWS AppSync with Lambda via AWS CDK 2 and a React 17 client. The README there is still the one of the Apollo example.
+- [`graphql-server-example-dotnet/`](graphql-server-example-dotnet/README.md) – a GraphQL server in C# with GraphQL.Server.All 5.2 on .NET Core 3.1. The tasks in `.vscode/` belong to this example.
 
-## Fehler melden
+## Reporting issues
 
-Hast du einen Fehler gefunden oder eine Idee? Leg ein [Issue](https://github.com/MikeBild/introduction-graphql/issues) an. Sicherheitslücken meldest du bitte nicht öffentlich, sondern über das Kontaktformular auf [mikebild.dev](https://www.mikebild.dev).
+Found a bug or have an idea? Open an [issue](https://github.com/MikeBild/introduction-graphql/issues). Please do not report security vulnerabilities publicly; use the contact form on [mikebild.dev](https://www.mikebild.dev) instead.
 
-## Lizenz
+## License
 
 [MIT](LICENSE)
