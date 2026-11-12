@@ -155,20 +155,21 @@ The theory is available as English chapters in the folder [`introduction-graphql
 
 ## Workshop and slides
 
-- Workshop: [“Architecture: DDD, CQRS, and Event Sourcing”](https://workshops.mikebild.dev/w/architektur-ddd-cqrs/remote/)
-- Workshop: [“Full-stack with TypeScript, Node.js, GraphQL, and React in 6 days”](https://workshops.mikebild.dev/w/fullstack/onsite/)
-- Workshop: [“Design and build GraphQL APIs”](https://workshops.mikebild.dev/w/graphql-kompakt/online/)
-- Workshop: [“GraphQL from schema to production”](https://workshops.mikebild.dev/w/graphql/onsite/)
-- Workshop: [“Microservices with Node.js, Express 5, and Docker Compose”](https://workshops.mikebild.dev/w/microservices/remote/)
-- Workshop: [“GraphQL in 60 minutes”](https://workshops.mikebild.dev/w/mini-kurs/online/)
-- Workshop: [“Node.js backend, functional and type-safe”](https://workshops.mikebild.dev/w/nodejs/remote/)
-- Workshop: [“React with Vite to an installable PWA”](https://workshops.mikebild.dev/w/react-fortgeschritten/remote/)
-- Workshop: [“React with TypeScript all the way to production”](https://workshops.mikebild.dev/w/react/remote/)
-- Slides: [slides.mikebild.dev/introduction-graphql](https://slides.mikebild.dev/introduction-graphql.html)
-- PDF: [slides.mikebild.dev/introduction-graphql.pdf](https://slides.mikebild.dev/introduction-graphql.pdf)
-- Articles on mikebild.dev (in German):
-  - [GraphQL-Konzepte: Schema, Resolver, Ausführung](https://www.mikebild.dev/de/blog/graphql-konzepte-schema-resolver-ausfuehrung/)
-  - [GraphQL-Überblick: Vom Schema zur föderierten API](https://www.mikebild.dev/de/blog/graphql-ueberblick-vom-schema-zur-foederierten-api/)
+- Workshop (held in German): [“Architecture: DDD, CQRS, and Event Sourcing”](https://workshops.mikebild.dev/w/architektur-ddd-cqrs/remote/)
+- Workshop (held in German): [“Full-stack with TypeScript, Node.js, GraphQL, and React in 6 days”](https://workshops.mikebild.dev/w/fullstack/onsite/)
+- Workshop (held in German): [“Design and build GraphQL APIs”](https://workshops.mikebild.dev/w/graphql-kompakt/online/)
+- Workshop (held in German): [“GraphQL from schema to production”](https://workshops.mikebild.dev/w/graphql/onsite/)
+- Workshop (held in German): [“Microservices with Node.js, Express 5, and Docker Compose”](https://workshops.mikebild.dev/w/microservices/remote/)
+- Workshop (held in German): [“GraphQL in 60 minutes”](https://workshops.mikebild.dev/w/mini-kurs/online/)
+- Workshop (held in German): [“Node.js backend, functional and type-safe”](https://workshops.mikebild.dev/w/nodejs/remote/)
+- Workshop (held in German): [“React with Vite to an installable PWA”](https://workshops.mikebild.dev/w/react-fortgeschritten/remote/)
+- Workshop (held in German): [“React with TypeScript all the way to production”](https://workshops.mikebild.dev/w/react/remote/)
+- Slides: [slides.mikebild.dev/introduction-graphql.en](https://slides.mikebild.dev/introduction-graphql.en.html)
+- PDF: [introduction-graphql.en.pdf](https://objects.upraft.mikebild.info/site-media/mikebild/decks/introduction-graphql/introduction-graphql.en.pdf)
+- Video: [introduction-graphql.en.mp4](https://objects.upraft.mikebild.info/site-media/mikebild/decks/introduction-graphql/introduction-graphql.en.mp4)
+- Posts on mikebild.dev:
+  - [GraphQL Concepts: Schema, Resolvers, Execution](https://www.mikebild.dev/en/blog/graphql-concepts-schema-resolvers-execution/)
+  - [GraphQL Overview: From Schema to Federated API](https://www.mikebild.dev/en/blog/graphql-overview-from-schema-to-federated-api/)
 
 ## Archive
 
