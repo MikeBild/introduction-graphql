@@ -165,8 +165,8 @@ The theory is available as English chapters in the folder [`introduction-graphql
 - Workshop (held in German): [“React with Vite to an installable PWA”](https://workshops.mikebild.dev/w/react-fortgeschritten/remote/)
 - Workshop (held in German): [“React with TypeScript all the way to production”](https://workshops.mikebild.dev/w/react/remote/)
 - Slides: [slides.mikebild.dev/introduction-graphql.en](https://slides.mikebild.dev/introduction-graphql.en.html)
-- PDF: [introduction-graphql.en.pdf](https://objects.upraft.mikebild.info/site-media/mikebild/decks/introduction-graphql/introduction-graphql.en.pdf)
-- Video: [introduction-graphql.en.mp4](https://objects.upraft.mikebild.info/site-media/mikebild/decks/introduction-graphql/introduction-graphql.en.mp4)
+- PDF: [introduction-graphql.en.pdf](https://media.mikebild.dev/site/mikebild/decks/introduction-graphql/introduction-graphql.en.pdf)
+- Video: [introduction-graphql.en.mp4](https://media.mikebild.dev/site/mikebild/decks/introduction-graphql/introduction-graphql.en.mp4)
 - Posts on mikebild.dev:
   - [GraphQL Concepts: Schema, Resolvers, Execution](https://www.mikebild.dev/en/blog/graphql-concepts-schema-resolvers-execution/)
   - [GraphQL Overview: From Schema to Federated API](https://www.mikebild.dev/en/blog/graphql-overview-from-schema-to-federated-api/)
